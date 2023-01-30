@@ -1,10 +1,13 @@
-const selectionDropDownRange = function (startNumber, endNumber) {
+const selectionDropDownRange = function (
+  startNumber: string,
+  endNumber: string,
+) {
   const numbers = [];
   console.log(
-    "selectionDropDownRange:startNumber:" +
+    'selectionDropDownRange:startNumber:' +
       startNumber +
-      ", endNumber" +
-      endNumber
+      ', endNumber' +
+      endNumber,
   );
   // startNumber = startNumber || 80;
   while (startNumber <= endNumber) {
@@ -23,9 +26,9 @@ const yearsRange = function (startYear) {
   startYear = startYear || 1980;
   while (startYear <= currentYear) {
     startYear++;
-    years.push({ label: startYear.toString(), value: startYear.toString() });
+    years.push({label: startYear.toString(), value: startYear.toString()});
   }
   return years;
 };
 
-export default { selectionDropDownRange, yearsRange };
+export default {selectionDropDownRange, yearsRange};

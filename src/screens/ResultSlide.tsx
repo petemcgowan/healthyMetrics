@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 // import { useContext } from "react";
 import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -20,6 +20,9 @@ const ResultSlide = ({idealWeight}) => {
   const weightUnits = useSelector((state: State) => state.weightUnits);
 
   // const { colourData, index } = useContext(ColourContext);
+  useEffect(() => {
+    console.log('ResultSlide, useEffect');
+  }, []);
 
   return (
     <SafeAreaView style={styles.vwResultSlide}>
