@@ -5,7 +5,7 @@ const IntroSlide = () => {
   return (
     <View style={styles.overallContainer}>
       <View style={styles.topContainer}>
-        <Text style={styles.mainText}>Welcome to Ideal... </Text>
+        <Text style={styles.mainText}>Welcome to Healthy... </Text>
       </View>
       <View style={styles.midContainer} />
       <View style={styles.bottomContainer}>

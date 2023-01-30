@@ -15,6 +15,7 @@ import {
   StyleSheet,
   View,
   ListRenderItem,
+  TouchableWithoutFeedback,
   Dimensions,
   Animated,
   ImageBackground,
@@ -43,7 +44,8 @@ function CustomSwiper() {
   const {colourData} = useContext(ColourContext);
 
   const [index, setIndex] = React.useState(0);
-
+  // const nativeEventPageX = -1; // tracked by mouse move
+  // const handlerTouchX = -1; // tracked by mouse move
   const weightPounds = useSelector((state: State) => state.weightPounds);
   const weightStones = useSelector((state: State) => state.weightStones);
   const weightKg = useSelector((state: State) => state.weightKg);
@@ -52,6 +54,7 @@ function CustomSwiper() {
   const heightInches = useSelector((state: State) => state.heightInches);
   const heightUnits = useSelector((state: State) => state.heightUnits);
   const weightUnits = useSelector((state: State) => state.weightUnits);
+
   console.log(
     'CustomSwiper: weightPounds:' +
       weightPounds +
@@ -101,11 +104,11 @@ function CustomSwiper() {
   );
 
   const helpSlideValues = [
-    {
-      // title: "Info",
-      subHeading: 'Welcome',
-      text: "Find related info on the screen you're on here 😎 ",
-    },
+    // {
+    //   // title: "Info",
+    //   subHeading: 'Welcome',
+    //   text: "Find related info on the screen you're on here 😎 ",
+    // },
     {
       // title: "Info",
       subHeading: 'Units',
@@ -196,16 +199,8 @@ function CustomSwiper() {
   }, [index]);
 
   const handleCalculate = () => {
-    const weightIsValidated = validate('weight');
-    console.log(
-      'handleCalculate, heightCm:' +
-        heightCm +
-        ', heightFt:' +
-        heightFt +
-        ', heightInches:' +
-        heightInches,
-    );
     console.log('handleCalculate, frame:' + frame);
+    const weightIsValidated = validate('weight');
 
     if (weightIsValidated) {
       // const ageValue = +age;
@@ -215,10 +210,10 @@ function CustomSwiper() {
       if (heightUnits === 'Feet/Inches') {
         // the + makes it a number (for calcs)
         const heightFtInches = +heightFt * 12 + +heightInches;
-        console.log('heightFtInches:' + heightFtInches);
+        console.log('handleCalculate, heightFtInches:' + heightFtInches);
         heightCmValue = heightFtInches * 2.54; // convert to cm
       }
-      console.log('heightCmValue:' + heightCmValue);
+      console.log('handleCalculate, heightCmValue:' + heightCmValue);
 
       // Note: Weight is not currently used in the calc
 
@@ -233,9 +228,9 @@ function CustomSwiper() {
         console.log('Doing Male calc');
         if (heightCmValue > 60) {
           const heightAbove = heightCmValue - 60;
-          console.log('heightAbove:' + heightAbove);
+          console.log('handleCalculate, heightAbove:' + heightAbove);
           const extraWeight = 1.41 * heightAbove;
-          console.log('extraWeight:' + extraWeight);
+          console.log('handleCalculate, extraWeight:' + extraWeight);
           idealWeightInt = 56.2 + extraWeight;
         } else {
           // not over 60 in
@@ -246,9 +241,9 @@ function CustomSwiper() {
         console.log('Doing Female calc');
         if (heightCmValue > 60) {
           const heightAbove = heightCmValue - 60;
-          console.log('heightAbove:' + heightAbove);
+          console.log('handleCalculate, heightAbove:' + heightAbove);
           const extraWeight = 1.36 * heightAbove;
-          console.log('extraWeight:' + extraWeight);
+          console.log('handleCalculate, extraWeight:' + extraWeight);
           idealWeightInt = 53.1 + extraWeight;
         } // not over 60 in
         else {
@@ -256,16 +251,21 @@ function CustomSwiper() {
           // so if they're 40in it's 40*1.1299
         }
       }
-      console.log('idealWeightInt before frame mod:' + idealWeightInt);
+      console.log(
+        'handleCalculate, idealWeightInt before frame mod:' + idealWeightInt,
+      );
       // Add 10% for a large frame size, and subtract 10% for a small frame size.
       if (frame === 'Small') {
         idealWeightInt -= idealWeightInt * 0.1;
       } else if (frame === 'Large') {
         idealWeightInt += idealWeightInt * 0.1;
       } // medium needs no mods
-      console.log('idealWeightInt after frame mod:' + idealWeightInt);
+      console.log(
+        'handleCalculate, idealWeightInt after frame mod:' + idealWeightInt,
+      );
 
       setIdealWeight(idealWeightInt);
+      console.log('handleCalculate (before switch), index:' + index);
       setIndex(index + 1); // move to the results slide
     } // weight entry validation
   };
@@ -365,9 +365,8 @@ function CustomSwiper() {
     setHelpText(helpSlideValues[index - 1].text);
 
     setIndex(index - 1);
-    console.log('colourData[index].dominant):' + colourData[index].dominant);
 
-    console.log('index(prev):' + index);
+    console.log('leftPress, index to be decremented:' + index);
 
     setErrorText('');
   };
@@ -380,8 +379,8 @@ function CustomSwiper() {
     setHelpSubHeading(helpSlideValues[index + 1].subHeading);
     setHelpText(helpSlideValues[index + 1].text);
 
+    console.log('rightPress, index to be incremented:' + index);
     setIndex(index + 1);
-    console.log('colourData[index].dominant):' + colourData[index].dominant);
 
     setErrorText('');
   };
@@ -406,10 +405,85 @@ function CustomSwiper() {
             showsHorizontalScrollIndicator={false}
             pagingEnabled
             bounces={false}
+            onScrollBeginDrag={e => {
+              if (this && e) {
+                console.log(
+                  'onScrollBeginDrag, e.nativeEvent.contentOffset.x:' +
+                    e.nativeEvent.contentOffset.x +
+                    ', this.touchX:' +
+                    this.touchX,
+                );
+                this.touchX = e.nativeEvent.contentOffset.x;
+              }
+              // if (this && e) {
+              //   console.log(
+              //     'onScrollBeginDrag, e.nativeEvent.contentOffset.x:' +
+              //       e.nativeEvent.contentOffset.x +
+              //       ', this.touchX:' +
+              //       this.touchX,
+              //   );
+              // nativeEventPageX = e.nativeEvent.pageX;
+              // handlerTouchX = this.touchX;
+              // }
+            }}
+            // onScroll={e => {
+            //   if (this && e) {
+            //     console.log(
+            //       'onScroll, e.nativeEvent.contentOffset.x:' +
+            //         e.nativeEvent.contentOffset.x +
+            //         ', this.touchX:' +
+            //         this.touchX,
+            //     );
+            //     // nativeEventPageX = e.nativeEvent.pageX;
+            //     // handlerTouchX = this.touchX;
+            //   }
+            // }}
+            onScrollEndDrag={e => {
+              console.log(
+                'onScrollEndDrag handlerTouchX:' +
+                  this.touchX +
+                  ', e.nativeEvent.pageX:' +
+                  e.nativeEvent.contentOffset.x +
+                  ', subtracted:' +
+                  (this.touchX - e.nativeEvent.contentOffset.x),
+              );
+              if (this.touchX - e.nativeEvent.contentOffset.x < -210) {
+                console.log(
+                  'Swiped left handlerTouchX:' +
+                    this.touchX +
+                    ', e.nativeEvent.pageX:' +
+                    e.nativeEvent.contentOffset.x +
+                    ', subtracted:' +
+                    (this.touchX - e.nativeEvent.contentOffset.x),
+                );
+                console.log(
+                  'onScrollEndDrag, title to check:' + colourData[index].title,
+                );
+                // TODO PUT BACK IN VALIDATIon byt storing title or the item they're on
+                const result = validate(colourData[index].title); // did they enter relevant info?
+                console.log(
+                  'result:' + result + ', item.title' + colourData[index].title,
+                );
+                console.log('index' + index);
+                if (result) {
+                  // entry is good
+                  console.log("rightPress it's good");
+                  rightPress();
+                } else {
+                  // don't allow them to go forward yet
+                  refFlatList.current?.scrollToIndex({
+                    index,
+                    animated: true,
+                  }); // setIndex(index);
+                }
+              }
+              if (this.touchX - e.nativeEvent.contentOffset.x > 210) {
+                console.log('leftPress');
+                leftPress();
+              }
+            }}
             renderItem={({item}) => {
               const hasImage = item.image !== null;
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              // const opacity = useMemo(() => new Animated.Value(0), []);
               console.log(
                 'item.title:' +
                   item.title +
@@ -420,55 +494,113 @@ function CustomSwiper() {
               );
               return (
                 <View
-                  style={{width, height}}
-                  onTouchStart={e => {
-                    // console.log("onTouchStart, e:" + e + ", this:" + this);
-                    if (this && e) {
-                      this.touchX = e.nativeEvent.pageX;
-                    }
-                  }}
-                  onTouchEnd={e => {
-                    if (this && e) {
-                      // check for undefined
-                      if (this.touchX - e.nativeEvent.pageX > 210) {
-                        console.log(
-                          'Swiped left' +
-                            this.touchX +
-                            ', e.nativeEvent.pageX:' +
-                            e.nativeEvent.pageX +
-                            ', subtracted:' +
-                            (this.touchX - e.nativeEvent.pageX),
-                        );
+                  style={{width, height, backgroundColor: 'white'}}
+                  // onTouchStart={e => {
+                  //   // console.log('onTouchStart, e:' + e + ', this:' + this);
+                  //   if (this && e) {
+                  //     console.log(
+                  //       'onTouchStart, e Setting this.touchX and handlerTouchX to pageX:' +
+                  //         e.nativeEvent.pageX,
+                  //     );
+                  //     this.touchX = e.nativeEvent.pageX;
+                  //     handlerTouchX = e.nativeEvent.pageX;
+                  //   }
+                  // }}
+                  // onTouchMove={e => {
+                  //   // check for undefined
+                  //   if (this && e) {
+                  //     console.log(
+                  //       'onTouchMove, Setting nativeEventPageX to e.nativeEvent.pageX:' +
+                  //         e.nativeEvent.pageX +
+                  //         ', this.touchX:' +
+                  //         this.touchX,
+                  //     );
+                  //     nativeEventPageX = e.nativeEvent.pageX;
+                  //     // handlerTouchX = this.touchX;
+                  //   }
+                  // }}
+                  // onTouchEnd={e => {
+                  //   if (this.touchX - nativeEventPageX > 210) {
+                  //     // console.log(
+                  //     //   'Swiped left' +
+                  //     //     this.touchX +
+                  //     //     ', e.nativeEvent.pageX:' +
+                  //     //     e.nativeEvent.pageX +
+                  //     //     ', subtracted:' +
+                  //     //     (this.touchX - e.nativeEvent.pageX),
+                  //     // );
 
-                        const result = validate(item.title); // did they enter relevant info?
-                        console.log(
-                          'result:' + result + ', item.title' + item.title,
-                        );
-                        console.log('index' + index);
-                        if (result) {
-                          // entry is good
-                          console.log("rightPress it's good");
-                          rightPress();
-                        } else {
-                          refFlatList.current?.scrollToIndex({
-                            index,
-                            animated: true,
-                          }); // setIndex(index);
-                        }
-                      }
-                      if (this.touchX - e.nativeEvent.pageX < -210) {
-                        leftPress();
-                      }
-                      console.log(
-                        'Swiped right, this.touchX' +
-                          this.touchX +
-                          ', e.nativeEvent.pageX:' +
-                          e.nativeEvent.pageX +
-                          ', subtracted:' +
-                          (this.touchX - e.nativeEvent.pageX),
-                      );
-                    }
-                  }}>
+                  //     const result = validate(item.title); // did they enter relevant info?
+                  //     // console.log(
+                  //     //   'result:' + result + ', item.title' + item.title,
+                  //     // );
+                  //     console.log('index' + index);
+                  //     if (result) {
+                  //       // entry is good
+                  //       console.log("rightPress it's good");
+                  //       rightPress();
+                  //     } else {
+                  //       // don't allow them to go forward yet
+                  //       refFlatList.current?.scrollToIndex({
+                  //         index,
+                  //         animated: true,
+                  //       }); // setIndex(index);
+                  //     }
+                  //   }
+                  //   if (this.touchX - e.nativeEvent.pageX < -210) {
+                  //     leftPress();
+                  //   }
+                  // console.log(
+                  //   'Swiped right, this.touchX' +
+                  //     this.touchX +
+                  //     ', e.nativeEvent.pageX:' +
+                  //     e.nativeEvent.pageX +
+                  //     ', subtracted:' +
+                  //     (this.touchX - e.nativeEvent.pageX),
+                  // );
+                  //   console.log('onTouchEnd, e:' + e + ', this:' + this);
+                  //   if (this && e) {
+                  //     // check for undefined
+                  //     if (this.touchX - e.nativeEvent.pageX > 210) {
+                  //       console.log(
+                  //         'Swiped left' +
+                  //           this.touchX +
+                  //           ', e.nativeEvent.pageX:' +
+                  //           e.nativeEvent.pageX +
+                  //           ', subtracted:' +
+                  //           (this.touchX - e.nativeEvent.pageX),
+                  //       );
+
+                  //       const result = validate(item.title); // did they enter relevant info?
+                  //       console.log(
+                  //         'result:' + result + ', item.title' + item.title,
+                  //       );
+                  //       console.log('index' + index);
+                  //       if (result) {
+                  //         // entry is good
+                  //         console.log("rightPress it's good");
+                  //         rightPress();
+                  //       } else { // don't allow them to go forward yet
+                  //         refFlatList.current?.scrollToIndex({
+                  //           index,
+                  //           animated: true,
+                  //         }); // setIndex(index);
+                  //       }
+                  //     }
+                  //     if (this.touchX - e.nativeEvent.pageX < -210) {
+                  //       leftPress();
+                  //     }
+                  //     console.log(
+                  //       'Swiped right, this.touchX' +
+                  //         this.touchX +
+                  //         ', e.nativeEvent.pageX:' +
+                  //         e.nativeEvent.pageX +
+                  //         ', subtracted:' +
+                  //         (this.touchX - e.nativeEvent.pageX),
+                  //     );
+                  //   }
+                  // }}
+                >
                   {hasImage && (
                     <ImageBackground
                       source={item.image}
@@ -499,62 +631,6 @@ function CustomSwiper() {
                       </View>
                     </ImageBackground>
                   )}
-                  {!hasImage && (
-                    <View style={styles.innerContainer}>
-                      <View style={styles.innerBackground}>
-                        <Animated.View style={[styles.backgroundViewWrapper]}>
-                          {/* <Video
-                            isLooping
-                            isMuted
-                            rate={0.7}
-                            positionMillis={500}
-                            resizeMode={ResizeMode.COVER}
-                            shouldPlay={false}
-                            source={require('../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4')}
-                            style={{flex: 1}}
-                          /> */}
-                          <Video
-                            source={require('../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4')}
-                            // posterResizeMode={"cover"}
-                            style={{flex: 1}}
-                            // onError={onVideoError}
-                            // positionMillis={500}
-                            muted={true}
-                            repeat={true}
-                            // buffered={true}
-                            // onLoad={onVideoLoaded}
-                            paused={false}
-                            resizeMode={'cover'}
-                            rate={0.7}
-                            // ignoreSilentSwitch={'obey'}
-                          />
-                        </Animated.View>
-                      </View>
-                      <View
-                        style={{
-                          flex: 1,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          width: '100%',
-                        }}>
-                        {/* ************************************* */}
-                        <ListSlide
-                          errorText={errorText}
-                          helpSlideValues={helpSlideValues}
-                          index={index}
-                          handleCalculate={handleCalculate}
-                          idealWeight={idealWeight}
-                          item={item}
-                        />
-                        {/* ************************************* */}
-                        <BottomHelp
-                          helpTitle={helpSlideValues[index].title}
-                          helpSubHeading={helpSlideValues[index].subHeading}
-                          helpText={helpSlideValues[index].text}
-                        />
-                      </View>
-                    </View>
-                  )}
                 </View>
               );
             }}
@@ -572,9 +648,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: "center",
     justifyContent: 'center',
-    // paddingTop: StatusBar.currentHeight,
   },
   innerContainer: {
     alignItems: 'center',
