@@ -7,16 +7,30 @@ import {
   Platform,
   // TextInput,
   View,
+  Dimensions,
+  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import {HelperText} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 import Utils from '../components/Utils';
 import {actionCreators, State} from '../redux/index';
 import ColourContext from '../state/ColourContext';
 // import { ValuesContext } from "../state/ValuesContext";
+
+const {width} = Dimensions.get('window');
+const threeQuarterWidth = width * 0.75;
+
+const poundOptions = Utils.selectionDropDownRange(100, 260).map(
+  pound => pound.value,
+);
+const stoneOptions = Utils.selectionDropDownRange(0, 13).map(
+  stone => stone.value,
+);
+const kgOptions = Utils.selectionDropDownRange(40, 160).map(kg => kg.value);
 
 const WeightSlide = ({handleCalculate, errorText}) => {
   const {colourData, index} = useContext(ColourContext);
@@ -44,7 +58,7 @@ const WeightSlide = ({handleCalculate, errorText}) => {
       alignSelf: 'center',
       // width: "auto",
       textAlign: 'center',
-      minWidth: 100,
+      minWidth: threeQuarterWidth,
       color: '#e4bc94',
       fontSize: 90,
     },
@@ -59,9 +73,9 @@ const WeightSlide = ({handleCalculate, errorText}) => {
     weightEntry: {
       // height: 115,
       textAlign: 'center',
-      fontSize: Platform.OS === 'ios' ? 95 : 60,
+      fontSize: 95,
       color: colourData[index].lightVibrant,
-      minWidth: 230,
+      minWidth: 190,
       // padding: 20,
     },
     stonesPounds: {
@@ -70,6 +84,7 @@ const WeightSlide = ({handleCalculate, errorText}) => {
     },
     inputContainer: {
       // height: 115,
+      alignItems: 'center',
       borderWidth: 3,
       borderRadius: 30,
       borderColor: colourData[index].lightVibrant,
@@ -88,83 +103,76 @@ const WeightSlide = ({handleCalculate, errorText}) => {
       backgroundColor: '#e4bc94',
       marginBottom: 80,
     },
+    dropdown_2_row: {
+      // USING in dropdown, background color
+      flexDirection: 'row',
+      backgroundColor: 'transparent',
+      // height: 40,
+      alignItems: 'center',
+    },
+    // USING in dropdown, font Size
+    inputDropdown: {
+      textAlign: 'center',
+      fontSize: 35,
+      backgroundColor: 'transparent',
+      color: colourData[index].lightVibrant,
+      borderRadius: 50,
+      // backgroundColor: 'pink',
+      minWidth: threeQuarterWidth,
+      padding: 12,
+    },
   });
-  console.log(
-    'WeightSlide: colourData[index].lightVibrant):' +
-      colourData[index].lightVibrant,
-  );
+
+  const _dropdown_2_renderRow = (rowData, rowID, highlighted) => {
+    return (
+      // <TouchableHighlight>
+      <View style={dynamicStyles.dropdown_2_row}>
+        <Text style={dynamicStyles.inputDropdown}>{`${rowData}`}</Text>
+      </View>
+      // </TouchableHighlight>
+    );
+  };
+
   return (
     <View>
-      <Text style={dynamicStyles.textAbove}>Enter</Text>
-      <Text style={dynamicStyles.textBelow}>Weight</Text>
-      {weightUnits === 'Pounds' && (
-        <View style={dynamicStyles.inputContainer}>
-          <Picker
-            selectedValue={weightPounds}
-            itemStyle={dynamicStyles.weightEntry}
-            onValueChange={(itemWeightPounds, itemIndex) => {
-              setWeightPounds(itemWeightPounds);
-              console.log('itemWeightPounds:' + itemWeightPounds);
-              if (itemWeightPounds !== '') {
-                errorText = '';
-              }
-            }}>
-            {Utils.selectionDropDownRange(100, 260).map(weight => (
-              <Picker.Item
-                value={weight.value}
-                label={weight.label}
-                key={weight.label}
-                style={dynamicStyles.weightEntry}
-              />
-            ))}
-          </Picker>
+      {weightUnits === 'Pounds' && Platform.OS === 'android' && (
+        <View>
+          <View style={dynamicStyles.inputContainer}>
+            <ModalDropdown
+              defaultValue={weightPounds}
+              options={poundOptions}
+              onSelect={itemPoundsIndex => {
+                console.log('itemPoundsIndex:' + itemPoundsIndex);
+                setWeightPounds(poundOptions[itemPoundsIndex]);
+              }}
+              textStyle={dynamicStyles.weightEntry} // this is the selection box
+              renderRow={_dropdown_2_renderRow} // this is the dropdown style
+            />
+          </View>
+          <Text style={dynamicStyles.textAbove}>Enter</Text>
+          <Text style={dynamicStyles.textBelow}>Weight</Text>
         </View>
       )}
-      {weightUnits === 'Stones/Pounds' && (
-        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-          <View style={dynamicStyles.inputContainer}>
-            <Picker
-              selectedValue={weightStones}
-              itemStyle={[
-                dynamicStyles.weightEntry,
-                dynamicStyles.stonesPounds,
-              ]}
-              onValueChange={(itemWeightStones, itemIndex) => {
-                setWeightStones(itemWeightStones);
-                console.log('itemWeightStones:' + itemWeightStones);
-                if (itemWeightStones !== '') {
-                  errorText = '';
-                }
-              }}>
-              {Utils.selectionDropDownRange(100, 260).map(weight => (
-                <Picker.Item
-                  value={weight.value}
-                  label={weight.label}
-                  key={weight.label}
-                  style={dynamicStyles.weightEntry}
-                />
-              ))}
-            </Picker>
-          </View>
+      {weightUnits === 'Pounds' && Platform.OS === 'ios' && (
+        <View>
+          <Text style={dynamicStyles.textAbove}>Enter</Text>
+          <Text style={dynamicStyles.textBelow}>Weight</Text>
           <View style={dynamicStyles.inputContainer}>
             <Picker
               selectedValue={weightPounds}
-              itemStyle={[
-                dynamicStyles.weightEntry,
-                dynamicStyles.stonesPounds,
-              ]}
-              onValueChange={(itemWeightPounds, itemIndex) => {
+              itemStyle={dynamicStyles.weightEntry}
+              onValueChange={(itemWeightPounds: string) => {
                 setWeightPounds(itemWeightPounds);
                 console.log('itemWeightPounds:' + itemWeightPounds);
                 if (itemWeightPounds !== '') {
                   errorText = '';
                 }
               }}>
-              {Utils.selectionDropDownRange(0, 13).map(weight => (
+              {poundOptions.map(weightValue => (
                 <Picker.Item
-                  value={weight.value}
-                  label={weight.label}
-                  key={weight.label}
+                  value={weightValue}
+                  label={weightValue}
+                  key={weightValue}
                   style={dynamicStyles.weightEntry}
                 />
               ))}
@@ -172,27 +180,137 @@ const WeightSlide = ({handleCalculate, errorText}) => {
           </View>
         </View>
       )}
-      {weightUnits === 'kg' && (
-        <View style={dynamicStyles.inputContainer}>
-          <Picker
-            selectedValue={weightKg}
-            itemStyle={dynamicStyles.weightEntry}
-            onValueChange={(itemWeightKg, itemIndex) => {
-              setWeightKg(itemWeightKg);
-              console.log('itemWeightPounds:' + itemWeightKg);
-              if (itemWeightKg !== '') {
-                errorText = '';
-              }
-            }}>
-            {Utils.selectionDropDownRange(40, 160).map(weight => (
-              <Picker.Item
-                value={weight.value}
-                label={weight.label}
-                key={weight.label}
-                style={dynamicStyles.weightEntry}
+      {weightUnits === 'Stones/Pounds' && Platform.OS === 'android' && (
+        <View>
+          <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+            <View style={dynamicStyles.inputContainer}>
+              <ModalDropdown
+                defaultValue={weightStones}
+                options={stoneOptions}
+                onSelect={itemStonesIndex => {
+                  setWeightStones(stoneOptions[itemStonesIndex]);
+                  console.log('itemStonesIndex:' + itemStonesIndex);
+                }}
+                textStyle={dynamicStyles.weightEntry} // this is the selection box
+                renderRow={_dropdown_2_renderRow} // this is the dropdown style
               />
-            ))}
-          </Picker>
+            </View>
+            <View style={dynamicStyles.inputContainer}>
+              <ModalDropdown
+                defaultValue={weightPounds}
+                options={poundOptions}
+                onSelect={itemPoundsIndex => {
+                  console.log('itemPoundsIndex:' + itemPoundsIndex);
+                  setWeightPounds(poundOptions[itemPoundsIndex]);
+                }}
+                textStyle={dynamicStyles.weightEntry} // this is the selection box
+                renderRow={_dropdown_2_renderRow} // this is the dropdown style
+              />
+            </View>
+          </View>
+          <Text style={dynamicStyles.textAbove}>Enter</Text>
+          <Text style={dynamicStyles.textBelow}>Weight</Text>
+        </View>
+      )}
+      {weightUnits === 'Stones/Pounds' && Platform.OS === 'ios' && (
+        <View>
+          <Text style={dynamicStyles.textAbove}>Enter</Text>
+          <Text style={dynamicStyles.textBelow}>Weight</Text>
+          <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+            <View style={dynamicStyles.inputContainer}>
+              <Picker
+                selectedValue={weightStones}
+                itemStyle={[
+                  dynamicStyles.weightEntry,
+                  dynamicStyles.stonesPounds,
+                ]}
+                onValueChange={(itemWeightStones: string) => {
+                  setWeightStones(itemWeightStones);
+                  console.log('itemWeightStones:' + itemWeightStones);
+                  if (itemWeightStones !== '') {
+                    errorText = '';
+                  }
+                }}>
+                {stoneOptions.map(weightValue => (
+                  <Picker.Item
+                    value={weightValue}
+                    label={weightValue}
+                    key={weightValue}
+                    style={dynamicStyles.weightEntry}
+                  />
+                ))}
+              </Picker>
+            </View>
+            <View style={dynamicStyles.inputContainer}>
+              <Picker
+                selectedValue={weightPounds}
+                itemStyle={[
+                  dynamicStyles.weightEntry,
+                  dynamicStyles.stonesPounds,
+                ]}
+                onValueChange={(itemWeightPounds: string) => {
+                  setWeightPounds(itemWeightPounds);
+                  console.log('itemWeightPounds:' + itemWeightPounds);
+                  if (itemWeightPounds !== '') {
+                    errorText = '';
+                  }
+                }}>
+                {poundOptions.map(weightPound => (
+                  <Picker.Item
+                    value={weightPound}
+                    label={weightPound}
+                    key={weightPound}
+                    style={dynamicStyles.weightEntry}
+                  />
+                ))}
+              </Picker>
+            </View>
+          </View>
+        </View>
+      )}
+      {weightUnits === 'kg' && Platform.OS === 'android' && (
+        <View>
+          <View style={dynamicStyles.inputContainer}>
+            <ModalDropdown
+              defaultValue={weightKg}
+              options={kgOptions}
+              onSelect={(itemKgIndex: string) => {
+                console.log('itemKgIndex:' + itemKgIndex);
+                setWeightKg(kgOptions[itemKgIndex]);
+              }}
+              textStyle={dynamicStyles.weightEntry} // this is the selection box
+              renderRow={_dropdown_2_renderRow} // this is the dropdown style
+            />
+          </View>
+          <Text style={dynamicStyles.textAbove}>Enter</Text>
+          <Text style={dynamicStyles.textBelow}>Weight</Text>
+        </View>
+      )}
+      {weightUnits === 'kg' && Platform.OS === 'ios' && (
+        <View>
+          <Text style={dynamicStyles.textAbove}>Enter</Text>
+          <Text style={dynamicStyles.textBelow}>Weight</Text>
+          <View style={dynamicStyles.inputContainer}>
+            <Picker
+              selectedValue={weightKg}
+              itemStyle={dynamicStyles.weightEntry}
+              onValueChange={(itemWeightKg: string) => {
+                setWeightKg(itemWeightKg);
+                console.log('itemWeightPounds:' + itemWeightKg);
+                if (itemWeightKg !== '') {
+                  errorText = '';
+                }
+              }}>
+              {kgOptions.map(kgValue => (
+                <Picker.Item
+                  value={kgValue}
+                  label={kgValue}
+                  key={kgValue}
+                  style={dynamicStyles.weightEntry}
+                />
+              ))}
+            </Picker>
+          </View>
         </View>
       )}
       <View>
