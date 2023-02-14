@@ -1,100 +1,102 @@
-import React, { useContext } from "react";
+import React from 'react';
 import {
   StyleSheet,
+  Dimensions,
   View,
   Text,
   TouchableWithoutFeedback,
   TouchableOpacity,
-} from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+} from 'react-native';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
-import ColourContext from "../../state/ColourContext";
+const {width} = Dimensions.get('window');
+const threeQuarterWidth = width * 0.8;
 
 interface AnimatedBlockProps {
-  name: string;
   animatedStyle: Record<string, any>;
-  defaultShow?: boolean;
   gender: string;
   setGender: any;
 }
 
 const GenAnimatedRadioGroup = ({
-  name,
   animatedStyle,
-  defaultShow,
   gender,
   setGender,
 }: AnimatedBlockProps) => {
   const dynamicStyles = StyleSheet.create({
     animatedBlock: {
       height: 60,
-      width: 300,
+      // flex: 1,
+      width: threeQuarterWidth,
       borderWidth: 3,
-      borderColor: "#84c4ec",
-      backgroundColor: "#84c4ec",
-      alignItems: "center",
-      justifyContent: "center",
+      borderColor: '#84c4ec',
+      backgroundColor: '#84c4ec',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     animatedTextPlaceholder: {
-      color: "#84c4ec",
-      fontSize: 30,
+      color: '#84c4ec',
+      fontSize: 40,
+      // alignItems: 'center',
+      // textAlignVertical: 'center',
+      // justifyContent: 'center',
+      // textAlign: 'center',
     },
     animatedBlockPlaceholder: {
       height: 60,
-      width: 300,
-      borderWidth: 3,
-      borderColor: "#84c4ec",
-      alignItems: "center",
-      justifyContent: "center",
-      borderStyle: "dashed",
+      margin: 3,
+      width: threeQuarterWidth,
+      borderWidth: 4,
+      borderColor: '#84c4ec',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderStyle: 'dashed',
     },
   });
   return (
     <View style={styles.animatedBox}>
-      {gender === "Female" ? (
+      {gender === 'Female' ? (
         <TouchableWithoutFeedback //Female  ON
           onPress={() => {
-            setGender("Male");
-          }}
-        >
+            setGender('Male');
+          }}>
           <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>Female</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //Female  OFF
-          entering={"entering" in animatedStyle ? undefined : FadeIn.delay(350)}
-        >
+          entering={
+            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
+          }>
           <TouchableOpacity
             style={dynamicStyles.animatedBlockPlaceholder}
             onPress={() => {
-              setGender("Female");
-            }}
-          >
+              setGender('Female');
+            }}>
             <Text style={dynamicStyles.animatedTextPlaceholder}>Female</Text>
           </TouchableOpacity>
         </Animated.View>
       )}
-      {gender === "Male" ? (
+      {gender === 'Male' ? (
         <TouchableWithoutFeedback //Male  ON
           onPress={() => {
-            setGender("Female");
-          }}
-        >
+            setGender('Female');
+          }}>
           <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>Male</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //Male  OFF
-          entering={"entering" in animatedStyle ? undefined : FadeIn.delay(350)}
-        >
+          entering={
+            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
+          }>
           <TouchableOpacity
             style={dynamicStyles.animatedBlockPlaceholder}
             onPress={() => {
-              setGender("Male");
-            }}
-          >
+              setGender('Male');
+            }}>
             <Text style={dynamicStyles.animatedTextPlaceholder}>Male</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -108,10 +110,10 @@ export default GenAnimatedRadioGroup;
 const styles = StyleSheet.create({
   animatedBox: {
     padding: 5,
-    alignItems: "center",
+    alignItems: 'center',
   },
   animatedText: {
-    color: "#ffffff",
-    fontSize: 30,
+    color: '#ffffff',
+    fontSize: 40,
   },
 });

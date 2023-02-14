@@ -1,129 +1,92 @@
-import React, { useContext } from "react";
+import React from 'react';
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
   Text,
   StyleSheet,
-} from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
-
-import ColourContext from "../../state/ColourContext";
+} from 'react-native';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 interface AnimatedRadioGroupProps {
-  name: string;
   animatedStyle: Record<string, any>;
-  defaultShow?: boolean;
   frame: string;
   setFrame: any;
 }
 
 const AnimatedRadioGroup = ({
-  name,
   animatedStyle,
-  defaultShow,
   frame,
   setFrame,
 }: AnimatedRadioGroupProps) => {
-  const { colourData, index } = useContext(ColourContext);
-
-  const dynamicStyles = StyleSheet.create({
-    animatedBlock: {
-      height: 60,
-      width: 300,
-      borderWidth: 3,
-      borderColor: colourData[index].lightVibrant,
-      backgroundColor: colourData[index].lightVibrant,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    animatedTextPlaceholder: {
-      color: "white",
-      // color: colourData[index].lightVibrant,
-      fontSize: 30,
-    },
-    animatedBlockPlaceholder: {
-      height: 60,
-      width: 300,
-      borderWidth: 3,
-      borderColor: colourData[index].lightVibrant,
-      alignItems: "center",
-      justifyContent: "center",
-      borderStyle: "dashed",
-    },
-  });
-
   return (
     <View style={styles.animatedBox}>
-      {frame === "Small" ? (
+      {frame === 'Small' ? (
         <TouchableWithoutFeedback //Small  ON
           onPress={() => {
-            setFrame("Medium");
-          }}
-        >
-          <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
+            setFrame('Medium');
+          }}>
+          <Animated.View style={styles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>Small</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //Small  OFF
-          entering={"entering" in animatedStyle ? undefined : FadeIn.delay(350)}
-        >
+          entering={
+            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
+          }>
           <TouchableOpacity
-            style={dynamicStyles.animatedBlockPlaceholder}
+            style={styles.animatedBlockPlaceholder}
             onPress={() => {
-              setFrame("Small"); // Turning SMALL ON
-            }}
-          >
-            <Text style={dynamicStyles.animatedTextPlaceholder}>Small</Text>
+              setFrame('Small'); // Turning SMALL ON
+            }}>
+            <Text style={styles.animatedTextPlaceholder}>Small</Text>
           </TouchableOpacity>
         </Animated.View>
       )}
-      {frame === "Medium" ? (
+      {frame === 'Medium' ? (
         <TouchableWithoutFeedback //Medium  ON
           onPress={() => {
-            setFrame("Small");
-          }}
-        >
-          <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
+            setFrame('Small');
+          }}>
+          <Animated.View style={styles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>Medium</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //Medium  OFF
-          entering={"entering" in animatedStyle ? undefined : FadeIn.delay(350)}
-        >
+          entering={
+            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
+          }>
           <TouchableOpacity
-            style={dynamicStyles.animatedBlockPlaceholder}
+            style={styles.animatedBlockPlaceholder}
             onPress={() => {
-              setFrame("Medium"); // Turning MEDIUM ON
-            }}
-          >
-            <Text style={dynamicStyles.animatedTextPlaceholder}>Medium</Text>
+              setFrame('Medium'); // Turning MEDIUM ON
+            }}>
+            <Text style={styles.animatedTextPlaceholder}>Medium</Text>
           </TouchableOpacity>
         </Animated.View>
       )}
-      {frame === "Large" ? (
+      {frame === 'Large' ? (
         <TouchableWithoutFeedback //Large  ON
           onPress={() => {
-            setFrame("Small");
-          }}
-        >
-          <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
+            setFrame('Small');
+          }}>
+          <Animated.View style={styles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>Large</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //Large  OFF
-          entering={"entering" in animatedStyle ? undefined : FadeIn.delay(350)}
-        >
+          entering={
+            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
+          }>
           <TouchableOpacity
-            style={dynamicStyles.animatedBlockPlaceholder}
+            style={styles.animatedBlockPlaceholder}
             onPress={() => {
-              setFrame("Large"); // Turning Large ON
-            }}
-          >
-            <Text style={dynamicStyles.animatedTextPlaceholder}>Large</Text>
+              setFrame('Large'); // Turning Large ON
+            }}>
+            <Text style={styles.animatedTextPlaceholder}>Large</Text>
           </TouchableOpacity>
         </Animated.View>
       )}
@@ -132,12 +95,34 @@ const AnimatedRadioGroup = ({
 };
 
 const styles = StyleSheet.create({
+  animatedBlock: {
+    height: 60,
+    width: 300,
+    borderWidth: 3,
+    borderColor: '#ddb583',
+    backgroundColor: '#ddb583',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  animatedTextPlaceholder: {
+    color: 'white',
+    fontSize: 30,
+  },
+  animatedBlockPlaceholder: {
+    height: 60,
+    width: 300,
+    borderWidth: 3,
+    borderColor: '#ddb583',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderStyle: 'dashed',
+  },
   animatedBox: {
     padding: 5,
-    alignItems: "center",
+    alignItems: 'center',
   },
   animatedText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 30,
   },
 });
