@@ -16,17 +16,6 @@ const ColourContext = React.createContext({
   index: 0,
 
   colourData: [
-    // {
-    //   key: 0,
-    //   title: "intro",
-    //   image: null,
-    //   video: require("../../assets/beach-umbrella-colony-small.jpg"),
-    //   dominant: "#345b5d",
-    //   vibrant: "#b48143",
-    //   darkVibrant: "#197773",
-    //   lightVibrant: "#83cace",
-    //   lightMuted: "#d0bbac",
-    // },
     {
       key: 1,
       title: 'units',
