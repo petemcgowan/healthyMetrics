@@ -1,12 +1,22 @@
-import React, {useEffect} from 'react';
-// import { useContext } from "react";
-import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View, SafeAreaView, Dimensions} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import {State} from '../redux/index';
-// import ColourContext from "../state/ColourContext";
 
-const ResultSlide = ({idealWeight}) => {
+const {width} = Dimensions.get('window');
+
+interface ResultSlideProps {
+  idealWeightStones: number;
+  idealWeightPounds: number;
+  idealWeightKg: number;
+}
+
+const ResultSlide = ({
+  idealWeightStones,
+  idealWeightPounds,
+  idealWeightKg,
+}: ResultSlideProps) => {
   const heightCm = useSelector((state: State) => state.heightCm);
   const heightFt = useSelector((state: State) => state.heightFt);
   const heightInches = useSelector((state: State) => state.heightInches);
@@ -18,11 +28,6 @@ const ResultSlide = ({idealWeight}) => {
   const gender = useSelector((state: State) => state.gender);
   const heightUnits = useSelector((state: State) => state.heightUnits);
   const weightUnits = useSelector((state: State) => state.weightUnits);
-
-  // const { colourData, index } = useContext(ColourContext);
-  useEffect(() => {
-    console.log('ResultSlide, useEffect');
-  }, []);
 
   return (
     <SafeAreaView style={styles.vwResultSlide}>
@@ -36,7 +41,40 @@ const ResultSlide = ({idealWeight}) => {
           <Text style={styles.yourHealthyWeightText}>Your</Text>
           <Text style={styles.yourHealthyWeightText}>Healthy</Text>
           <Text style={styles.yourHealthyWeightText}>Weight</Text>
-          <Text style={styles.idealWeightText}>{Math.round(idealWeight)}</Text>
+          {weightUnits === 'kg' && (
+            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+              <Text style={styles.idealWeightText}>
+                {Math.round(idealWeightKg)}
+              </Text>
+              <Text style={[styles.weightUnits, {marginBottom: 25}]}>kg</Text>
+            </View>
+          )}
+          {weightUnits === 'Pounds' && (
+            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+              <Text style={styles.idealWeightText}>
+                {Math.round(idealWeightPounds)}
+              </Text>
+              <Text style={[styles.weightUnits, {marginBottom: 25}]}>
+                pounds
+              </Text>
+            </View>
+          )}
+          {weightUnits === 'Stones/Pounds' && (
+            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.idealWeightText}>
+                  {Math.round(idealWeightStones)}
+                </Text>
+                <Text style={styles.idealWeightText}>/</Text>
+                <Text style={styles.idealWeightText}>
+                  {Math.round(idealWeightPounds)}
+                </Text>
+              </View>
+              <Text style={[styles.weightUnits, {marginBottom: 25}]}>
+                stones/pounds
+              </Text>
+            </View>
+          )}
         </View>
       </View>
 
@@ -86,9 +124,9 @@ const ResultSlide = ({idealWeight}) => {
         {weightUnits === 'Stones/Pounds' && (
           <View style={styles.vwWeight}>
             <Text style={styles.detailsHeaderText}>Weight(Stones/Pounds)</Text>
-            <Text style={styles.detailText}>{weightPounds}</Text>
-            <Text style={styles.detailText}>/</Text>
             <Text style={styles.detailText}>{weightStones}</Text>
+            <Text style={styles.detailText}>/</Text>
+            <Text style={styles.detailText}>{weightPounds}</Text>
           </View>
         )}
       </View>
@@ -101,27 +139,38 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
   },
+  vwTop: {
+    // flex: 1,
+    // maxHeight: 180,
+  },
   vwBottom: {
-    marginTop: 230,
-    flex: 0.4,
+    // marginTop: 180,
+    // flex: 1,
   },
   detailsHeaderText: {
     fontWeight: 'bold',
     color: '#e4bc94',
-    fontSize: 27,
+    // fontSize: 27,
+    fontSize: width < 450 ? 24 : 27,
   },
   detailText: {
     color: '#173f6a',
-    fontSize: 23,
+    fontSize: width < 450 ? 20 : 23,
   },
   idealWeightText: {
-    fontSize: 120,
+    fontSize: width < 450 ? 100 : 125,
     color: 'white',
+    fontWeight: '500',
   },
   yourHealthyWeightText: {
     color: '#e4bc94',
-    // color: "#8ac4e4",
-    fontSize: 66,
+    fontSize: width < 450 ? 58 : 83,
+    fontWeight: '500',
+  },
+  weightUnits: {
+    // color: '#e4bc94',
+    color: 'white',
+    fontSize: width < 450 ? 33 : 43,
   },
   vwGender: {
     flexDirection: 'row',
@@ -138,10 +187,6 @@ const styles = StyleSheet.create({
   },
   vwAge: {
     flexDirection: 'row',
-  },
-  vwTop: {
-    flex: 0.3,
-    // maxHeight: 180,
   },
   healthyWeightText: {
     fontSize: 14,

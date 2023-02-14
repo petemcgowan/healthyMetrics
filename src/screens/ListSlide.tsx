@@ -8,22 +8,25 @@ import HeightSlide from './HeightSlide';
 import ResultSlide from './ResultSlide';
 import UnitsSlide from './UnitsSlide';
 import WeightSlide from './WeightSlide';
-// import IntroSlide from './onboarding/IntroSlide';
+
+interface ListSlideProps {
+  errorText: string;
+  handleCalculate: any;
+  idealWeightStones: number;
+  idealWeightPounds: number;
+  idealWeightKg: number;
+  itemTitle: string;
+}
 
 const ListSlide = ({
   errorText,
-  helpSlideValues,
-  index,
   handleCalculate,
-  idealWeight,
-  item,
-}) => {
+  idealWeightStones,
+  idealWeightPounds,
+  idealWeightKg,
+  itemTitle,
+}: ListSlideProps) => {
   return {
-    // intro: (
-    //   <View>
-    //     <IntroSlide />
-    //   </View>
-    // ),
     units: (
       <View>
         <UnitsSlide errorText={errorText} />
@@ -56,10 +59,14 @@ const ListSlide = ({
     ),
     result: (
       <View>
-        <ResultSlide idealWeight={idealWeight} />
+        <ResultSlide
+          idealWeightStones={idealWeightStones}
+          idealWeightPounds={idealWeightPounds}
+          idealWeightKg={idealWeightKg}
+        />
       </View>
     ),
-  }[item.title];
+  }[itemTitle];
 };
 
 export default ListSlide;
