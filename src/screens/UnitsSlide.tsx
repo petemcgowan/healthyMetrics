@@ -1,14 +1,17 @@
 import React from 'react';
-import {useContext} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import {HelperText} from 'react-native-paper';
 
 import HeightUnitsPicker from '../components/pickers/HeightUnitsPicker';
 import WeightUnitsPicker from '../components/pickers/WeightUnitsPicker';
-import ColourContext from '../state/ColourContext';
 
-const UnitsSlide = ({errorText}) => {
-  const {colourData, index} = useContext(ColourContext);
+const {width} = Dimensions.get('window');
+
+interface UnitsSlideProps {
+  errorText: string;
+}
+
+const UnitsSlide = ({errorText}: UnitsSlideProps) => {
   const hasErrors = () => {
     return errorText !== '';
   };
@@ -16,20 +19,20 @@ const UnitsSlide = ({errorText}) => {
   const dynamicStyles = StyleSheet.create({
     textAbove: {
       alignSelf: 'center',
-      width: 'auto',
+      width: width,
       textAlign: 'center',
       minWidth: 100,
-      color: colourData[index].dominant, // "#FFCB1F",
-      fontSize: 90,
+      color: '#e4bc94', // "#FFCB1F",
+      fontSize: width < 450 ? 70 : 90,
       // fontWeight: "bold",
     },
     textBelow: {
       alignSelf: 'center',
-      width: 'auto',
+      width: width,
       textAlign: 'center',
       minWidth: 100,
-      color: colourData[index].dominant,
-      fontSize: 123,
+      color: '#e4bc94',
+      fontSize: width < 450 ? 103 : 123,
     },
   });
 
@@ -41,7 +44,7 @@ const UnitsSlide = ({errorText}) => {
       <WeightUnitsPicker />
       <View style={styles.textContainer}>
         <HelperText
-          style={{fontSize: 40, color: colourData[index].lightVibrant}}
+          style={{fontSize: 40, color: '#ddb583'}}
           type="error"
           visible={hasErrors()}>
           {errorText}

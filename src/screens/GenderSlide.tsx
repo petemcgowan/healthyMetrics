@@ -1,36 +1,26 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-import {HelperText, TextInput} from 'react-native-paper';
-import Animated, {
-  useSharedValue,
-  useAnimatedGestureHandler,
-  cancelAnimation,
-  interpolate,
-  Extrapolate,
-  withSpring,
-} from 'react-native-reanimated';
+
+import {HelperText} from 'react-native-paper';
+
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import GenderPicker from '../components/pickers/GenderPicker';
 import {actionCreators, State} from '../redux/index';
-import ColourContext from '../state/ColourContext';
 
-const GenderSlide = ({errorText}) => {
-  const {colourData, index} = useContext(ColourContext);
+const {width} = Dimensions.get('window');
+const threeQuarterWidth = width * 0.8;
+
+interface GenderSlideProps {
+  errorText: string;
+}
+
+const GenderSlide = ({errorText}: GenderSlideProps) => {
   const gender = useSelector((state: State) => state.gender);
   console.log('GenderSlide: gender:' + gender);
   const dispatch = useDispatch();
   const {setGender} = bindActionCreators(actionCreators, dispatch);
-
-  const {width} = Dimensions.get('window');
-  // const maxDist = width - initialSideWidth;
-
-  console.log('GenderSlide, index:' + index);
 
   const hasErrors = () => {
     return errorText !== '';
@@ -39,33 +29,28 @@ const GenderSlide = ({errorText}) => {
   const dynamicStyles = StyleSheet.create({
     textAbove: {
       alignSelf: 'center',
-      width: 'auto',
       textAlign: 'center',
-      minWidth: 100,
+      width: threeQuarterWidth,
       color: '#84c4ec',
-      fontSize: 80,
+      fontSize: width < 450 ? 70 : 90,
     },
     textBelow: {
       alignSelf: 'center',
-      width: 'auto',
       textAlign: 'center',
-      minWidth: 100,
+      width: threeQuarterWidth,
       color: '#84c4ec',
-      fontSize: 120,
+      fontSize: width < 450 ? 85 : 100,
     },
     input: {
       height: 70,
       width: 'auto',
       textAlign: 'center',
-      fontSize: 65,
-      // fontWeight: "bold",
+      fontSize: width < 450 ? 65 : 75,
       color: '#84c4ec',
-      minWidth: 150,
+      minWidth: threeQuarterWidth,
       padding: 5,
     },
   });
-
-  useEffect(() => {}, []);
 
   return (
     <View>
@@ -74,7 +59,7 @@ const GenderSlide = ({errorText}) => {
       <GenderPicker gender={gender} setGender={setGender} />
       <View style={styles.textContainer}>
         <HelperText
-          style={{fontSize: 35, color: colourData[index].darkVibrant}}
+          style={{fontSize: 35, color: '#5b4028'}}
           type="error"
           visible={hasErrors()}>
           {errorText}
