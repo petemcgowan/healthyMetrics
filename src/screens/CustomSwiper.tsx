@@ -1,21 +1,9 @@
-/* eslint-disable react/no-this-in-sfc */
-// import {ResizeMode, Video} from 'expo-av';
-import Video from 'react-native-video';
-// import { StatusBar } from "expo-status-bar";
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useMemo,
-  createContext,
-} from 'react';
+import React, {useState, useEffect, useContext, useMemo} from 'react';
 import 'react-native-gesture-handler';
 import {
   LogBox,
   StyleSheet,
   View,
-  ListRenderItem,
-  TouchableWithoutFeedback,
   Dimensions,
   Animated,
   ImageBackground,
@@ -24,21 +12,11 @@ import {useSelector} from 'react-redux';
 
 import BottomHelp from '../components/BottomHelp';
 import {State} from '../redux/index';
-import ColourContext, {
-  ColourProvider,
-  ColourType,
-} from '../state/ColourContext';
-import {ValuesContext, ValuesProvider} from '../state/ValuesContext';
+import ColourContext, {ColourProvider} from '../state/ColourContext';
+// import {ValuesProvider} from '../state/ValuesContext';
 import ListSlide from './ListSlide';
 
-// export const ValuesContext = createContext();
-
 const {width, height} = Dimensions.get('screen');
-// const ITEM_WIDTH = width;
-// const ITEM_HEIGHT = height * 0.8;
-const DOT_SIZE = 8;
-const DOT_SPACING = 8;
-// const DOT_INDICATOR_SIZE = DOT_SIZE + DOT_SPACING;
 
 function CustomSwiper() {
   const {colourData} = useContext(ColourContext);
@@ -55,48 +33,43 @@ function CustomSwiper() {
   const heightUnits = useSelector((state: State) => state.heightUnits);
   const weightUnits = useSelector((state: State) => state.weightUnits);
 
-  console.log(
-    'CustomSwiper: weightPounds:' +
-      weightPounds +
-      ', weightStones:' +
-      +weightStones,
-  );
-  console.log(
-    'CustomSwiper: heightCm:' +
-      heightCm +
-      ', heightFt:' +
-      heightFt +
-      ', heightInches:' +
-      heightInches,
-  );
-
   const frame = useSelector((state: State) => state.frame);
   const age = useSelector((state: State) => state.age);
   const gender = useSelector((state: State) => state.gender);
-  console.log('CustomSwiper: frame:' + frame);
-  console.log('CustomSwiper: age:' + age);
-  console.log('CustomSwiper: gender:' + gender);
-  const [idealWeight, setIdealWeight] = useState(0);
+  const [idealWeightPounds, setIdealWeightPounds] = useState(0);
+  const [idealWeightStones, setIdealWeightStones] = useState(0);
+  const [idealWeightKg, setIdealWeightKg] = useState(0);
   const [helpTitle, setHelpTitle] = useState('');
   const [helpSubHeading, setHelpSubHeading] = useState('');
   const [helpText, setHelpText] = useState('');
   const refFlatList = React.useRef(null);
-  const [loading, setLoading] = useState(true);
-  // console.log("CustomSwiper: before useContext weightValue:" + weightValue);
-
-  // const { heightUnitsValue, weightUnitsValue } = useContext(StateContext);
-  // const { weightUnitsValue } = useContext(StateContext);
 
   const [errorText, setErrorText] = useState(null);
   LogBox.ignoreAllLogs();
 
-  // TODO put this back when the Colour Context works throughout
+  // const memoizedValue = useMemo(
+  //   () => renderMainItem,
+  //   [
+  //     weightPounds,
+  //     weightStones,
+  //     weightKg,
+  //     weightKg,
+  //     heightCm,
+  //     heightFt,
+  //     heightInches,
+  //     heightUnits,
+  //     weightUnits,
+  //     frame,
+  //     age,
+  //     gender,
+  //     idealWeightPounds,
+  //     idealWeightStones,
+  //     idealWeightKg,
+  //   ],
+  // );
+
   const value = useMemo(
     () => ({
-      // dominantColour,
-      // lightMutedColour,
-      // lightVibrantColour,
-      // darkVibrant,
       colourData,
       index,
     }),
@@ -179,16 +152,15 @@ function CustomSwiper() {
     {
       // title: "Info",
       subHeading: 'Results',
-      text: `D. R. Miller Formula (1983)
+      text: `J. D. Robinson Formula (1983)
 
-      Male:	56.2 kg + 1.41 kg per inch over 5 feet
-      Female:	53.1 kg + 1.36 kg per inch over 5 feet
+      Male:	52 kg + 1.9 kg per inch over 5 feet
+      Female:	49 kg + 1.7 kg per inch over 5 feet
 
       Modification of the Devine Formula.`,
     },
   ];
 
-  console.log('App Render');
   // useEffect notices the change in state index, so changes the Flatlist's scrollToIndex
   useEffect(() => {
     console.log('App useEffect');
@@ -203,9 +175,6 @@ function CustomSwiper() {
     const weightIsValidated = validate('weight');
 
     if (weightIsValidated) {
-      // const ageValue = +age;
-      // console.log("handleCalculate, age:" + ageValue);
-
       let heightCmValue = +heightCm;
       if (heightUnits === 'Feet/Inches') {
         // the + makes it a number (for calcs)
@@ -217,38 +186,37 @@ function CustomSwiper() {
 
       // Note: Weight is not currently used in the calc
 
-      // D. R. Miller Formula (1983)
-      // Male:	56.2 kg + 1.41 kg per inch over 5 feet
-      // Female:	53.1 kg + 1.36 kg per inch over 5 feet
+      // J. D. Robinson Formula (1983)
+
+      // Male:	52 kg + 1.9 kg per inch over 5 feet (0.748 kg per cm)
+      // Female:	49 kg + 1.7 kg per inch over 5 feet (0.3937 kg per cm)
 
       // 5ft = 60 inches
       let idealWeightInt = 0;
-      // **Pseudo code**
       if (gender === 'Male') {
         console.log('Doing Male calc');
-        if (heightCmValue > 60) {
-          const heightAbove = heightCmValue - 60;
+        if (heightCmValue > 152.4) {
+          const heightAbove = heightCmValue - 152.4;
           console.log('handleCalculate, heightAbove:' + heightAbove);
-          const extraWeight = 1.41 * heightAbove;
+          const extraWeight = 0.748 * heightAbove;
           console.log('handleCalculate, extraWeight:' + extraWeight);
-          idealWeightInt = 56.2 + extraWeight;
+          idealWeightInt = 52 + extraWeight;
         } else {
-          // not over 60 in
-          idealWeightInt = 1.0676 * heightCmValue; //  it's 1.0676 per in(56.2kg/60)
-          // so if they're 40in it's 40*1.0676
+          // not over 60 in (152.4 or 5 ft)
+          // this is a per cm value, multiplied by height
+          idealWeightInt = 0.3412 * heightCmValue; //  it's 0.3412 per cm(52kg/152.4)
         }
       } else if (gender === 'Female') {
         console.log('Doing Female calc');
-        if (heightCmValue > 60) {
-          const heightAbove = heightCmValue - 60;
+        if (heightCmValue > 152.4) {
+          const heightAbove = heightCmValue - 152.4;
           console.log('handleCalculate, heightAbove:' + heightAbove);
-          const extraWeight = 1.36 * heightAbove;
+          const extraWeight = 0.3937 * heightAbove;
           console.log('handleCalculate, extraWeight:' + extraWeight);
-          idealWeightInt = 53.1 + extraWeight;
+          idealWeightInt = 49 + extraWeight;
         } // not over 60 in
         else {
-          idealWeightInt = 1.1299 * heightCmValue; //  it's 1.1299 per in(53.1kg/60)
-          // so if they're 40in it's 40*1.1299
+          idealWeightInt = 0.3215 * heightCmValue; //  it's 0.34842 per cm(49kg/152.4)
         }
       }
       console.log(
@@ -264,7 +232,37 @@ function CustomSwiper() {
         'handleCalculate, idealWeightInt after frame mod:' + idealWeightInt,
       );
 
-      setIdealWeight(idealWeightInt);
+      let inPounds = idealWeightInt * 2.205;
+      console.log('inPounds:' + inPounds);
+      if (weightUnits === 'kg') {
+        // It's already in kg for the calc, no change
+        console.log('setIdealWeightKg KG:' + idealWeightInt);
+        setIdealWeightKg(idealWeightInt);
+      }
+      if (weightUnits === 'Stones/Pounds') {
+        // divide by 14 and round the modulus down or up based on 0.5)
+        // show them result in stones and pounds
+        console.log(
+          'setIdealWeightStones/Pounds Stones:' + Math.round(inPounds / 14),
+        );
+        let stones = Math.floor(inPounds / 14);
+        inPounds = Math.round(inPounds % 14);
+        console.log('stones, inPounds before mods' + stones + ', :' + inPounds);
+        // deal with case where pounds round up to the next stone (making it 14 pounds)
+        if (inPounds === 14) {
+          console.log('Augmenting for edge rounding case...');
+          stones++;
+          inPounds = 0;
+        }
+        setIdealWeightStones(stones);
+        setIdealWeightPounds(inPounds);
+      }
+      if (weightUnits === 'Pounds') {
+        // show them result in pounds
+        console.log('setIdealWeightPounds Pounds:' + inPounds);
+        setIdealWeightPounds(inPounds);
+      }
+
       console.log('handleCalculate (before switch), index:' + index);
       setIndex(index + 1); // move to the results slide
     } // weight entry validation
@@ -276,7 +274,6 @@ function CustomSwiper() {
       case 'gender': {
         if (gender === '') {
           // they haven't selected anything
-          console.log('validate(gender):' + gender);
           setErrorText('Please select a gender');
           return false;
         }
@@ -286,7 +283,6 @@ function CustomSwiper() {
         console.log('ageValue:' + age);
         if (age === '') {
           // they haven't selected anything
-          console.log('validate(age):' + age);
           setErrorText('Please enter an age');
           return false;
         }
@@ -295,7 +291,6 @@ function CustomSwiper() {
       case 'frame': {
         if (frame === '') {
           // they haven't selected anything
-          console.log('validate(frame):' + frame);
           setErrorText('Please select a frame size');
           return false;
         }
@@ -311,15 +306,13 @@ function CustomSwiper() {
         if (weightUnits === 'kg') {
           if (weightKg === '') {
             // they haven't selected anything
-            console.log('validate(weightPounds):' + weightPounds);
             setErrorText('Please enter a weight in kg');
             return false;
           }
         }
-        if (weightUnits === 'Pounds' || weightUnits === 'Stone/Pounds') {
+        if (weightUnits === 'Pounds' || weightUnits === 'Stones/Pounds') {
           if (weightPounds === '') {
             // they haven't selected anything
-            console.log('validate(weightPounds):' + weightPounds);
             setErrorText('Please enter a weight in pounds');
             return false;
           }
@@ -331,7 +324,6 @@ function CustomSwiper() {
         if (heightUnits === 'cm') {
           if (heightCm === '') {
             // they haven't selected anything
-            console.log('validate(heightCm):' + heightCm);
             setErrorText('Please enter a height');
             return false;
           }
@@ -339,7 +331,6 @@ function CustomSwiper() {
         if (heightUnits === 'Feet/Inches') {
           if (heightFt === '') {
             // they haven't selected anything
-            console.log('validate(height Feet/Inches):' + heightFt);
             setErrorText('Please enter a height');
             return false;
           }
@@ -356,6 +347,45 @@ function CustomSwiper() {
     return true;
   };
 
+  const renderMainItem = ({item}) => {
+    const hasImage = item.image !== null;
+    console.log('MAIN renderItem called:' + item.title);
+    return (
+      <View style={{width, height, backgroundColor: 'white'}}>
+        {hasImage && (
+          <ImageBackground
+            source={item.image}
+            resizeMode={'cover'}
+            style={{flex: 1}}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+              }}>
+              {/* ************************************* */}
+              <ListSlide
+                errorText={errorText}
+                handleCalculate={handleCalculate}
+                idealWeightStones={idealWeightStones}
+                idealWeightPounds={idealWeightPounds}
+                idealWeightKg={idealWeightKg}
+                itemTitle={item.title}
+              />
+              {/* ************************************* */}
+              <BottomHelp
+                helpTitle={helpSlideValues[index].title}
+                helpSubHeading={helpSlideValues[index].subHeading}
+                helpText={helpSlideValues[index].text}
+              />
+            </View>
+          </ImageBackground>
+        )}
+      </View>
+    );
+  };
+
   const leftPress = () => {
     if (index === 0) {
       return;
@@ -365,8 +395,6 @@ function CustomSwiper() {
     setHelpText(helpSlideValues[index - 1].text);
 
     setIndex(index - 1);
-
-    console.log('leftPress, index to be decremented:' + index);
 
     setErrorText('');
   };
@@ -379,266 +407,92 @@ function CustomSwiper() {
     setHelpSubHeading(helpSlideValues[index + 1].subHeading);
     setHelpText(helpSlideValues[index + 1].text);
 
-    console.log('rightPress, index to be incremented:' + index);
     setIndex(index + 1);
 
     setErrorText('');
   };
 
-  // TODO Videos should be playing by default, I turned off cause they're distracting
-  console.log('CustomSwiper: before return block');
   return (
-    // <ValuesContext.Provider
-    //   value={(weightValue, setWeightValue, heightValue, setHeightValue)}
-    // >
-    <ValuesProvider>
-      <ColourProvider value={value}>
-        <View style={styles.container}>
-          {/* <StatusBar /> */}
-          <Animated.FlatList
-            ref={refFlatList}
-            initialScrollIndex={index}
-            data={colourData}
-            keyExtractor={(_, index) => index.toString()}
-            // keyExtractor={(item: ColourType) => item.key}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled
-            bounces={false}
-            onScrollBeginDrag={e => {
-              if (this && e) {
-                console.log(
-                  'onScrollBeginDrag, e.nativeEvent.contentOffset.x:' +
-                    e.nativeEvent.contentOffset.x +
-                    ', this.touchX:' +
-                    this.touchX,
-                );
-                this.touchX = e.nativeEvent.contentOffset.x;
+    // <ValuesProvider>
+    <ColourProvider value={value}>
+      <View style={styles.container}>
+        {/* <StatusBar /> */}
+        <Animated.FlatList
+          ref={refFlatList}
+          initialScrollIndex={index}
+          data={colourData}
+          keyExtractor={(_, index) => index.toString()}
+          // keyExtractor={(item: ColourType) => item.key}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          bounces={false}
+          onScrollBeginDrag={e => {
+            if (this && e) {
+              this.touchX = e.nativeEvent.contentOffset.x;
+            }
+          }}
+          onScrollEndDrag={e => {
+            if (this.touchX - e.nativeEvent.contentOffset.x < -210) {
+              const result = validate(colourData[index].title); // did they enter relevant info?
+              if (result) {
+                // entry is good
+                rightPress();
+              } else {
+                // don't allow them to go forward yet
+                refFlatList.current?.scrollToIndex({
+                  index,
+                  animated: true,
+                }); // setIndex(index);
               }
-              // if (this && e) {
-              //   console.log(
-              //     'onScrollBeginDrag, e.nativeEvent.contentOffset.x:' +
-              //       e.nativeEvent.contentOffset.x +
-              //       ', this.touchX:' +
-              //       this.touchX,
-              //   );
-              // nativeEventPageX = e.nativeEvent.pageX;
-              // handlerTouchX = this.touchX;
-              // }
-            }}
-            // onScroll={e => {
-            //   if (this && e) {
-            //     console.log(
-            //       'onScroll, e.nativeEvent.contentOffset.x:' +
-            //         e.nativeEvent.contentOffset.x +
-            //         ', this.touchX:' +
-            //         this.touchX,
-            //     );
-            //     // nativeEventPageX = e.nativeEvent.pageX;
-            //     // handlerTouchX = this.touchX;
-            //   }
-            // }}
-            onScrollEndDrag={e => {
-              console.log(
-                'onScrollEndDrag handlerTouchX:' +
-                  this.touchX +
-                  ', e.nativeEvent.pageX:' +
-                  e.nativeEvent.contentOffset.x +
-                  ', subtracted:' +
-                  (this.touchX - e.nativeEvent.contentOffset.x),
-              );
-              if (this.touchX - e.nativeEvent.contentOffset.x < -210) {
-                console.log(
-                  'Swiped left handlerTouchX:' +
-                    this.touchX +
-                    ', e.nativeEvent.pageX:' +
-                    e.nativeEvent.contentOffset.x +
-                    ', subtracted:' +
-                    (this.touchX - e.nativeEvent.contentOffset.x),
-                );
-                console.log(
-                  'onScrollEndDrag, title to check:' + colourData[index].title,
-                );
-                // TODO PUT BACK IN VALIDATIon byt storing title or the item they're on
-                const result = validate(colourData[index].title); // did they enter relevant info?
-                console.log(
-                  'result:' + result + ', item.title' + colourData[index].title,
-                );
-                console.log('index' + index);
-                if (result) {
-                  // entry is good
-                  console.log("rightPress it's good");
-                  rightPress();
-                } else {
-                  // don't allow them to go forward yet
-                  refFlatList.current?.scrollToIndex({
-                    index,
-                    animated: true,
-                  }); // setIndex(index);
-                }
-              }
-              if (this.touchX - e.nativeEvent.contentOffset.x > 210) {
-                console.log('leftPress');
-                leftPress();
-              }
-            }}
-            renderItem={({item}) => {
-              const hasImage = item.image !== null;
-              console.log(
-                'item.title:' +
-                  item.title +
-                  ', item.image:' +
-                  item.image +
-                  ', hasImage:' +
-                  hasImage,
-              );
-              return (
-                <View
-                  style={{width, height, backgroundColor: 'white'}}
-                  // onTouchStart={e => {
-                  //   // console.log('onTouchStart, e:' + e + ', this:' + this);
-                  //   if (this && e) {
-                  //     console.log(
-                  //       'onTouchStart, e Setting this.touchX and handlerTouchX to pageX:' +
-                  //         e.nativeEvent.pageX,
-                  //     );
-                  //     this.touchX = e.nativeEvent.pageX;
-                  //     handlerTouchX = e.nativeEvent.pageX;
-                  //   }
-                  // }}
-                  // onTouchMove={e => {
-                  //   // check for undefined
-                  //   if (this && e) {
-                  //     console.log(
-                  //       'onTouchMove, Setting nativeEventPageX to e.nativeEvent.pageX:' +
-                  //         e.nativeEvent.pageX +
-                  //         ', this.touchX:' +
-                  //         this.touchX,
-                  //     );
-                  //     nativeEventPageX = e.nativeEvent.pageX;
-                  //     // handlerTouchX = this.touchX;
-                  //   }
-                  // }}
-                  // onTouchEnd={e => {
-                  //   if (this.touchX - nativeEventPageX > 210) {
-                  //     // console.log(
-                  //     //   'Swiped left' +
-                  //     //     this.touchX +
-                  //     //     ', e.nativeEvent.pageX:' +
-                  //     //     e.nativeEvent.pageX +
-                  //     //     ', subtracted:' +
-                  //     //     (this.touchX - e.nativeEvent.pageX),
-                  //     // );
-
-                  //     const result = validate(item.title); // did they enter relevant info?
-                  //     // console.log(
-                  //     //   'result:' + result + ', item.title' + item.title,
-                  //     // );
-                  //     console.log('index' + index);
-                  //     if (result) {
-                  //       // entry is good
-                  //       console.log("rightPress it's good");
-                  //       rightPress();
-                  //     } else {
-                  //       // don't allow them to go forward yet
-                  //       refFlatList.current?.scrollToIndex({
-                  //         index,
-                  //         animated: true,
-                  //       }); // setIndex(index);
-                  //     }
-                  //   }
-                  //   if (this.touchX - e.nativeEvent.pageX < -210) {
-                  //     leftPress();
-                  //   }
-                  // console.log(
-                  //   'Swiped right, this.touchX' +
-                  //     this.touchX +
-                  //     ', e.nativeEvent.pageX:' +
-                  //     e.nativeEvent.pageX +
-                  //     ', subtracted:' +
-                  //     (this.touchX - e.nativeEvent.pageX),
-                  // );
-                  //   console.log('onTouchEnd, e:' + e + ', this:' + this);
-                  //   if (this && e) {
-                  //     // check for undefined
-                  //     if (this.touchX - e.nativeEvent.pageX > 210) {
-                  //       console.log(
-                  //         'Swiped left' +
-                  //           this.touchX +
-                  //           ', e.nativeEvent.pageX:' +
-                  //           e.nativeEvent.pageX +
-                  //           ', subtracted:' +
-                  //           (this.touchX - e.nativeEvent.pageX),
-                  //       );
-
-                  //       const result = validate(item.title); // did they enter relevant info?
-                  //       console.log(
-                  //         'result:' + result + ', item.title' + item.title,
-                  //       );
-                  //       console.log('index' + index);
-                  //       if (result) {
-                  //         // entry is good
-                  //         console.log("rightPress it's good");
-                  //         rightPress();
-                  //       } else { // don't allow them to go forward yet
-                  //         refFlatList.current?.scrollToIndex({
-                  //           index,
-                  //           animated: true,
-                  //         }); // setIndex(index);
-                  //       }
-                  //     }
-                  //     if (this.touchX - e.nativeEvent.pageX < -210) {
-                  //       leftPress();
-                  //     }
-                  //     console.log(
-                  //       'Swiped right, this.touchX' +
-                  //         this.touchX +
-                  //         ', e.nativeEvent.pageX:' +
-                  //         e.nativeEvent.pageX +
-                  //         ', subtracted:' +
-                  //         (this.touchX - e.nativeEvent.pageX),
-                  //     );
-                  //   }
-                  // }}
-                >
-                  {hasImage && (
-                    <ImageBackground
-                      source={item.image}
-                      resizeMode={'cover'}
-                      style={{flex: 1}}>
-                      <View
-                        style={{
-                          flex: 1,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          width: '100%',
-                        }}>
-                        {/* ************************************* */}
-                        <ListSlide
-                          errorText={errorText}
-                          helpSlideValues={helpSlideValues}
-                          index={index}
-                          handleCalculate={handleCalculate}
-                          idealWeight={idealWeight}
-                          item={item}
-                        />
-                        {/* ************************************* */}
-                        <BottomHelp
-                          helpTitle={helpSlideValues[index].title}
-                          helpSubHeading={helpSlideValues[index].subHeading}
-                          helpText={helpSlideValues[index].text}
-                        />
-                      </View>
-                    </ImageBackground>
-                  )}
-                </View>
-              );
-            }}
-          />
-        </View>
-      </ColourProvider>
-    </ValuesProvider>
-    // </ValuesContext.Provider>
+            }
+            if (this.touchX - e.nativeEvent.contentOffset.x > 210) {
+              leftPress();
+            }
+          }}
+          renderItem={renderMainItem}
+          // renderItem={({item}) => {
+          // const hasImage = item.image !== null;
+          // console.log('MAIN renderItem called');
+          // return (
+          //   <View style={{width, height, backgroundColor: 'white'}}>
+          //     {hasImage && (
+          //       <ImageBackground
+          //         source={item.image}
+          //         resizeMode={'cover'}
+          //         style={{flex: 1}}>
+          //         <View
+          //           style={{
+          //             flex: 1,
+          //             justifyContent: 'center',
+          //             alignItems: 'center',
+          //             width: '100%',
+          //           }}>
+          //           {/* ************************************* */}
+          //           <ListSlide
+          //             errorText={errorText}
+          //             handleCalculate={handleCalculate}
+          //             idealWeightStones={idealWeightStones}
+          //             idealWeightPounds={idealWeightPounds}
+          //             idealWeightKg={idealWeightKg}
+          //             itemTitle={item.title}
+          //           />
+          //           {/* ************************************* */}
+          //           <BottomHelp
+          //             helpTitle={helpSlideValues[index].title}
+          //             helpSubHeading={helpSlideValues[index].subHeading}
+          //             helpText={helpSlideValues[index].text}
+          //           />
+          //         </View>
+          //       </ImageBackground>
+          //     )}
+          //   </View>
+          // );
+          // }}
+        />
+      </View>
+    </ColourProvider>
+    // </ValuesProvider>
   );
 }
 
@@ -677,7 +531,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderLeftWidth: 4,
     borderRightWidth: 4,
-    // height: 70,
   },
   input: {
     height: 70,
