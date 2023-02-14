@@ -1,16 +1,16 @@
 import ViewPager from '@react-native-community/viewpager';
 import {useNavigation} from '@react-navigation/native';
 import React, {useRef} from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Video from 'react-native-video';
 import Footer from '../../components/onboarding/Footer';
 import Page from '../../components/onboarding/Page';
 import IntroSlide from './IntroSlide';
 
-const selectUnitsVideo = require('../../../assets/videos/onboarding/1_SelectUnits.mp4');
-const selectValuesVideo = require('../../../assets/videos/onboarding/2_SelectValues.mp4');
-const useHelpVideo = require('../../../assets/videos/onboarding/3_UseHelp.mp4');
-const getResultsVideo = require('../../../assets/videos/onboarding/4_GetResults.mp4');
+import selectUnitsVideo from '../../../assets/videos/onboarding/1_SelectUnits.mp4';
+import selectValuesVideo from '../../../assets/videos/onboarding/2_SelectValues.mp4';
+import useHelpVideo from '../../../assets/videos/onboarding/3_UseHelp.mp4';
+import getResultsVideo from '../../../assets/videos/onboarding/4_GetResults.mp4';
 
 // const {width, height} = Dimensions.get('screen');
 

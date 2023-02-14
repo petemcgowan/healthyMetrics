@@ -8,7 +8,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import TheoryComponent from './components/TheoryComponent';
 import {store, persistor} from './redux/store';
-import {StateProvider} from './state/StateContext';
+// import {StateProvider} from './state/StateContext';
 
 export default function App() {
   // const [dominantColour, setDominantColour] = useState(
@@ -30,9 +30,9 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-        <StateProvider>
-          <TheoryComponent />
-        </StateProvider>
+        {/* <StateProvider> */}
+        <TheoryComponent />
+        {/* </StateProvider> */}
       </PersistGate>
     </Provider>
   );

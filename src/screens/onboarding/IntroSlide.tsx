@@ -1,5 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Dimensions, Text, View} from 'react-native';
+
+const {width} = Dimensions.get('window');
+const threeQuarterWidth = width * 0.75;
 
 const IntroSlide = () => {
   return (
@@ -7,11 +10,11 @@ const IntroSlide = () => {
       <View style={styles.topContainer}>
         <Text style={styles.mainText}>Welcome to Healthy... </Text>
       </View>
-      <View style={styles.midContainer} />
+
       <View style={styles.bottomContainer}>
         <Text style={styles.secondaryText}>
           Find the medically recommended range for your age, weight, height,
-          gender and wrist size! 😎
+          gender and wrist size!
         </Text>
       </View>
     </View>
@@ -24,14 +27,11 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     // flexWrap: "wrap",
-    flexBasis: '30%',
+    flexBasis: '55%',
     margin: 20,
     overflow: 'hidden',
     // minWidth: 150,
     padding: 10,
-  },
-  midContainer: {
-    flexBasis: '30%',
   },
   bottomContainer: {
     // flex: 1,
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     // justifyContent: "flex-start",
     textAlign: 'center',
+    width: threeQuarterWidth,
     color: 'rgba(255, 203, 31, 0.89)',
     fontSize: 68,
     alignItems: 'flex-start',
