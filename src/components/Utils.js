@@ -3,12 +3,6 @@ const selectionDropDownRange = function (
   endNumber: string,
 ) {
   const numbers = [];
-  console.log(
-    'selectionDropDownRange:startNumber:' +
-      startNumber +
-      ', endNumber' +
-      endNumber,
-  );
   // startNumber = startNumber || 80;
   while (startNumber <= endNumber) {
     numbers.push({

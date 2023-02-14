@@ -11,17 +11,9 @@ const CustomBackground: React.FC<BottomSheetBackgroundProps> = ({
   style,
   animatedIndex,
 }) => {
-  // const { dominantColour, lightMutedColour, lightVibrantColour } =
-  //   useContext(ColourContext);
   const {colourData, index} = useContext(ColourContext);
-  // console.log("CustomBackground, dominantColour:" + dominantColour);
-  // console.log("CustomBackground,lightMutedColour:" + lightMutedColour);
-  // console.log("CustomBackground,lightVibrantColour:" + lightVibrantColour);
 
-  useEffect(() => {
-    console.log('CustomBackground, useEffect');
-    console.log(JSON.stringify(colourData[index]));
-  }, []);
+  useEffect(() => {}, []);
 
   //#region styles
   const containerAnimatedStyle = useAnimatedStyle(() => ({
