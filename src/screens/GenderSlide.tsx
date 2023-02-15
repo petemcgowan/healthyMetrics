@@ -30,14 +30,14 @@ const GenderSlide = ({errorText}: GenderSlideProps) => {
     textAbove: {
       alignSelf: 'center',
       textAlign: 'center',
-      width: threeQuarterWidth,
+      width: width,
       color: '#84c4ec',
       fontSize: width < 450 ? 70 : 90,
     },
     textBelow: {
       alignSelf: 'center',
       textAlign: 'center',
-      width: threeQuarterWidth,
+      width: width,
       color: '#84c4ec',
       fontSize: width < 450 ? 85 : 100,
     },

@@ -4,7 +4,12 @@ import {FadeIn} from 'react-native-reanimated';
 
 import AnimatedRadioGroup from '../radio-groups/AnimatedRadioGroup';
 
-const FramePicker = ({frame, setFrame}) => {
+interface FramePickerProps {
+  frame: string;
+  setFrame: any;
+}
+
+const FramePicker = ({frame, setFrame}: FramePickerProps) => {
   return (
     <View>
       <AnimatedRadioGroup

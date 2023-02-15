@@ -15,7 +15,13 @@ import {HeaderHandle} from './handles/HeaderHandle';
 const {width, height} = Dimensions.get('screen');
 const ITEM_HEIGHT = height * 0.8;
 
-const BottomHelp = ({helpTitle, helpSubHeading, helpText}) => {
+interface BottomHelpProps {
+  helpTitle: string;
+  helpSubHeading: string;
+  helpText: string;
+}
+
+const BottomHelp = ({helpTitle, helpSubHeading, helpText}: BottomHelpProps) => {
   // console.log(
   //   "BottomHelp, height:" +
   //     height +
@@ -55,12 +61,12 @@ const BottomHelp = ({helpTitle, helpSubHeading, helpText}) => {
 
   return (
     <BottomSheet
-      initialSnapIndex={0}
+      // initialSnapIndex={0}
       animateOnMount
       backgroundComponent={CustomBackground}
       // handleComponent={renderHeaderHandle}
       // snapPoints={[height - ITEM_HEIGHT, ITEM_HEIGHT - 70]}
-      snapPoints={[height > 750 ? '6%' : '16%', ITEM_HEIGHT - 70]}
+      snapPoints={[height > 750 ? '15%' : '10%', ITEM_HEIGHT - height * 0.1]}
       style={{
         shadowColor: '#000',
         shadowOffset: {

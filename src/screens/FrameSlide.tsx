@@ -1,11 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import {HelperText} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import FramePicker from '../components/pickers/FramePicker';
 import {actionCreators, State} from '../redux/index';
+
+const {width} = Dimensions.get('window');
 
 interface FrameSlideProps {
   errorText: string;
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 100,
     color: '#7de6fb', // "#FFCB1F",
-    fontSize: 90,
+    fontSize: width < 450 ? 77 : 95,
     // fontWeight: "bold",
   },
   textBelow: {
@@ -61,6 +63,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 100,
     color: '#7de6fb',
-    fontSize: 123,
+    fontSize: width < 450 ? 100 : 123,
   },
 });
