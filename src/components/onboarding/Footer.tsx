@@ -1,15 +1,23 @@
-import React from "react";
-import { View, useWindowDimensions } from "react-native";
+import React from 'react';
+import {View, useWindowDimensions} from 'react-native';
 
-import RoundedButton from "./RoundedButton";
+import RoundedButton from './RoundedButton';
+
+interface FooterProps {
+  backgroundColor: string;
+  leftButtonLabel?: string;
+  leftButtonPress?: any;
+  rightButtonLabel: string;
+  rightButtonPress: any;
+}
 
 const Footer = ({
   backgroundColor,
-  leftButtonLabel = false,
-  leftButtonPress = false,
-  rightButtonLabel = false,
-  rightButtonPress = false,
-}) => {
+  leftButtonLabel,
+  leftButtonPress,
+  rightButtonLabel,
+  rightButtonPress,
+}: FooterProps) => {
   const windowWidth = useWindowDimensions().width;
   const HEIGHT = windowWidth * 0.21;
   const FOOTER_PADDING = windowWidth * 0.1;
@@ -17,15 +25,14 @@ const Footer = ({
   return (
     <View
       style={{
-        flexDirection: "row",
-        justifyContent: leftButtonLabel ? "space-between" : "flex-end",
+        flexDirection: 'row',
+        justifyContent: leftButtonLabel ? 'space-between' : 'flex-end',
         height: HEIGHT,
         backgroundColor,
         opacity: 0.6,
-        alignItems: "center",
+        alignItems: 'center',
         paddingHorizontal: FOOTER_PADDING,
-      }}
-    >
+      }}>
       {leftButtonLabel && (
         <RoundedButton label={leftButtonLabel} onPress={leftButtonPress} />
       )}

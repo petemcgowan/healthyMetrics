@@ -1,6 +1,6 @@
 const selectionDropDownRange = function (
-  startNumber: string,
-  endNumber: string,
+  startNumber: number,
+  endNumber: number,
 ) {
   const numbers = [];
   // startNumber = startNumber || 80;

@@ -8,19 +8,8 @@ import SplashScreen from 'react-native-splash-screen';
 
 import TheoryComponent from './components/TheoryComponent';
 import {store, persistor} from './redux/store';
-// import {StateProvider} from './state/StateContext';
 
 export default function App() {
-  // const [dominantColour, setDominantColour] = useState(
-  //   colourData[index].dominant
-  // );
-  // const [lightMutedColour, setLightMutedColour] = useState(
-  //   colourData[index].lightMuted
-  // );
-  // const [lightVibrantColour, setLightVibrantColour] = useState(
-  //   colourData[index].lightVibrant
-  // );
-  // const [darkVibrant, setDarkVibrant] = useState(colourData[index].darkVibrant);
   Ionicons.loadFont();
 
   useEffect(() => {
@@ -30,9 +19,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-        {/* <StateProvider> */}
         <TheoryComponent />
-        {/* </StateProvider> */}
       </PersistGate>
     </Provider>
   );
