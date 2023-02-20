@@ -40,7 +40,7 @@ const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
     },
     animatedTextPlaceholder: {
       color: 'white',
-      fontSize: width < 450 ? 25 : 30,
+      fontSize: width < 380 ? 25 : 30,
     },
     animatedBlockPlaceholder: {
       height: height * 0.07,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   animatedText: {
     color: '#ffffff',
-    fontSize: width < 450 ? 25 : 30,
+    fontSize: width < 380 ? 25 : 30,
   },
 });
 

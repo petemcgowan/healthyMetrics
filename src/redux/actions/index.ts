@@ -1,4 +1,4 @@
-import { ActionType } from "../action-types";
+import {ActionType} from '../action-types';
 
 interface HasSeenIntroAction {
   type: ActionType.UPDATE_HAS_SEEN_INTRO_VALUE;
@@ -48,6 +48,13 @@ interface UpdateWeightPoundsAction {
 }
 
 export type WeightPoundsAction = UpdateWeightPoundsAction;
+
+interface UpdateWeightPoundsOnlyAction {
+  type: ActionType.UPDATE_WEIGHT_POUNDS_ONLY_VALUE;
+  payload: string;
+}
+
+export type WeightPoundsOnlyAction = UpdateWeightPoundsOnlyAction;
 
 interface UpdateWeightStoneAction {
   type: ActionType.UPDATE_WEIGHT_STONE_VALUE;

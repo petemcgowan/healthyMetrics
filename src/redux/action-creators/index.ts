@@ -1,6 +1,6 @@
-import { Dispatch } from "redux";
+import {Dispatch} from 'redux';
 
-import { ActionType } from "../action-types/index";
+import {ActionType} from '../action-types/index';
 
 export const setHeightCm = (heightCm: string) => {
   return (dispatch: Dispatch) => {
@@ -34,6 +34,15 @@ export const setWeightPounds = (weightPounds: string) => {
     dispatch({
       type: ActionType.UPDATE_WEIGHT_POUNDS_VALUE,
       payload: weightPounds,
+    });
+  };
+};
+
+export const setWeightPoundsOnly = (weightPoundsOnly: string) => {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.UPDATE_WEIGHT_POUNDS_ONLY_VALUE,
+      payload: weightPoundsOnly,
     });
   };
 };
