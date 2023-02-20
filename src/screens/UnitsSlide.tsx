@@ -23,7 +23,7 @@ const UnitsSlide = ({errorText}: UnitsSlideProps) => {
       textAlign: 'center',
       minWidth: 100,
       color: '#e4bc94', // "#FFCB1F",
-      fontSize: width < 450 ? 70 : 90,
+      fontSize: width < 380 ? 70 : 90,
       // fontWeight: "bold",
     },
     textBelow: {
@@ -32,7 +32,7 @@ const UnitsSlide = ({errorText}: UnitsSlideProps) => {
       textAlign: 'center',
       minWidth: 100,
       color: '#e4bc94',
-      fontSize: width < 450 ? 103 : 123,
+      fontSize: width < 380 ? 103 : 123,
     },
   });
 

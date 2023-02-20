@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 import {State} from '../redux/index';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 interface ResultSlideProps {
   idealWeightStones: number;
@@ -21,6 +21,9 @@ const ResultSlide = ({
   const heightFt = useSelector((state: State) => state.heightFt);
   const heightInches = useSelector((state: State) => state.heightInches);
   const weightPounds = useSelector((state: State) => state.weightPounds);
+  const weightPoundsOnly = useSelector(
+    (state: State) => state.weightPoundsOnly,
+  );
   const weightStones = useSelector((state: State) => state.weightStones);
   const weightKg = useSelector((state: State) => state.weightKg);
   const frame = useSelector((state: State) => state.frame);
@@ -31,8 +34,6 @@ const ResultSlide = ({
 
   return (
     <SafeAreaView style={styles.vwResultSlide}>
-      {/* specifics top */}
-      {/* healthy weight section */}
       {/* todo  */}
       {/* <Text style={styles.healthyWeightText}>Healthy Weight Range:</Text> */}
 
@@ -42,11 +43,11 @@ const ResultSlide = ({
           <Text style={styles.yourHealthyWeightText}>Healthy</Text>
           <Text style={styles.yourHealthyWeightText}>Weight</Text>
           {weightUnits === 'kg' && (
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.idealWeightText}>
                 {Math.round(idealWeightKg)}
               </Text>
-              <Text style={[styles.weightUnits, {marginBottom: 25}]}>kg</Text>
+              <Text style={[styles.weightUnits]}>kg</Text>
             </View>
           )}
           {weightUnits === 'Pounds' && (
@@ -54,31 +55,37 @@ const ResultSlide = ({
               <Text style={styles.idealWeightText}>
                 {Math.round(idealWeightPounds)}
               </Text>
-              <Text style={[styles.weightUnits, {marginBottom: 25}]}>
-                pounds
-              </Text>
+              <Text style={[styles.weightUnits]}>pounds</Text>
             </View>
           )}
           {weightUnits === 'Stones/Pounds' && (
             <View style={{flexDirection: 'column', alignItems: 'center'}}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={styles.idealWeightText}>
+                <Text style={styles.idealWeightSPText}>
                   {Math.round(idealWeightStones)}
                 </Text>
-                <Text style={styles.idealWeightText}>/</Text>
-                <Text style={styles.idealWeightText}>
+                <Text style={[styles.weightUnits]}>st</Text>
+                <Text style={styles.idealWeightSPText}>
                   {Math.round(idealWeightPounds)}
                 </Text>
+                <Text style={[styles.weightUnits]}>po</Text>
               </View>
-              <Text style={[styles.weightUnits, {marginBottom: 25}]}>
-                stones/pounds
-              </Text>
             </View>
           )}
         </View>
       </View>
 
       <View style={styles.vwBottom}>
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 24,
+              fontStyle: 'italic',
+            }}>
+            Entered Info:
+          </Text>
+        </View>
         <View style={styles.vwGender}>
           <Text style={styles.detailsHeaderText}>Gender:</Text>
           <Text style={styles.detailText}>{gender}</Text>
@@ -98,7 +105,7 @@ const ResultSlide = ({
         )}
         {heightUnits === 'Feet/Inches' && (
           <View style={styles.vwHeight}>
-            <Text style={styles.detailsHeaderText}>Height (feet/inches)</Text>
+            <Text style={styles.detailsHeaderText}>Height (ft/in)</Text>
             <Text style={styles.detailText}>{heightFt}</Text>
             <Text style={styles.detailText}>/</Text>
             <Text style={styles.detailText}>{heightInches}</Text>
@@ -118,12 +125,12 @@ const ResultSlide = ({
         {weightUnits === 'Pounds' && (
           <View style={styles.vwWeight}>
             <Text style={styles.detailsHeaderText}>Weight (Pounds)</Text>
-            <Text style={styles.detailText}>{weightPounds}</Text>
+            <Text style={styles.detailText}>{weightPoundsOnly}</Text>
           </View>
         )}
         {weightUnits === 'Stones/Pounds' && (
           <View style={styles.vwWeight}>
-            <Text style={styles.detailsHeaderText}>Weight(Stones/Pounds)</Text>
+            <Text style={styles.detailsHeaderText}>Weight(St/Po)</Text>
             <Text style={styles.detailText}>{weightStones}</Text>
             <Text style={styles.detailText}>/</Text>
             <Text style={styles.detailText}>{weightPounds}</Text>
@@ -138,39 +145,47 @@ const styles = StyleSheet.create({
   vwResultSlide: {
     flexDirection: 'column',
     flex: 1,
+    width: width,
   },
   vwTop: {
     // flex: 1,
     // maxHeight: 180,
   },
   vwBottom: {
-    // marginTop: 180,
+    // marginTop: 25,
     // flex: 1,
   },
   detailsHeaderText: {
     fontWeight: 'bold',
     color: '#e4bc94',
+    padding: 1,
     // fontSize: 27,
-    fontSize: width < 450 ? 24 : 27,
+    fontSize: width < 380 ? 21 : 24,
   },
   detailText: {
     color: '#173f6a',
-    fontSize: width < 450 ? 20 : 23,
+    padding: 1,
+    fontSize: width < 380 ? 19 : 23,
   },
   idealWeightText: {
-    fontSize: width < 450 ? 100 : 125,
+    fontSize: width < 380 ? 100 : 125,
+    color: 'white',
+    fontWeight: '500',
+  },
+  idealWeightSPText: {
+    fontSize: width < 380 ? 80 : 105,
     color: 'white',
     fontWeight: '500',
   },
   yourHealthyWeightText: {
     color: '#e4bc94',
-    fontSize: width < 450 ? 58 : 83,
+    fontSize: width < 380 ? 50 : 62,
     fontWeight: '500',
   },
   weightUnits: {
     // color: '#e4bc94',
     color: 'white',
-    fontSize: width < 450 ? 33 : 43,
+    fontSize: width < 380 ? 30 : 40,
   },
   vwGender: {
     flexDirection: 'row',

@@ -1,11 +1,23 @@
-import React, {useMemo, useRef} from 'react';
-import {Picker} from '@react-native-picker/picker';
-import {StyleSheet, Text, View, Dimensions, Platform} from 'react-native';
+import React, {useMemo, useRef, useState} from 'react';
+import {Picker as Select} from '@react-native-picker/picker';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Dimensions,
+  SafeAreaView,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import {HelperText} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
 // import ModalDropdown from 'react-native-modal-dropdown';
 // import SimplePicker from 'react-native-simple-picker';
+// import ReactNativeItemSelect from 'react-native-item-select';
+// import ReactNativePickerModule, {PickerRef} from 'react-native-picker-module';
+import {Picker, PickerColumn, PickerItem} from 'react-native-picky';
 
 import Utils from '../components/Utils';
 import {actionCreators, State} from '../redux/index';
@@ -17,13 +29,34 @@ interface AgeSlideProps {
   errorText: string;
 }
 
+// const Item: any = Select.Item;
+
+// const data = [
+//   {firstLetter: 'A', displayName: 'English', name: 'English'},
+//   {firstLetter: 'B', displayName: 'Bollock', name: 'Tamil'},
+// ];
+
+// const textStyle = {textAlign: 'center', color: '#696969', fontWeight: 'bold'};
+
 const AgeSlide = ({errorText}: AgeSlideProps) => {
   const ageOptions = Utils.selectionDropDownRange(24, 79).map(age => age.value);
-
+  const pickerRef = useRef();
+  // const pickerRef = useRef<PickerRef>(null);
   const age = useSelector((state: State) => state.age);
   const dispatch = useDispatch();
   const {setAge} = bindActionCreators(actionCreators, dispatch);
   // const pickerRef = useRef(null);
+  // const [value, setValue] = useState();
+  // const dataset_1 = [1, 2, 'Java', 'Kotlin', 'C++', 'C#', 'PHP'];
+
+  // function open() {
+  //   console.log('open called');
+  //   pickerRef.current.focus();
+  // }
+
+  // function close() {
+  //   pickerRef.current.blur();
+  // }
 
   const hasErrors = () => {
     return age === '';
@@ -38,39 +71,34 @@ const AgeSlide = ({errorText}: AgeSlideProps) => {
   //   );
   // };
 
+  // Picker ties the dropdown style to the selected container style, which I don't want so I'm moving it off the screen.  This is Android only.
+
   return (
     <View>
       {Platform.OS === 'android' && (
         <View>
-          <View style={styles.inputContainer}>
-            <Picker
-              selectedValue={age}
-              itemStyle={styles.androidItemStyle}
-              onValueChange={(itemAgeValue: string) => {
-                setAge(itemAgeValue);
-              }}>
-              {ageOptions.map(ageValue => (
-                <Picker.Item
-                  value={ageValue}
-                  label={ageValue}
-                  key={ageValue}
-                  style={styles.androidInput}
-                />
-              ))}
-            </Picker>
-            {/* <ModalDropdown
-              dropdownListProps={{}}
-              defaultValue={age}
-              options={ageOptions}
-              onSelect={itemIndex => {
-                setAge(ageOptions[itemIndex]);
-              }}
-              textStyle={styles.input} // this is the selection box
-              // renderRow={memoizedValue} // this is the dropdown style
-            /> */}
-          </View>
+          {/* <TouchableOpacity
+            onPress={open}
+            style={{borderWidth: 3, borderColor: '#84c4ec', borderRadius: 30}}>
+            <Text style={styles.textAbove}>{age}</Text>
+          </TouchableOpacity> */}
           <Text style={styles.textAbove}>Enter</Text>
           <Text style={styles.textBelow}>Age</Text>
+          <View style={styles.inputContainer}>
+            <Picker textColor="#84c4ec" textSize={60}>
+              <PickerColumn
+                selectedValue={age}
+                onChange={event => setAge(event.value.toString())}>
+                {ageOptions.map(ageValue => (
+                  <PickerItem
+                    label={ageValue.toString()}
+                    value={ageValue.toString()}
+                    key={ageValue}
+                  />
+                ))}
+              </PickerColumn>
+            </Picker>
+          </View>
         </View>
       )}
       {Platform.OS === 'ios' && (
@@ -78,21 +106,21 @@ const AgeSlide = ({errorText}: AgeSlideProps) => {
           <Text style={styles.textAbove}>Enter</Text>
           <Text style={styles.textBelow}>Age</Text>
           <View style={styles.inputContainer}>
-            <Picker
+            <Select
               selectedValue={age}
               itemStyle={styles.input}
               onValueChange={(itemAgeValue: string) => {
                 setAge(itemAgeValue);
               }}>
               {ageOptions.map(ageValue => (
-                <Picker.Item
+                <Select.Item
                   value={ageValue}
                   label={ageValue}
                   key={ageValue}
                   style={styles.input}
                 />
               ))}
-            </Picker>
+            </Select>
           </View>
         </View>
       )}
@@ -137,10 +165,9 @@ const styles = StyleSheet.create({
     minWidth: threeQuarterWidth,
     padding: 12,
   },
-
-  androidInput: {
+  androidPickerItem: {
     textAlign: 'center',
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: '400',
     // backgroundColor: 'rgba(252, 210, 89, 0.3)',
     opacity: 0.5,
@@ -158,13 +185,23 @@ const styles = StyleSheet.create({
     minWidth: threeQuarterWidth,
     padding: 12,
   },
-  inputContainer: {
+  androidInputContainer: {
     // height: 130,
     alignSelf: 'center',
     borderWidth: 3,
     // backgroundColor: 'transparent',
     borderColor: '#84c4ec',
     minWidth: threeQuarterWidth,
+    borderRadius: 30,
+    bottom: -700,
+  },
+  inputContainer: {
+    // height: 130,
+    alignSelf: 'center',
+    borderWidth: 3,
+    // backgroundColor: 'transparent',
+    borderColor: '#84c4ec',
+    width: threeQuarterWidth,
     borderRadius: 30,
   },
   // USING in dropdown, font Size

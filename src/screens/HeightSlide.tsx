@@ -1,11 +1,11 @@
-import {Picker} from '@react-native-picker/picker';
+import {Picker as Select} from '@react-native-picker/picker';
 import React from 'react';
 import {StyleSheet, Platform, Text, View, Dimensions} from 'react-native';
 import {HelperText} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ModalDropdown from 'react-native-modal-dropdown';
-
+import {Picker, PickerColumn, PickerItem} from 'react-native-picky';
 import Utils from '../components/Utils';
 import {actionCreators, State} from '../redux/index';
 
@@ -37,21 +37,35 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
     return heightCm === '';
   };
 
-  const _dropdown_2_renderRow = rowData => {
-    console.log('HeightSlide, _dropdown_2_renderRow called');
-    return (
-      <View style={styles.dropdown_2_row}>
-        <Text style={styles.inputDropdown}>{`${rowData}`}</Text>
-      </View>
-    );
-  };
+  // const _dropdown_2_renderRow = rowData => {
+  //   console.log('HeightSlide, _dropdown_2_renderRow called');
+  //   return (
+  //     <View style={styles.dropdown_2_row}>
+  //       <Text style={styles.inputDropdown}>{`${rowData}`}</Text>
+  //     </View>
+  //   );
+  // };
 
   return (
     <View>
       {heightUnits === 'cm' && Platform.OS === 'android' && (
         <View>
           <View style={styles.inputContainer}>
-            <ModalDropdown
+            <Picker textColor="#7de6fb" textSize={60}>
+              <PickerColumn
+                selectedValue={heightCm}
+                onChange={event => setHeightCm(event.value.toString())}>
+                {cmOptions.map(cmValue => (
+                  <PickerItem
+                    label={cmValue.toString()}
+                    value={cmValue.toString()}
+                    key={cmValue}
+                  />
+                ))}
+              </PickerColumn>
+            </Picker>
+
+            {/* <ModalDropdown
               dropdownListProps={{}}
               defaultValue={heightCm}
               options={cmOptions}
@@ -60,7 +74,7 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
               }}
               textStyle={styles.heightEntry} // this is the selection box
               renderRow={_dropdown_2_renderRow} // this is the dropdown style
-            />
+            /> */}
           </View>
           <Text style={styles.textAbove}>Enter</Text>
           <Text style={styles.textBelow}>Height</Text>
@@ -71,7 +85,7 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
           <Text style={styles.textAbove}>Enter</Text>
           <Text style={styles.textBelow}>Height</Text>
           <View style={styles.inputContainer}>
-            <Picker
+            <Select
               selectedValue={heightCm}
               itemStyle={styles.heightEntry}
               style={styles.heightEntry}
@@ -79,14 +93,14 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
                 setHeightCm(itemHeightCm);
               }}>
               {cmOptions.map(heightValue => (
-                <Picker.Item
+                <Select.Item
                   value={heightValue}
                   label={heightValue}
                   key={heightValue}
                   style={styles.heightEntry}
                 />
               ))}
-            </Picker>
+            </Select>
           </View>
         </View>
       )}
@@ -94,7 +108,21 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
         <View>
           <View style={{flexDirection: 'row', alignSelf: 'center'}}>
             <View style={styles.feetContainer}>
-              <ModalDropdown
+              <Picker textColor="#7de6fb" textSize={60}>
+                <PickerColumn
+                  selectedValue={heightFt}
+                  onChange={event => setHeightFt(event.value.toString())}>
+                  {ftOptions.map(ftValue => (
+                    <PickerItem
+                      label={ftValue.toString()}
+                      value={ftValue.toString()}
+                      key={ftValue}
+                    />
+                  ))}
+                </PickerColumn>
+              </Picker>
+
+              {/* <ModalDropdown
                 dropdownListProps={{}}
                 defaultValue={heightFt}
                 options={ftOptions}
@@ -103,10 +131,24 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
                 }}
                 textStyle={styles.heightEntry} // this is the selection box
                 renderRow={_dropdown_2_renderRow} // this is the dropdown style
-              />
+              /> */}
             </View>
             <View style={styles.inchesContainer}>
-              <ModalDropdown
+              <Picker textColor="#7de6fb" textSize={50}>
+                <PickerColumn
+                  selectedValue={heightInches}
+                  onChange={event => setHeightInches(event.value.toString())}>
+                  {inchesOptions.map(inchValue => (
+                    <PickerItem
+                      label={inchValue.toString()}
+                      value={inchValue.toString()}
+                      key={inchValue}
+                    />
+                  ))}
+                </PickerColumn>
+              </Picker>
+
+              {/* <ModalDropdown
                 dropdownListProps={{}}
                 defaultValue={heightInches}
                 options={inchesOptions}
@@ -115,7 +157,7 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
                 }}
                 textStyle={styles.heightEntry} // this is the selection box
                 renderRow={_dropdown_2_renderRow} // this is the dropdown style
-              />
+              /> */}
             </View>
           </View>
           <Text style={styles.textAbove}>Enter</Text>
@@ -128,38 +170,38 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
           <Text style={styles.textBelow}>Height</Text>
           <View style={{flexDirection: 'row', alignSelf: 'center'}}>
             <View style={styles.feetContainer}>
-              <Picker
+              <Select
                 selectedValue={heightFt}
                 itemStyle={styles.heightEntry}
                 onValueChange={(itemHeightFt: string) => {
                   setHeightFt(itemHeightFt);
                 }}>
                 {ftOptions.map(heightValue => (
-                  <Picker.Item
+                  <Select.Item
                     value={heightValue}
                     label={heightValue}
                     key={heightValue}
                     style={styles.heightEntry}
                   />
                 ))}
-              </Picker>
+              </Select>
             </View>
             <View style={styles.inchesContainer}>
-              <Picker
+              <Select
                 selectedValue={heightInches}
                 itemStyle={styles.heightEntry}
                 onValueChange={(itemHeightInches: string) => {
                   setHeightInches(itemHeightInches);
                 }}>
                 {inchesOptions.map(heightValue => (
-                  <Picker.Item
+                  <Select.Item
                     value={heightValue}
                     label={heightValue}
                     key={heightValue}
                     style={styles.heightEntry}
                   />
                 ))}
-              </Picker>
+              </Select>
             </View>
           </View>
         </View>
@@ -192,7 +234,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: threeQuarterWidth,
     color: '#7de6fb',
-    fontSize: 93,
+    fontSize: width < 380 ? 73 : 90,
   },
   textBelow: {
     alignSelf: 'center',
@@ -200,14 +242,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: threeQuarterWidth,
     color: '#7de6fb',
-    fontSize: 120,
+    fontSize: width < 380 ? 90 : 103,
   },
   feetContainer: {
     // height: 180,
     // alignItems: 'center',
     alignSelf: 'center',
     borderWidth: 3,
-    minWidth: 170,
+    width: width / 2,
     borderRadius: 30,
     borderColor: '#7de6fb',
   },
@@ -216,7 +258,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     alignSelf: 'center',
     borderWidth: 3,
-    minWidth: 170,
+    width: width / 2,
     borderRadius: 30,
     borderColor: '#7de6fb',
   },
@@ -230,7 +272,7 @@ const styles = StyleSheet.create({
     // height: 180,
     alignSelf: 'center',
     borderWidth: 3,
-    minWidth: threeQuarterWidth,
+    width: width,
     borderRadius: 30,
     borderColor: '#7de6fb',
   },

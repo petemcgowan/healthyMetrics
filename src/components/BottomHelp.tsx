@@ -66,7 +66,10 @@ const BottomHelp = ({helpTitle, helpSubHeading, helpText}: BottomHelpProps) => {
       backgroundComponent={CustomBackground}
       // handleComponent={renderHeaderHandle}
       // snapPoints={[height - ITEM_HEIGHT, ITEM_HEIGHT - 70]}
-      snapPoints={[height > 750 ? '15%' : '10%', ITEM_HEIGHT - height * 0.1]}
+      snapPoints={[
+        height > 750 ? height * 0.08 : height * 0.1,
+        ITEM_HEIGHT - height * 0.1,
+      ]}
       style={{
         shadowColor: '#000',
         shadowOffset: {
@@ -98,9 +101,11 @@ const BottomHelp = ({helpTitle, helpSubHeading, helpText}: BottomHelpProps) => {
         >
           {helpTitle}
         </Text> */}
-        <Text style={{fontSize: 16}}>{helpSubHeading}</Text>
+        <Text style={{fontSize: 23}}>{helpSubHeading}</Text>
         <View style={{marginVertical: 20}}>
-          <Text style={{color: colourData[index].dominant}}>{helpText}</Text>
+          <Text style={{color: colourData[index].dominant, fontSize: 17}}>
+            {helpText}
+          </Text>
         </View>
       </BottomSheetScrollView>
     </BottomSheet>
