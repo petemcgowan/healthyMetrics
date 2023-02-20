@@ -15,7 +15,6 @@ interface FrameSlideProps {
 
 const FrameSlide = ({errorText}: FrameSlideProps) => {
   const frame = useSelector((state: State) => state.frame);
-  console.log('FrameSlide: frame:' + frame);
   const dispatch = useDispatch();
   const {setFrame} = bindActionCreators(actionCreators, dispatch);
 
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 100,
     color: '#7de6fb', // "#FFCB1F",
-    fontSize: width < 450 ? 77 : 95,
+    fontSize: width < 380 ? 73 : 90,
     // fontWeight: "bold",
   },
   textBelow: {
@@ -63,6 +62,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 100,
     color: '#7de6fb',
-    fontSize: width < 450 ? 100 : 123,
+    fontSize: width < 380 ? 93 : 105,
   },
 });

@@ -18,7 +18,6 @@ interface GenderSlideProps {
 
 const GenderSlide = ({errorText}: GenderSlideProps) => {
   const gender = useSelector((state: State) => state.gender);
-  console.log('GenderSlide: gender:' + gender);
   const dispatch = useDispatch();
   const {setGender} = bindActionCreators(actionCreators, dispatch);
 
@@ -32,20 +31,20 @@ const GenderSlide = ({errorText}: GenderSlideProps) => {
       textAlign: 'center',
       width: width,
       color: '#84c4ec',
-      fontSize: width < 450 ? 70 : 90,
+      fontSize: width < 380 ? 70 : 90,
     },
     textBelow: {
       alignSelf: 'center',
       textAlign: 'center',
       width: width,
       color: '#84c4ec',
-      fontSize: width < 450 ? 85 : 100,
+      fontSize: width < 380 ? 85 : 95,
     },
     input: {
       height: 70,
       width: 'auto',
       textAlign: 'center',
-      fontSize: width < 450 ? 65 : 75,
+      fontSize: width < 380 ? 65 : 75,
       color: '#84c4ec',
       minWidth: threeQuarterWidth,
       padding: 5,
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
   textContainer: {
     alignSelf: 'center',
     minWidth: 150,
-    height: 45,
+    height: 55,
   },
 });
 

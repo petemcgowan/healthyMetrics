@@ -17,6 +17,7 @@ import ColourContext, {ColourProvider} from '../state/ColourContext';
 import ListSlide from './ListSlide';
 
 const {width, height} = Dimensions.get('screen');
+const widthBasedDiff = width * 0.85;
 
 function CustomSwiper() {
   const {colourData} = useContext(ColourContext);
@@ -25,6 +26,9 @@ function CustomSwiper() {
   // const nativeEventPageX = -1; // tracked by mouse move
   // const handlerTouchX = -1; // tracked by mouse move
   const weightPounds = useSelector((state: State) => state.weightPounds);
+  const weightPoundsOnly = useSelector(
+    (state: State) => state.weightPoundsOnly,
+  );
   const weightStones = useSelector((state: State) => state.weightStones);
   const weightKg = useSelector((state: State) => state.weightKg);
   const heightCm = useSelector((state: State) => state.heightCm);
@@ -43,6 +47,8 @@ function CustomSwiper() {
   const [helpSubHeading, setHelpSubHeading] = useState('');
   const [helpText, setHelpText] = useState('');
   const refFlatList = React.useRef(null);
+  let localTouchX = 0;
+  let trackingScrolling = false;
 
   const [errorText, setErrorText] = useState(null);
   LogBox.ignoreAllLogs();
@@ -85,7 +91,11 @@ function CustomSwiper() {
     {
       // title: "Info",
       subHeading: 'Units',
-      text: `TODO
+      text: `Do you weigh yourself in pounds?  Stones and Pounds?  Kg?  Specify that on this page!
+
+Do you measure your height in cm (metric) or feet and inches (imperial)?
+
+Specify here and we'll stick to that unless you change it here...
                `,
     },
     {
@@ -147,7 +157,23 @@ function CustomSwiper() {
     {
       // title: "Info",
       subHeading: 'Weight',
-      text: '4th text item',
+      text: `Most everyone has at some point tried to lose weight, or at least known somebody who has.
+
+      This is largely due to the perception of an "ideal" body weight, which is often based on what we see promoted through various media such as social media, TV, movies, magazines, etc.
+
+      Although ideal body weight (IBW) today is sometimes based on perceived visual appeal, IBW was actually introduced to estimate dosages for medical use, and the formulas that calculate it are not at all related to how a person looks at a given weight.
+
+      It has since been determined that the metabolism of certain drugs is more based on IBW than it is total body weight. Today, IBW is also used widely throughout sports, since many sports classify people based on their body weight.
+
+      Note that IBW is not a perfect measurement. It does not consider the percentages of body fat and muscle in a person's body. This means that it is possible for highly fit, healthy athletes to be considered overweight based on their IBW.
+
+      This is why IBW should be considered with the perspective that it is an imperfect measure and not necessarily indicative of health, or a weight that a person should necessarily strive toward; it is possible to be over or under your "IBW" and be perfectly healthy.
+
+      How much a person should weigh is not an exact science. It is highly dependent on each individual. Thus far, there is no measure, be it IBW, body mass index (BMI), or any other that can definitively state how much a person should weigh to be healthy.
+
+      They are only references, and it's more important to adhere to making healthy life choices such as regular exercise, eating a variety of unprocessed foods, getting enough sleep, etc. than it is to chase a specific weight based on a generalized formula.
+
+      That being said, many factors can affect the ideal weight; the major factors are listed below. Other factors include health conditions, fat distribution, progeny, etc.`,
     },
     {
       // title: "Info",
@@ -349,7 +375,7 @@ function CustomSwiper() {
 
   const renderMainItem = ({item}) => {
     const hasImage = item.image !== null;
-    console.log('MAIN renderItem called:' + item.title);
+    // console.log('MAIN renderItem called:' + item.title);
     return (
       <View style={{width, height, backgroundColor: 'white'}}>
         {hasImage && (
@@ -401,12 +427,21 @@ function CustomSwiper() {
 
   const rightPress = () => {
     if (index === colourData.length - 1) {
+      console.log(
+        'index:' +
+          index +
+          ', colourdata.length - 1:' +
+          (colourData.length - 1) +
+          ', RETURNING',
+      );
+      console.log('index is equal to colourdata.length - 1, RETURNING');
       return;
     }
     setHelpTitle(helpSlideValues[index + 1].title);
     setHelpSubHeading(helpSlideValues[index + 1].subHeading);
     setHelpText(helpSlideValues[index + 1].text);
 
+    console.log('setIndex, index:' + index + ', index + 1:' + (index + 1));
     setIndex(index + 1);
 
     setErrorText('');
@@ -427,68 +462,105 @@ function CustomSwiper() {
           showsHorizontalScrollIndicator={false}
           pagingEnabled
           bounces={false}
-          onScrollBeginDrag={e => {
-            if (this && e) {
-              this.touchX = e.nativeEvent.contentOffset.x;
-            }
-          }}
-          onScrollEndDrag={e => {
-            if (this.touchX - e.nativeEvent.contentOffset.x < -210) {
+          onScroll={e => {
+            const swipeDiff = this.touchX - e.nativeEvent.contentOffset.x;
+            if (trackingScrolling && swipeDiff < -widthBasedDiff) {
+              console.log(
+                'SCROLL BELIEVES THIS IS A RIGHT LIVE ONE:' +
+                  swipeDiff +
+                  ', localTouchX:' +
+                  localTouchX +
+                  ', this.touchX:' +
+                  this.touchX,
+              );
               const result = validate(colourData[index].title); // did they enter relevant info?
               if (result) {
+                if (index === 5) {
+                  // todo enum time!
+                  console.log('RUN HANDLECALCULATE');
+                  handleCalculate();
+                }
                 // entry is good
                 rightPress();
               } else {
+                console.log(
+                  'dont allow them to go forward yet:swipeDiff:' + swipeDiff,
+                );
                 // don't allow them to go forward yet
                 refFlatList.current?.scrollToIndex({
                   index,
                   animated: true,
                 }); // setIndex(index);
               }
+              trackingScrolling = false;
             }
-            if (this.touchX - e.nativeEvent.contentOffset.x > 210) {
+            if (trackingScrolling && swipeDiff > widthBasedDiff) {
+              console.log(
+                'SCROLL BELIEVES THIS IS A LEFT LIVE ONE:' +
+                  swipeDiff +
+                  ', localTouchX:' +
+                  localTouchX +
+                  ', this.touchX:' +
+                  this.touchX,
+              );
               leftPress();
+              trackingScrolling = false;
             }
           }}
+          onScrollBeginDrag={e => {
+            if (this && e) {
+              trackingScrolling = true;
+              console.log(
+                'BEGINe.nativeEvent.contentOffset.x:' +
+                  e.nativeEvent.contentOffset.x +
+                  ', this.touchX:' +
+                  this.touchX,
+              );
+              localTouchX = e.nativeEvent.contentOffset.x;
+              this.touchX = e.nativeEvent.contentOffset.x;
+            }
+          }}
+          onScrollEndDrag={e => {
+            // const swipeDiff = this.touchX - e.nativeEvent.contentOffset.x;
+            // console.log('ENDswipeDiff:' + swipeDiff + ', index:' + index);
+            // console.log(
+            //   'ENDlocalTouchX:' +
+            //     localTouchX +
+            //     ', e.nativeEvent.contentOffset.x:' +
+            //     e.nativeEvent.contentOffset.x,
+            // );
+            // if (swipeDiff < -widthBasedDiff) {
+            //   console.log(
+            //     'ENDPASSED:swipeDiff:' + swipeDiff + ', index:' + index,
+            //   );
+            //   const result = validate(colourData[index].title); // did they enter relevant info?
+            //   if (result) {
+            //     if (index === 5) {
+            //       // todo enum time!
+            //       console.log('RUN HANDLECALCULATE');
+            //       handleCalculate();
+            //     }
+            //     // entry is good
+            //     rightPress();
+            //   } else {
+            //     console.log(
+            //       'dont allow them to go forward yet:swipeDiff:' + swipeDiff,
+            //     );
+            //     // don't allow them to go forward yet
+            //     refFlatList.current?.scrollToIndex({
+            //       index,
+            //       animated: true,
+            //     }); // setIndex(index);
+            //   }
+            // }
+            // if (swipeDiff > widthBasedDiff) {
+            //   console.log(
+            //     'ENDPASSED:swipeDiff:' + swipeDiff + ', index:' + index,
+            //   );
+            //   leftPress();
+            // }
+          }}
           renderItem={renderMainItem}
-          // renderItem={({item}) => {
-          // const hasImage = item.image !== null;
-          // console.log('MAIN renderItem called');
-          // return (
-          //   <View style={{width, height, backgroundColor: 'white'}}>
-          //     {hasImage && (
-          //       <ImageBackground
-          //         source={item.image}
-          //         resizeMode={'cover'}
-          //         style={{flex: 1}}>
-          //         <View
-          //           style={{
-          //             flex: 1,
-          //             justifyContent: 'center',
-          //             alignItems: 'center',
-          //             width: '100%',
-          //           }}>
-          //           {/* ************************************* */}
-          //           <ListSlide
-          //             errorText={errorText}
-          //             handleCalculate={handleCalculate}
-          //             idealWeightStones={idealWeightStones}
-          //             idealWeightPounds={idealWeightPounds}
-          //             idealWeightKg={idealWeightKg}
-          //             itemTitle={item.title}
-          //           />
-          //           {/* ************************************* */}
-          //           <BottomHelp
-          //             helpTitle={helpSlideValues[index].title}
-          //             helpSubHeading={helpSlideValues[index].subHeading}
-          //             helpText={helpSlideValues[index].text}
-          //           />
-          //         </View>
-          //       </ImageBackground>
-          //     )}
-          //   </View>
-          // );
-          // }}
         />
       </View>
     </ColourProvider>

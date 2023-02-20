@@ -35,7 +35,8 @@ const GenAnimatedRadioGroup = ({
       justifyContent: 'center',
     },
     animatedTextPlaceholder: {
-      color: '#84c4ec',
+      color: 'white',
+      // color: '#84c4ec',
       fontSize: 40,
       // alignItems: 'center',
       // textAlignVertical: 'center',
