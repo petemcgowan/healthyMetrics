@@ -224,7 +224,7 @@ Specify here and we'll stick to that unless you change it here...
         if (heightCmValue > 152.4) {
           const heightAbove = heightCmValue - 152.4;
           console.log('handleCalculate, heightAbove:' + heightAbove);
-          const extraWeight = 0.748 * heightAbove;
+          const extraWeight = 0.7480319 * heightAbove;
           console.log('handleCalculate, extraWeight:' + extraWeight);
           idealWeightInt = 52 + extraWeight;
         } else {
@@ -237,7 +237,7 @@ Specify here and we'll stick to that unless you change it here...
         if (heightCmValue > 152.4) {
           const heightAbove = heightCmValue - 152.4;
           console.log('handleCalculate, heightAbove:' + heightAbove);
-          const extraWeight = 0.3937 * heightAbove;
+          const extraWeight = 0.6692917 * heightAbove;
           console.log('handleCalculate, extraWeight:' + extraWeight);
           idealWeightInt = 49 + extraWeight;
         } // not over 60 in

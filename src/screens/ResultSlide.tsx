@@ -150,13 +150,15 @@ const styles = StyleSheet.create({
   vwTop: {
     // flex: 1,
     // maxHeight: 180,
+    marginBottom: 15,
   },
   vwBottom: {
+    alignItems: 'center',
     // marginTop: 25,
     // flex: 1,
   },
   detailsHeaderText: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: '#e4bc94',
     padding: 1,
     // fontSize: 27,

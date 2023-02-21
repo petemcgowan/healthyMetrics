@@ -69,9 +69,6 @@ const WeightSlide = ({handleCalculate, errorText}: WeightSlideProps) => {
   //     // </TouchableHighlight>
   //   );
   // };
-  console.log('weightPoundsOnly:' + weightPoundsOnly);
-  console.log('weightKg:' + weightKg);
-  console.log('kgOptions:' + kgOptions);
   // console.log('poundsOnlyOptions:' + JSON.stringify(poundsOnlyOptions));
 
   return (

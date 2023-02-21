@@ -7,10 +7,20 @@ import Footer from '../../components/onboarding/Footer';
 import Page from '../../components/onboarding/Page';
 import IntroSlide from './IntroSlide';
 
-import selectUnitsVideo from '../../../assets/videos/onboarding/1_SelectUnits.mp4';
-import selectValuesVideo from '../../../assets/videos/onboarding/2_SelectValues.mp4';
-import useHelpVideo from '../../../assets/videos/onboarding/3_UseHelp.mp4';
-import getResultsVideo from '../../../assets/videos/onboarding/4_GetResults.mp4';
+// import selectUnitsVideo from '../../../assets/videos/onboarding/1_SelectUnits480-30T.mp4';
+// import selectValuesVideo from '../../../assets/videos/onboarding/2_SelectValues480-30T.mp4';
+// import useHelpVideo from '../../../assets/videos/onboarding/3_UseHelp480-30T.mp4';
+// import getResultsVideo from '../../../assets/videos/onboarding/4_GetResults480-30T.mp4';
+
+// const selectUnitsVideo = require('../../../assets/videos/onboarding/1_SelectUnits480-30T.mp4');
+// const selectValuesVideo = require('../../../assets/videos/onboarding/2_SelectValues480-30T.mp4');
+const useHelpVideo = require('../../../assets/videos/onboarding/3_UseHelp480-30T.mp4');
+const getResultsVideo = require('../../../assets/videos/onboarding/4_GetResults480-30T.mp4');
+const selectUnitsVideo = require('../../../assets/videos/onboarding/1SelectUnits.mp4');
+// const selectValuesVideo = require('../../../assets/videos/onboarding/Feb18OnboardingSelectMeasurements.mp4');
+const selectValuesVideo = require('../../../assets/videos/onboarding/2SelectValues.mp4');
+// const useHelpVideo = require('../../../assets/videos/onboarding/3Screen.mp4');
+// const getResultsVideo = require('../../../assets/videos/onboarding/4Screen.mp4');
 
 // const {width, height} = Dimensions.get('screen');
 
@@ -60,10 +70,10 @@ const Onboarding = () => {
 
         <View key="2">
           <Page
-            backgroundColor="#ffc93c"
+            sintel={selectUnitsVideo}
             title="Select Measurement Units"
             videoLink={selectUnitsVideo}
-            description="Select Measurement Units description"
+            description="Select how you want to enter and see your height and weight data"
           />
           <Footer
             backgroundColor="#ffc93c"
@@ -79,10 +89,10 @@ const Onboarding = () => {
         </View>
         <View key="3">
           <Page
-            backgroundColor="#ffc93c"
+            sintel={selectValuesVideo}
             title="Select Your Values"
             videoLink={selectValuesVideo}
-            description="Select Your Values Description"
+            description="Select your values using the dials and checkboxes"
           />
           <Footer
             backgroundColor="#ffc93c"
@@ -98,10 +108,10 @@ const Onboarding = () => {
         </View>
         <View key="4">
           <Page
-            backgroundColor="#ffc93c"
+            sintel={useHelpVideo}
             title="Use the Help system"
             videoLink={useHelpVideo}
-            description="Use the Help system Description"
+            description="Drag up from the bottom on any page to reveal help information"
           />
           <Footer
             backgroundColor="#ffc93c"
@@ -117,10 +127,10 @@ const Onboarding = () => {
         </View>
         <View key="5">
           <Page
-            backgroundColor="#07689f"
+            sintel={getResultsVideo}
             title="Get Your Results"
             videoLink={getResultsVideo}
-            description="Get Your Results description"
+            description="On the Weight screen, Click Calculate to get your Healthy Weight"
           />
           <Footer
             backgroundColor="#07689f"

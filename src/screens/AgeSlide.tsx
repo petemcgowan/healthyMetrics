@@ -39,7 +39,7 @@ interface AgeSlideProps {
 // const textStyle = {textAlign: 'center', color: '#696969', fontWeight: 'bold'};
 
 const AgeSlide = ({errorText}: AgeSlideProps) => {
-  const ageOptions = Utils.selectionDropDownRange(24, 79).map(age => age.value);
+  const ageOptions = Utils.selectionDropDownRange(18, 74).map(age => age.value);
   const pickerRef = useRef();
   // const pickerRef = useRef<PickerRef>(null);
   const age = useSelector((state: State) => state.age);
