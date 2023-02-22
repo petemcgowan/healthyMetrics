@@ -1,10 +1,10 @@
 import {Picker as Select} from '@react-native-picker/picker';
 import React from 'react';
 import {StyleSheet, Platform, Text, View, Dimensions} from 'react-native';
-import {HelperText} from 'react-native-paper';
+// import {HelperText} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ModalDropdown from 'react-native-modal-dropdown';
+// import ModalDropdown from 'react-native-modal-dropdown';
 import {Picker, PickerColumn, PickerItem} from 'react-native-picky';
 import Utils from '../components/Utils';
 import {actionCreators, State} from '../redux/index';
@@ -14,7 +14,7 @@ const threeQuarterWidth = width * 0.75;
 
 const cmOptions = Utils.selectionDropDownRange(100, 250).map(cm => cm.value);
 const ftOptions = Utils.selectionDropDownRange(3, 7).map(ft => ft.value);
-const inchesOptions = Utils.selectionDropDownRange(1, 12).map(
+const inchesOptions = Utils.selectionDropDownRange(0, 11).map(
   inches => inches.value,
 );
 
@@ -33,9 +33,9 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
   const {setHeightFt} = bindActionCreators(actionCreators, dispatch);
   const {setHeightInches} = bindActionCreators(actionCreators, dispatch);
 
-  const hasErrors = () => {
-    return heightCm === '';
-  };
+  // const hasErrors = () => {
+  //   return heightCm === '';
+  // };
 
   // const _dropdown_2_renderRow = rowData => {
   //   console.log('HeightSlide, _dropdown_2_renderRow called');
@@ -207,14 +207,14 @@ const HeightSlide = ({errorText}: HeightSlideProps) => {
         </View>
       )}
 
-      <View>
+      {/* <View>
         <HelperText
           style={{fontSize: 40, color: '#7de6fb'}}
           type="error"
           visible={hasErrors()}>
           {errorText}
         </HelperText>
-      </View>
+      </View> */}
     </View>
   );
 };

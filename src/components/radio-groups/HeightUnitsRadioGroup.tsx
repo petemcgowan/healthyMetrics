@@ -11,8 +11,8 @@ import Animated, {FadeIn} from 'react-native-reanimated';
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {actionCreators} from '../../redux/index';
-import {HeightUnitsReducerType} from '../../redux/reducers/HeightUnitsReducer';
+import {actionCreators, State} from '../../redux/index';
+// import {HeightUnitsReducerType} from '../../redux/reducers/HeightUnitsReducer';
 
 // import { StateContext } from "../../state/StateContext";
 const {width, height} = Dimensions.get('window');
@@ -24,14 +24,11 @@ interface HeightUnitsBlockProps {
 
 const HeightUnitsRadioGroup = ({animatedStyle}: HeightUnitsBlockProps) => {
   // const { heightUnitsValue, setHeightUnitsValue } = useContext(StateContext);
-  const heightUnits = useSelector(
-    (state: HeightUnitsReducerType) => state.heightUnits,
-  );
+  const heightUnits = useSelector((state: State) => state.heightUnits);
   const dispatch = useDispatch();
   const {setHeightUnits} = bindActionCreators(actionCreators, dispatch);
 
   // const [value, setValue] = useState("");
-
   const dynamicStyles = StyleSheet.create({
     animatedBlock: {
       height: height * 0.07,

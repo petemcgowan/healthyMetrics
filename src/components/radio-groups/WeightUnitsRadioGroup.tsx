@@ -11,8 +11,8 @@ import Animated, {FadeIn} from 'react-native-reanimated';
 import {useSelector, useDispatch} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {actionCreators} from '../../redux/index';
-import {WeightUnitsReducerType} from '../../redux/reducers/WeightUnitsReducer';
+import {actionCreators, State} from '../../redux/index';
+// import {WeightUnitsReducerType} from '../../redux/reducers/WeightUnitsReducer';
 
 const {width, height} = Dimensions.get('window');
 const threeQuarterWidth = width * 0.8;
@@ -22,9 +22,7 @@ interface WeightUnitsRadioGroupProps {
 }
 
 const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
-  const weightUnits = useSelector(
-    (state: WeightUnitsReducerType) => state.weightUnits,
-  );
+  const weightUnits = useSelector((state: State) => state.weightUnits);
   const dispatch = useDispatch();
   const {setWeightUnits} = bindActionCreators(actionCreators, dispatch);
 

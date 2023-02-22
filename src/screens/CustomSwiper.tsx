@@ -8,10 +8,11 @@ import {
   Animated,
   ImageBackground,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
+import {actionCreators, State} from '../redux/index';
 import BottomHelp from '../components/BottomHelp';
-import {State} from '../redux/index';
 import ColourContext, {ColourProvider} from '../state/ColourContext';
 // import {ValuesProvider} from '../state/ValuesContext';
 import ListSlide from './ListSlide';
@@ -25,20 +26,23 @@ function CustomSwiper() {
   const [index, setIndex] = React.useState(0);
   // const nativeEventPageX = -1; // tracked by mouse move
   // const handlerTouchX = -1; // tracked by mouse move
-  const weightPounds = useSelector((state: State) => state.weightPounds);
-  const weightPoundsOnly = useSelector(
-    (state: State) => state.weightPoundsOnly,
-  );
-  const weightStones = useSelector((state: State) => state.weightStones);
-  const weightKg = useSelector((state: State) => state.weightKg);
+  // const weightPounds = useSelector((state: State) => state.weightPounds);
+  // const weightPoundsOnly = useSelector(
+  //   (state: State) => state.weightPoundsOnly,
+  // );
+  // const weightStones = useSelector((state: State) => state.weightStones);
+  // const weightKg = useSelector((state: State) => state.weightKg);
   const heightCm = useSelector((state: State) => state.heightCm);
   const heightFt = useSelector((state: State) => state.heightFt);
   const heightInches = useSelector((state: State) => state.heightInches);
   const heightUnits = useSelector((state: State) => state.heightUnits);
   const weightUnits = useSelector((state: State) => state.weightUnits);
 
+  const dispatch = useDispatch();
+  const {updateHasSeenIntro} = bindActionCreators(actionCreators, dispatch);
+
   const frame = useSelector((state: State) => state.frame);
-  const age = useSelector((state: State) => state.age);
+  // const age = useSelector((state: State) => state.age);
   const gender = useSelector((state: State) => state.gender);
   const [idealWeightPounds, setIdealWeightPounds] = useState(0);
   const [idealWeightStones, setIdealWeightStones] = useState(0);
@@ -190,6 +194,8 @@ Specify here and we'll stick to that unless you change it here...
   // useEffect notices the change in state index, so changes the Flatlist's scrollToIndex
   useEffect(() => {
     console.log('App useEffect');
+    // We've seen the onboarding, so hide it from now on
+    updateHasSeenIntro(true);
     refFlatList.current?.scrollToIndex({
       index,
       animated: true,
@@ -306,12 +312,12 @@ Specify here and we'll stick to that unless you change it here...
         break;
       }
       case 'age': {
-        console.log('ageValue:' + age);
-        if (age === '') {
-          // they haven't selected anything
-          setErrorText('Please enter an age');
-          return false;
-        }
+        // console.log('ageValue:' + age);
+        // if (age === '') {
+        //   // they haven't selected anything
+        //   setErrorText('Please enter an age');
+        //   return false;
+        // }
         break;
       }
       case 'frame': {
@@ -329,38 +335,38 @@ Specify here and we'll stick to that unless you change it here...
       case 'result':
         break;
       case 'weight': {
-        if (weightUnits === 'kg') {
-          if (weightKg === '') {
-            // they haven't selected anything
-            setErrorText('Please enter a weight in kg');
-            return false;
-          }
-        }
-        if (weightUnits === 'Pounds' || weightUnits === 'Stones/Pounds') {
-          if (weightPounds === '') {
-            // they haven't selected anything
-            setErrorText('Please enter a weight in pounds');
-            return false;
-          }
-        }
+        // if (weightUnits === 'kg') {
+        //   if (weightKg === '') {
+        //     // they haven't selected anything
+        //     setErrorText('Please enter a weight in kg');
+        //     return false;
+        //   }
+        // }
+        // if (weightUnits === 'Pounds' || weightUnits === 'Stones/Pounds') {
+        //   if (weightPounds === '') {
+        //     // they haven't selected anything
+        //     setErrorText('Please enter a weight in pounds');
+        //     return false;
+        //   }
+        // }
         break;
       }
       case 'height': {
         // todo heightFeet and inches needed here depending on units measure
-        if (heightUnits === 'cm') {
-          if (heightCm === '') {
-            // they haven't selected anything
-            setErrorText('Please enter a height');
-            return false;
-          }
-        }
-        if (heightUnits === 'Feet/Inches') {
-          if (heightFt === '') {
-            // they haven't selected anything
-            setErrorText('Please enter a height');
-            return false;
-          }
-        }
+        // if (heightUnits === 'cm') {
+        //   if (heightCm === '') {
+        //     // they haven't selected anything
+        //     setErrorText('Please enter a height');
+        //     return false;
+        //   }
+        // }
+        // if (heightUnits === 'Feet/Inches') {
+        //   if (heightFt === '') {
+        //     // they haven't selected anything
+        //     setErrorText('Please enter a height');
+        //     return false;
+        //   }
+        // }
         break;
       }
       default: {
@@ -465,14 +471,14 @@ Specify here and we'll stick to that unless you change it here...
           onScroll={e => {
             const swipeDiff = this.touchX - e.nativeEvent.contentOffset.x;
             if (trackingScrolling && swipeDiff < -widthBasedDiff) {
-              console.log(
-                'SCROLL BELIEVES THIS IS A RIGHT LIVE ONE:' +
-                  swipeDiff +
-                  ', localTouchX:' +
-                  localTouchX +
-                  ', this.touchX:' +
-                  this.touchX,
-              );
+              // console.log(
+              //   'SCROLL BELIEVES THIS IS A RIGHT LIVE ONE:' +
+              //     swipeDiff +
+              //     ', localTouchX:' +
+              //     localTouchX +
+              //     ', this.touchX:' +
+              //     this.touchX,
+              // );
               const result = validate(colourData[index].title); // did they enter relevant info?
               if (result) {
                 if (index === 5) {
@@ -495,14 +501,14 @@ Specify here and we'll stick to that unless you change it here...
               trackingScrolling = false;
             }
             if (trackingScrolling && swipeDiff > widthBasedDiff) {
-              console.log(
-                'SCROLL BELIEVES THIS IS A LEFT LIVE ONE:' +
-                  swipeDiff +
-                  ', localTouchX:' +
-                  localTouchX +
-                  ', this.touchX:' +
-                  this.touchX,
-              );
+              // console.log(
+              //   'SCROLL BELIEVES THIS IS A LEFT LIVE ONE:' +
+              //     swipeDiff +
+              //     ', localTouchX:' +
+              //     localTouchX +
+              //     ', this.touchX:' +
+              //     this.touchX,
+              // );
               leftPress();
               trackingScrolling = false;
             }
@@ -510,12 +516,12 @@ Specify here and we'll stick to that unless you change it here...
           onScrollBeginDrag={e => {
             if (this && e) {
               trackingScrolling = true;
-              console.log(
-                'BEGINe.nativeEvent.contentOffset.x:' +
-                  e.nativeEvent.contentOffset.x +
-                  ', this.touchX:' +
-                  this.touchX,
-              );
+              // console.log(
+              //   'BEGINe.nativeEvent.contentOffset.x:' +
+              //     e.nativeEvent.contentOffset.x +
+              //     ', this.touchX:' +
+              //     this.touchX,
+              // );
               localTouchX = e.nativeEvent.contentOffset.x;
               this.touchX = e.nativeEvent.contentOffset.x;
             }
