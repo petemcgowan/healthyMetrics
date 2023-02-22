@@ -1,9 +1,18 @@
-import { HeightAction } from "../actions/index";
-const initialState = "174";
+import {
+  HeightCmAction,
+  HeightFtAction,
+  HeightInchesAction,
+} from '../actions/index';
+const heightCmInitialState = '174';
+const heightFtInitialState = '5';
+const heightInchesInitialState = '10';
 
-export const heightCm = (state = initialState, action: HeightAction) => {
+export const heightCm = (
+  state = heightCmInitialState,
+  action: HeightCmAction,
+) => {
   switch (action.type) {
-    case "UPDATE_HEIGHT_CM":
+    case 'UPDATE_HEIGHT_CM':
       state = action.payload;
       return state;
     default:
@@ -11,9 +20,12 @@ export const heightCm = (state = initialState, action: HeightAction) => {
   }
 };
 
-export const heightFt = (state = initialState, action: HeightAction) => {
+export const heightFt = (
+  state = heightFtInitialState,
+  action: HeightFtAction,
+) => {
   switch (action.type) {
-    case "UPDATE_HEIGHT_FT":
+    case 'UPDATE_HEIGHT_FT':
       state = action.payload;
       return state;
     default:
@@ -21,9 +33,12 @@ export const heightFt = (state = initialState, action: HeightAction) => {
   }
 };
 
-export const heightInches = (state = initialState, action: HeightAction) => {
+export const heightInches = (
+  state = heightInchesInitialState,
+  action: HeightInchesAction,
+) => {
   switch (action.type) {
-    case "UPDATE_HEIGHT_INCHES":
+    case 'UPDATE_HEIGHT_INCHES':
       state = action.payload;
       return state;
     default:

@@ -1,5 +1,6 @@
 import {
   WeightPoundsAction,
+  WeightPoundsOnlyAction,
   WeightStonesAction,
   WeightKgAction,
 } from '../actions/index';

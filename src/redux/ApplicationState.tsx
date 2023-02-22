@@ -1,6 +1,8 @@
 const ApplicatonState: {
   age: number;
-  height: number;
+  heightCm: number;
+  heightInches: number;
+  heightFt: number;
   frame: string;
   gender: string;
   weightStones: number;
@@ -10,7 +12,9 @@ const ApplicatonState: {
   targetWeight: number;
 } = {
   age: 29,
-  height: 174,
+  heightCm: 174,
+  heightInches: 10,
+  heightFt: 5,
   frame: 'medium',
   gender: 'Female',
   weightStones: 11,

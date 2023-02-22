@@ -109,3 +109,12 @@ export const setWeightUnits = (weightUnits: string) => {
     });
   };
 };
+
+export const updateHasSeenIntro = (hasSeenIntro: boolean) => {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.UPDATE_HAS_SEEN_INTRO_VALUE,
+      payload: hasSeenIntro,
+    });
+  };
+};

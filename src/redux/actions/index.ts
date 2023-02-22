@@ -28,12 +28,26 @@ interface UpdateGenderAction {
 
 export type GenderAction = UpdateGenderAction;
 
-interface UpdateHeightAction {
-  type: ActionType.UPDATE_HEIGHT_VALUE;
+interface UpdateHeightCmAction {
+  type: ActionType.UPDATE_HEIGHT_CM;
   payload: string;
 }
 
-export type HeightAction = UpdateHeightAction;
+export type HeightCmAction = UpdateHeightCmAction;
+
+interface UpdateHeightFtAction {
+  type: ActionType.UPDATE_HEIGHT_FT;
+  payload: string;
+}
+
+export type HeightFtAction = UpdateHeightFtAction;
+
+interface UpdateHeightInchesAction {
+  type: ActionType.UPDATE_HEIGHT_INCHES;
+  payload: string;
+}
+
+export type HeightInchesAction = UpdateHeightInchesAction;
 
 interface UpdateHeightUnitsAction {
   type: ActionType.UPDATE_HEIGHT_UNITS_VALUE;
@@ -56,12 +70,12 @@ interface UpdateWeightPoundsOnlyAction {
 
 export type WeightPoundsOnlyAction = UpdateWeightPoundsOnlyAction;
 
-interface UpdateWeightStoneAction {
-  type: ActionType.UPDATE_WEIGHT_STONE_VALUE;
+interface UpdateWeightStonesAction {
+  type: ActionType.UPDATE_WEIGHT_STONES_VALUE;
   payload: string;
 }
 
-export type WeightStoneAction = UpdateWeightStoneAction;
+export type WeightStonesAction = UpdateWeightStonesAction;
 
 interface UpdateWeightKgAction {
   type: ActionType.UPDATE_WEIGHT_KG_VALUE;
