@@ -1,20 +1,22 @@
-import React, {useEffect} from 'react';
-import {Text} from 'react-native';
-import 'react-native-gesture-handler';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import SplashScreen from 'react-native-splash-screen';
+import React, { useEffect } from 'react'
+import { Text } from 'react-native'
+import 'react-native-gesture-handler'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+// import Ionicons from 'react-native-vector-icons/Ionicons';
+import SplashScreen from 'react-native-splash-screen'
 
-import TheoryComponent from './components/TheoryComponent';
-import {store, persistor} from './redux/store';
+import TheoryComponent from './components/TheoryComponent'
+import { store, persistor } from './redux/store'
 
 export default function App() {
-  Ionicons.loadFont();
+  // Ionicons.loadFont();
 
   useEffect(() => {
-    SplashScreen.hide();
-  }, []);
+    console.log('before splash screen')
+    SplashScreen.hide()
+    console.log('after splash screen')
+  }, [])
 
   return (
     <Provider store={store}>
@@ -22,5 +24,5 @@ export default function App() {
         <TheoryComponent />
       </PersistGate>
     </Provider>
-  );
+  )
 }

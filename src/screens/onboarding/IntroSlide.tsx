@@ -1,20 +1,19 @@
 import React from 'react';
 import {StyleSheet, Dimensions, Text, View} from 'react-native';
 
-const {width} = Dimensions.get('window');
-const threeQuarterWidth = width * 0.75;
+const {width, height} = Dimensions.get('window');
 
 const IntroSlide = () => {
   return (
     <View style={styles.overallContainer}>
-      <View style={styles.topContainer}>
-        <Text style={styles.mainText}>Welcome to Healthy </Text>
+      <View style={[styles.topContainer, {height: height * 0.7}]}>
+        <Text style={styles.mainText}>Welcome to Healthy</Text>
       </View>
-
-      <View style={styles.bottomContainer}>
+      {/* <View style={{height: height * 0.15}}></View> */}
+      <View style={[styles.bottomContainer, {height: height * 0.3}]}>
         <Text style={styles.secondaryText}>
-          Find the recommended healthy weight for your age, weight, height,
-          gender and wrist size...
+          Find the recommended healthy weight for your age, weight, height and
+          wrist size...
         </Text>
       </View>
     </View>
@@ -26,47 +25,52 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topContainer: {
-    // flexWrap: "wrap",
-    flexBasis: '55%',
-    margin: 20,
+    // flex: 0.5,
+    flexDirection: 'column',
     marginTop: 40,
     overflow: 'hidden',
+    // padding: 10,
+    // flexWrap: "wrap",
     // minWidth: 150,
-    padding: 10,
+    // flexBasis: '45%',
+    // margin: 10,
   },
   bottomContainer: {
-    // flex: 1,
-    flexBasis: '40%',
+    flexDirection: 'column',
+    // flex: 0.5,
     letterSpacing: 3,
-    margin: 13,
-    marginTop: 40,
     marginBottom: 80,
-    flexWrap: 'wrap',
-    overflow: 'hidden',
-    minHeight: 40,
+    width: width * 0.95,
     borderRadius: 20,
+    // flex: 1,
+    // flexBasis: '45%',
+    // margin: 13,
+    // marginTop: 40,
+    // flexWrap: 'wrap',
+    // overflow: 'hidden',
+    // minHeight: 40,
   },
   mainText: {
     alignSelf: 'center',
     // justifyContent: "flex-start",
     textAlign: 'center',
-    width: threeQuarterWidth,
-
+    width: width * 0.95,
     color: 'rgba(255, 203, 31, 0.89)',
-    fontSize: width < 380 ? 58 : 70,
+    fontSize: height < 800 ? 58 : 70,
     alignItems: 'flex-start',
   },
   secondaryText: {
     // backgroundColor: 'rgba(0, 0, 0, 0.2)',
 
     backgroundColor: 'rgba(175,160,96, 0.8)',
+    width: width * 0.95,
 
     alignSelf: 'flex-start',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     color: '#764134',
     // color: 'rgba(255, 203, 31, 0.89)',
-    padding: 3,
-    fontSize: 24,
+    margin: 3,
+    fontSize: 21,
   },
 });
 

@@ -2,6 +2,7 @@ import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import React, {useContext, useCallback, useEffect} from 'react';
 import {
   StyleSheet,
+  Linking,
   Text,
   View,
   Dimensions,
@@ -12,16 +13,22 @@ import ColourContext from '../state/ColourContext';
 import CustomBackground from './CustomBackground';
 import {HeaderHandle} from './handles/HeaderHandle';
 
-const {width, height} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('window');
 const ITEM_HEIGHT = height * 0.8;
 
 interface BottomHelpProps {
-  helpTitle: string;
   helpSubHeading: string;
   helpText: string;
+  helpReferenceTitle: string;
+  helpReferenceLink: string;
 }
 
-const BottomHelp = ({helpTitle, helpSubHeading, helpText}: BottomHelpProps) => {
+const BottomHelp = ({
+  helpSubHeading,
+  helpText,
+  helpReferenceTitle,
+  helpReferenceLink,
+}: BottomHelpProps) => {
   // console.log(
   //   "BottomHelp, height:" +
   //     height +
@@ -41,19 +48,6 @@ const BottomHelp = ({helpTitle, helpSubHeading, helpText}: BottomHelpProps) => {
 */
   const {colourData, index} = useContext(ColourContext);
 
-  useEffect(() => {
-    console.log(
-      'BottomHelp, useEffect, helpSubHeading:' +
-        helpSubHeading +
-        ', height:' +
-        height +
-        ', ITEM_HEIGHT:' +
-        ITEM_HEIGHT +
-        ', (height - ITEM_HEIGHT):' +
-        (height - ITEM_HEIGHT),
-    );
-  }, []);
-
   // const renderHeaderHandle = useCallback(
   //   (props) => <HeaderHandle {...props} children="Custom Background" />,
   //   []
@@ -67,7 +61,7 @@ const BottomHelp = ({helpTitle, helpSubHeading, helpText}: BottomHelpProps) => {
       // handleComponent={renderHeaderHandle}
       // snapPoints={[height - ITEM_HEIGHT, ITEM_HEIGHT - 70]}
       snapPoints={[
-        height > 750 ? height * 0.08 : height * 0.1,
+        height > 750 ? height * 0.08 : height * 0.14,
         ITEM_HEIGHT - height * 0.1,
       ]}
       style={{
@@ -105,6 +99,21 @@ const BottomHelp = ({helpTitle, helpSubHeading, helpText}: BottomHelpProps) => {
         <View style={{marginVertical: 20}}>
           <Text style={{color: colourData[index].dominant, fontSize: 17}}>
             {helpText}
+          </Text>
+          <Text style={{fontStyle: 'italic', marginTop: 15}}>Reference: </Text>
+          <Text
+            style={{
+              fontStyle: 'italic',
+              color: colourData[index].dominant,
+              fontSize: 17,
+            }}>
+            {helpReferenceTitle}
+          </Text>
+
+          <Text
+            style={{color: 'mediumblue'}}
+            onPress={() => Linking.openURL(helpReferenceLink)}>
+            {helpReferenceLink}
           </Text>
         </View>
       </BottomSheetScrollView>
