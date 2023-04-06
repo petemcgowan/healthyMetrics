@@ -9,7 +9,7 @@ import {Picker, PickerColumn, PickerItem} from 'react-native-picky';
 import Utils from '../components/Utils';
 import {actionCreators, State} from '../redux/index';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const threeQuarterWidth = width * 0.75;
 
 const cmOptions = Utils.selectionDropDownRange(100, 250).map(cm => cm.value);
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: threeQuarterWidth,
     color: '#7de6fb',
-    fontSize: width < 380 ? 73 : 90,
+    fontSize: height < 800 ? 73 : 90,
   },
   textBelow: {
     alignSelf: 'center',
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: threeQuarterWidth,
     color: '#7de6fb',
-    fontSize: width < 380 ? 90 : 103,
+    fontSize: height < 800 ? 90 : 103,
   },
   feetContainer: {
     // height: 180,

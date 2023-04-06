@@ -2,7 +2,7 @@ import Video from 'react-native-video';
 import React from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
-const {width, height} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('window');
 const VIDEO_HEIGHT = height * 0.67;
 const VIDEO_WIDTH = width * 0.67;
 

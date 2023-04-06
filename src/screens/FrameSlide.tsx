@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import FramePicker from '../components/pickers/FramePicker';
 import {actionCreators, State} from '../redux/index';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 interface FrameSlideProps {
   errorText: string;
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 100,
     color: '#7de6fb', // "#FFCB1F",
-    fontSize: width < 380 ? 73 : 90,
+    fontSize: height < 800 ? 73 : 90,
     // fontWeight: "bold",
   },
   textBelow: {
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: 100,
     color: '#7de6fb',
-    fontSize: width < 380 ? 93 : 105,
+    fontSize: height < 800 ? 93 : 105,
   },
 });

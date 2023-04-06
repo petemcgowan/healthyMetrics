@@ -9,7 +9,7 @@ import {bindActionCreators} from 'redux';
 import GenderPicker from '../components/pickers/GenderPicker';
 import {actionCreators, State} from '../redux/index';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const threeQuarterWidth = width * 0.8;
 
 interface GenderSlideProps {
@@ -31,20 +31,20 @@ const GenderSlide = ({errorText}: GenderSlideProps) => {
       textAlign: 'center',
       width: width,
       color: '#84c4ec',
-      fontSize: width < 380 ? 70 : 90,
+      fontSize: height < 800 ? 70 : 90,
     },
     textBelow: {
       alignSelf: 'center',
       textAlign: 'center',
       width: width,
       color: '#84c4ec',
-      fontSize: width < 380 ? 85 : 95,
+      fontSize: height < 800 ? 85 : 95,
     },
     input: {
       height: 70,
       width: 'auto',
       textAlign: 'center',
-      fontSize: width < 380 ? 65 : 75,
+      fontSize: height < 800 ? 65 : 75,
       color: '#84c4ec',
       minWidth: threeQuarterWidth,
       padding: 5,
