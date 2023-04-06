@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext, useMemo} from 'react';
 import 'react-native-gesture-handler';
 import {
-  LogBox,
   StyleSheet,
   View,
   Dimensions,
@@ -17,7 +16,7 @@ import ColourContext, {ColourProvider} from '../state/ColourContext';
 // import {ValuesProvider} from '../state/ValuesContext';
 import ListSlide from './ListSlide';
 
-const {width, height} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('window');
 const widthBasedDiff = width * 0.85;
 
 function CustomSwiper() {
@@ -26,12 +25,12 @@ function CustomSwiper() {
   const [index, setIndex] = React.useState(0);
   // const nativeEventPageX = -1; // tracked by mouse move
   // const handlerTouchX = -1; // tracked by mouse move
-  // const weightPounds = useSelector((state: State) => state.weightPounds);
-  // const weightPoundsOnly = useSelector(
-  //   (state: State) => state.weightPoundsOnly,
-  // );
-  // const weightStones = useSelector((state: State) => state.weightStones);
-  // const weightKg = useSelector((state: State) => state.weightKg);
+  const weightPounds = useSelector((state: State) => state.weightPounds);
+  const weightPoundsOnly = useSelector(
+    (state: State) => state.weightPoundsOnly,
+  );
+  const weightStones = useSelector((state: State) => state.weightStones);
+  const weightKg = useSelector((state: State) => state.weightKg);
   const heightCm = useSelector((state: State) => state.heightCm);
   const heightFt = useSelector((state: State) => state.heightFt);
   const heightInches = useSelector((state: State) => state.heightInches);
@@ -47,6 +46,8 @@ function CustomSwiper() {
   const [idealWeightPounds, setIdealWeightPounds] = useState(0);
   const [idealWeightStones, setIdealWeightStones] = useState(0);
   const [idealWeightKg, setIdealWeightKg] = useState(0);
+  const [bmiCalcResult, setBMICalcResult] = useState(0);
+
   const [helpTitle, setHelpTitle] = useState('');
   const [helpSubHeading, setHelpSubHeading] = useState('');
   const [helpText, setHelpText] = useState('');
@@ -55,7 +56,7 @@ function CustomSwiper() {
   let trackingScrolling = false;
 
   const [errorText, setErrorText] = useState(null);
-  LogBox.ignoreAllLogs();
+  console.log('CustomSwiper, width:' + width + ', height:' + height);
 
   // const memoizedValue = useMemo(
   //   () => renderMainItem,
@@ -87,13 +88,7 @@ function CustomSwiper() {
   );
 
   const helpSlideValues = [
-    // {
-    //   // title: "Info",
-    //   subHeading: 'Welcome',
-    //   text: "Find related info on the screen you're on here 😎 ",
-    // },
     {
-      // title: "Info",
       subHeading: 'Units',
       text: `Do you weigh yourself in pounds?  Stones and Pounds?  Kg?  Specify that on this page!
 
@@ -101,9 +96,9 @@ Do you measure your height in cm (metric) or feet and inches (imperial)?
 
 Specify here and we'll stick to that unless you change it here...
                `,
+      references: [{title: '', link: ''}],
     },
     {
-      // title: "Info",
       subHeading: 'Gender',
       text: `Generally, females weigh less than males even though they naturally have a higher percentage of body fat.
 
@@ -112,23 +107,41 @@ Specify here and we'll stick to that unless you change it here...
       * Women generally have lower bone density.
 
       * Last but not least, males tend to be taller than females.`,
+      references: [
+        {
+          title:
+            'Sex differences in human adipose tissues: the biology of pear shape',
+          link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3411490/',
+        },
+      ],
     },
     {
-      // title: "Info",
       subHeading: 'Age',
       text: `In theory, age shouldn't be a large determinant of an ideal body weight past the ages of 14-15 for girls and 16-17 for boys, after which most people stop growing.
 
       It is actually expected that human males and females to lose 1.5 and 2 inches in height respectively by age 70.
 
       It is possible to remove the effects of aging by adopting various habits such as monitoring diet, exercise, stress, supplementation and sleep.`,
+      references: [
+        {
+          title:
+            'A Research Agenda: The Changing Relationship Between Body Weight and Health in Aging',
+          link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4984841/',
+        },
+      ],
     },
     {
-      title: 'Info',
       subHeading: 'Height',
       text: 'The taller the person, the more muscle mass and body fat they have, which results in more weight. A male at a similar height to a female should weigh about 10-20% heavier.',
+      references: [
+        {
+          title:
+            'Robinson JD, Lupkiewicz SM, Palenik L, Lopez LM, Ariet M, Determination of ideal body weight for drug dosage calculations. Am J Hosp Parm 1983',
+          link: 'https://pubmed.ncbi.nlm.nih.gov/6869387/',
+        },
+      ],
     },
     {
-      // title: "Info",
       subHeading: 'Frame',
       text: `Body frame size is another factor that can have a significant impact on the measurement of ideal weight.
 
@@ -157,38 +170,56 @@ Specify here and we'll stick to that unless you change it here...
       Large boned = wrist size over 7.5 in
 
       A person who is large boned will naturally weigh more than someone who is small boned, even at the same height, making body frame size a factor that can affect measurements such as IBW and BMI.`,
+      references: [
+        {
+          title: 'How to Measure Your Wrist to Get Your Body Frame Size',
+          link: 'https://www.livestrong.com/article/175491-how-to-measure-wrist-size-for-body-frame-measurement/',
+        },
+      ],
     },
     {
-      // title: "Info",
       subHeading: 'Weight',
-      text: `Most everyone has at some point tried to lose weight, or at least known somebody who has.
+      text: `
 
-      This is largely due to the perception of an "ideal" body weight, which is often based on what we see promoted through various media such as social media, TV, movies, magazines, etc.
+      Although healthy body weight (HBW) today is sometimes based on perceived visual appeal, HBW was actually introduced to estimate dosages for medical use, and the formulas that calculate it are not at all related to how a person looks at a given weight.
 
-      Although ideal body weight (IBW) today is sometimes based on perceived visual appeal, IBW was actually introduced to estimate dosages for medical use, and the formulas that calculate it are not at all related to how a person looks at a given weight.
+      It has since been determined that the metabolism of certain drugs is more based on HBW than it is total body weight. Today, HBW is also used widely throughout sports, since many sports classify people based on their body weight.
 
-      It has since been determined that the metabolism of certain drugs is more based on IBW than it is total body weight. Today, IBW is also used widely throughout sports, since many sports classify people based on their body weight.
+      Note that HBW is not a perfect measurement. It does not consider the percentages of body fat and muscle in a person's body. This means that it is possible for highly fit, healthy athletes to be considered overweight based on their HBW.
 
-      Note that IBW is not a perfect measurement. It does not consider the percentages of body fat and muscle in a person's body. This means that it is possible for highly fit, healthy athletes to be considered overweight based on their IBW.
+      This is why HBW should be considered with the perspective that it is an imperfect measure and not necessarily indicative of health, or a weight that a person should necessarily strive toward; it is possible to be over or under your "HBW" and be perfectly healthy.
 
-      This is why IBW should be considered with the perspective that it is an imperfect measure and not necessarily indicative of health, or a weight that a person should necessarily strive toward; it is possible to be over or under your "IBW" and be perfectly healthy.
-
-      How much a person should weigh is not an exact science. It is highly dependent on each individual. Thus far, there is no measure, be it IBW, body mass index (BMI), or any other that can definitively state how much a person should weigh to be healthy.
+      How much a person should weigh is not an exact science. It is highly dependent on each individual. Thus far, there is no measure, be it HBW, body mass index (BMI), or any other that can definitively state how much a person should weigh to be healthy.
 
       They are only references, and it's more important to adhere to making healthy life choices such as regular exercise, eating a variety of unprocessed foods, getting enough sleep, etc. than it is to chase a specific weight based on a generalized formula.
 
-      That being said, many factors can affect the ideal weight; the major factors are listed below. Other factors include health conditions, fat distribution, progeny, etc.`,
+      That being said, many factors can affect the healthy weight; the major factors are listed below. Other factors include health conditions, fat distribution, progeny, etc.`,
+      references: [
+        {
+          title: 'Ideal Body Weight',
+          link: 'https://www.sciencedirect.com/topics/medicine-and-dentistry/ideal-body-weight',
+        },
+      ],
     },
-    {
-      // title: "Info",
-      subHeading: 'Results',
-      text: `J. D. Robinson Formula (1983)
+    null,
+    // {
+    //   subHeading: 'Results',
+    //   text: `J. D. Robinson Formula (1983)
 
-      Male:	52 kg + 1.9 kg per inch over 5 feet
-      Female:	49 kg + 1.7 kg per inch over 5 feet
+    //   Male:	52 kg + 1.9 kg per inch over 5 feet
+    //   Female:	49 kg + 1.7 kg per inch over 5 feet
 
-      Modification of the Devine Formula.`,
-    },
+    //   Modification of the Devine Formula.`,
+    //   references: [
+    //     {
+    //       title:
+    //         'Robinson JD, Lupkiewicz SM, Palenik L, Lopez LM, Ariet M, Determination of ideal body weight for drug dosage calculations. Am J Hosp Parm 1983',
+    //       link: 'https://pubmed.ncbi.nlm.nih.gov/6869387/',
+    //     },
+    //   ],
+    // },
+    null,
+    null,
   ];
 
   // useEffect notices the change in state index, so changes the Flatlist's scrollToIndex
@@ -205,9 +236,12 @@ Specify here and we'll stick to that unless you change it here...
   const handleCalculate = () => {
     console.log('handleCalculate, frame:' + frame);
     const weightIsValidated = validate('weight');
-
+    //resetting on a re-run
+    setIdealWeightPounds(0);
+    setIdealWeightStones(0);
+    setIdealWeightKg(0);
+    let heightCmValue = +heightCm;
     if (weightIsValidated) {
-      let heightCmValue = +heightCm;
       if (heightUnits === 'Feet/Inches') {
         // the + makes it a number (for calcs)
         const heightFtInches = +heightFt * 12 + +heightInches;
@@ -215,6 +249,27 @@ Specify here and we'll stick to that unless you change it here...
         heightCmValue = heightFtInches * 2.54; // convert to cm
       }
       console.log('handleCalculate, heightCmValue:' + heightCmValue);
+
+      let weightKgValue = +weightKg;
+      if (weightUnits === 'Pounds') {
+        // divide the kg value by 2.205 for lbs
+        weightKgValue = +weightPoundsOnly / 2.205;
+      }
+      if (weightUnits === 'Stones/Pounds') {
+        weightKgValue = +weightStones * 12 + +weightPounds;
+      }
+      console.log(
+        'CustomSwiper(after weight conversion), weightKgValue:' + weightKgValue,
+      );
+
+      // BMI CALC
+      const heightMSquared = (heightCmValue * heightCmValue) / 100 / 100;
+      console.log('handleCalculate, heightMSquared:' + heightMSquared);
+      const bmiCalcValue = weightKgValue / heightMSquared;
+      console.log('handleCalculate, bmiCalcValue:' + bmiCalcValue);
+      setBMICalcResult(bmiCalcValue);
+      // Todo: weightPoundsOnly (bmi calc)
+      // Todo: weightStones / weightPounds (bmi calc)
 
       // Note: Weight is not currently used in the calc
 
@@ -403,14 +458,22 @@ Specify here and we'll stick to that unless you change it here...
                 idealWeightStones={idealWeightStones}
                 idealWeightPounds={idealWeightPounds}
                 idealWeightKg={idealWeightKg}
+                bmiCalcResult={bmiCalcResult}
                 itemTitle={item.title}
+                setIndex={setIndex}
+                index={index}
               />
               {/* ************************************* */}
-              <BottomHelp
-                helpTitle={helpSlideValues[index].title}
-                helpSubHeading={helpSlideValues[index].subHeading}
-                helpText={helpSlideValues[index].text}
-              />
+              {helpSlideValues[index] !== null && (
+                <BottomHelp
+                  helpSubHeading={helpSlideValues[index].subHeading}
+                  helpText={helpSlideValues[index].text}
+                  helpReferenceTitle={
+                    helpSlideValues[index].references[0].title
+                  }
+                  helpReferenceLink={helpSlideValues[index].references[0].link}
+                />
+              )}
             </View>
           </ImageBackground>
         )}
@@ -422,9 +485,11 @@ Specify here and we'll stick to that unless you change it here...
     if (index === 0) {
       return;
     }
-    setHelpTitle(helpSlideValues[index - 1].title);
-    setHelpSubHeading(helpSlideValues[index - 1].subHeading);
-    setHelpText(helpSlideValues[index - 1].text);
+    if (helpSlideValues[index - 1] !== null) {
+      // setHelpTitle(helpSlideValues[index - 1].title);
+      setHelpSubHeading(helpSlideValues[index - 1].subHeading);
+      setHelpText(helpSlideValues[index - 1].text);
+    }
 
     setIndex(index - 1);
 
@@ -443,9 +508,11 @@ Specify here and we'll stick to that unless you change it here...
       console.log('index is equal to colourdata.length - 1, RETURNING');
       return;
     }
-    setHelpTitle(helpSlideValues[index + 1].title);
-    setHelpSubHeading(helpSlideValues[index + 1].subHeading);
-    setHelpText(helpSlideValues[index + 1].text);
+    if (helpSlideValues[index + 1] !== null) {
+      // setHelpTitle(helpSlideValues[index + 1].title);
+      setHelpSubHeading(helpSlideValues[index + 1].subHeading);
+      setHelpText(helpSlideValues[index + 1].text);
+    }
 
     console.log('setIndex, index:' + index + ', index + 1:' + (index + 1));
     setIndex(index + 1);
