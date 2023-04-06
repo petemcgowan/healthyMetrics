@@ -4,10 +4,14 @@ import {
   WeightStonesAction,
   WeightKgAction,
 } from '../actions/index';
-const initialState = '157';
+// const initialState = '157';
+const weightStonesInitialState = '5';
+const weightPoundsInitialState = '157';
+const weightPoundsOnlyInitialState = '0';
+const weightKgInitialState = '75';
 
 export const weightPounds = (
-  state = initialState,
+  state = weightPoundsInitialState,
   action: WeightPoundsAction,
 ) => {
   switch (action.type) {
@@ -20,7 +24,7 @@ export const weightPounds = (
 };
 
 export const weightPoundsOnly = (
-  state = initialState,
+  state = weightPoundsOnlyInitialState,
   action: WeightPoundsOnlyAction,
 ) => {
   switch (action.type) {
@@ -33,7 +37,7 @@ export const weightPoundsOnly = (
 };
 
 export const weightStones = (
-  state = initialState,
+  state = weightStonesInitialState,
   action: WeightStonesAction,
 ) => {
   switch (action.type) {
@@ -45,7 +49,10 @@ export const weightStones = (
   }
 };
 
-export const weightKg = (state = initialState, action: WeightKgAction) => {
+export const weightKg = (
+  state = weightKgInitialState,
+  action: WeightKgAction,
+) => {
   switch (action.type) {
     case 'UPDATE_WEIGHT_KG_VALUE':
       state = action.payload;

@@ -6,6 +6,7 @@ import FrameSlide from './FrameSlide';
 import GenderSlide from './GenderSlide';
 import HeightSlide from './HeightSlide';
 import ResultSlide from './ResultSlide';
+import ResultBMISlide from './ResultBMISlide';
 import UnitsSlide from './UnitsSlide';
 import WeightSlide from './WeightSlide';
 
@@ -16,6 +17,9 @@ interface ListSlideProps {
   idealWeightPounds: number;
   idealWeightKg: number;
   itemTitle: string;
+  bmiCalcResult: number;
+  setIndex: any;
+  index: number;
 }
 
 const ListSlide = ({
@@ -24,7 +28,10 @@ const ListSlide = ({
   idealWeightStones,
   idealWeightPounds,
   idealWeightKg,
+  bmiCalcResult,
   itemTitle,
+  setIndex,
+  index,
 }: ListSlideProps) => {
   return {
     units: (
@@ -63,7 +70,14 @@ const ListSlide = ({
           idealWeightStones={idealWeightStones}
           idealWeightPounds={idealWeightPounds}
           idealWeightKg={idealWeightKg}
+          setIndex={setIndex}
+          index={index}
         />
+      </View>
+    ),
+    resultBMI: (
+      <View>
+        <ResultBMISlide bmiCalcResult={bmiCalcResult} />
       </View>
     ),
   }[itemTitle];

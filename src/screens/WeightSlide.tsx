@@ -128,7 +128,7 @@ const WeightSlide = ({handleCalculate, errorText}: WeightSlideProps) => {
                 styles.inputContainer,
                 {width: width * 0.45, height: height * 0.35},
               ]}>
-              <Picker textColor="#8ac4e4" textSize={width < 380 ? 53 : 60}>
+              <Picker textColor="#8ac4e4" textSize={height < 800 ? 53 : 60}>
                 <PickerColumn
                   selectedValue={weightStones}
                   onChange={event => setWeightPounds(event.value.toString())}>
@@ -147,7 +147,7 @@ const WeightSlide = ({handleCalculate, errorText}: WeightSlideProps) => {
                 styles.inputContainer,
                 {width: width * 0.45, height: height * 0.35},
               ]}>
-              <Picker textColor="#8ac4e4" textSize={width < 380 ? 53 : 60}>
+              <Picker textColor="#8ac4e4" textSize={height < 800 ? 53 : 60}>
                 <PickerColumn
                   selectedValue={weightPounds}
                   onChange={event => setWeightPounds(event.value.toString())}>
@@ -217,7 +217,7 @@ const WeightSlide = ({handleCalculate, errorText}: WeightSlideProps) => {
       {weightUnits === 'kg' && Platform.OS === 'android' && (
         <View>
           <View style={styles.inputContainer}>
-            <Picker textColor="#8ac4e4" textSize={width < 380 ? 50 : 60}>
+            <Picker textColor="#8ac4e4" textSize={height < 800 ? 50 : 60}>
               <PickerColumn
                 selectedValue={weightKg}
                 onChange={event => setWeightKg(event.value.toString())}>
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     minWidth: threeQuarterWidth,
     color: '#8ac4e4',
     // fontSize: 90,
-    fontSize: width < 380 ? 73 : 88,
+    fontSize: height < 800 ? 73 : 88,
   },
   textBelow: {
     alignSelf: 'center',
@@ -293,11 +293,11 @@ const styles = StyleSheet.create({
     minWidth: 100,
     color: '#8ac4e4',
     // fontSize: 120,
-    fontSize: width < 380 ? 85 : 98,
+    fontSize: height < 800 ? 85 : 98,
   },
   stonesPounds: {
     width: width / 2,
-    fontSize: width < 380 ? 60 : 70,
+    fontSize: height < 800 ? 60 : 70,
     // borderWidth: 3,
     // borderRadius: 30,
     // borderColor: '#84c4ec',
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
   weightEntry: {
     // height: 115,
     textAlign: 'center',
-    fontSize: width < 380 ? 75 : 95,
+    fontSize: height < 800 ? 75 : 95,
     color: '#84c4ec',
     // minWidth: 190,
     // padding: 20,

@@ -93,6 +93,17 @@ const ColourContext = React.createContext({
       lightVibrant: '#efa450',
       lightMuted: '#d0b99f',
     },
+    {
+      key: 8,
+      title: 'resultBMI',
+      image: require('../../assets/beach-footsteps-small.jpg'),
+      video: null,
+      dominant: '#784b3c',
+      vibrant: '#d27e38',
+      darkVibrant: '#173f6a',
+      lightVibrant: '#efa450',
+      lightMuted: '#d0b99f',
+    },
   ],
 });
 
