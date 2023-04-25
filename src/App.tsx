@@ -8,12 +8,17 @@ import SplashScreen from 'react-native-splash-screen'
 
 import TheoryComponent from './components/TheoryComponent'
 import { store, persistor } from './redux/store'
+// import axios from 'axios'
 
 export default function App() {
   // Ionicons.loadFont();
+  const [helpData, setHelpData] = React.useState([])
 
   useEffect(() => {
+    console.log('App useEffect')
     console.log('before splash screen')
+
+    // We've seen the onboarding, so hide it from now on
     SplashScreen.hide()
     console.log('after splash screen')
   }, [])
@@ -21,7 +26,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-        <TheoryComponent />
+        <TheoryComponent helpData={helpData} />
       </PersistGate>
     </Provider>
   )
