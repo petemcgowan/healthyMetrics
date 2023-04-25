@@ -1,5 +1,5 @@
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import React, {useContext, useCallback, useEffect} from 'react';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import React, { useContext, useCallback, useEffect } from 'react'
 import {
   StyleSheet,
   Linking,
@@ -7,20 +7,20 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-} from 'react-native';
+} from 'react-native'
 
-import ColourContext from '../state/ColourContext';
-import CustomBackground from './CustomBackground';
-import {HeaderHandle} from './handles/HeaderHandle';
+import ColourContext from '../state/ColourContext'
+import CustomBackground from './CustomBackground'
+import { HeaderHandle } from './handles/HeaderHandle'
 
-const {width, height} = Dimensions.get('window');
-const ITEM_HEIGHT = height * 0.8;
+const { width, height } = Dimensions.get('window')
+const ITEM_HEIGHT = height * 0.8
 
 interface BottomHelpProps {
-  helpSubHeading: string;
-  helpText: string;
-  helpReferenceTitle: string;
-  helpReferenceLink: string;
+  helpSubHeading: string
+  helpText: string
+  helpReferenceTitle: string
+  helpReferenceLink: string
 }
 
 const BottomHelp = ({
@@ -46,7 +46,7 @@ const BottomHelp = ({
   snapPoints={[height - ITEM_HEIGHT, height - 70, ITEM_HEIGHT - 70]}
   The initialSnapIndex is which of the array of snap Points do you snap to 1st.  I have it set to 0 aka the 1st.
 */
-  const {colourData, index} = useContext(ColourContext);
+  const { colourData, index } = useContext(ColourContext)
 
   // const renderHeaderHandle = useCallback(
   //   (props) => <HeaderHandle {...props} children="Custom Background" />,
@@ -73,7 +73,8 @@ const BottomHelp = ({
         shadowOpacity: 0.51,
         shadowRadius: 13.16,
         elevation: 20,
-      }}>
+      }}
+    >
       <BottomSheetScrollView
         style={{
           shadowColor: '#000',
@@ -85,7 +86,8 @@ const BottomHelp = ({
           shadowRadius: 13.16,
           elevation: 20,
         }}
-        contentContainerStyle={{padding: 20}}>
+        contentContainerStyle={{ padding: 20 }}
+      >
         {/* <Text
           style={{
             fontWeight: "800",
@@ -95,30 +97,42 @@ const BottomHelp = ({
         >
           {helpTitle}
         </Text> */}
-        <Text style={{fontSize: 23}}>{helpSubHeading}</Text>
-        <View style={{marginVertical: 20}}>
-          <Text style={{color: colourData[index].dominant, fontSize: 17}}>
+        <Text style={{ fontSize: 23 }}>{helpSubHeading}</Text>
+        <View style={{ marginVertical: 20 }}>
+          <Text style={{ color: colourData[index].dominant, fontSize: 17 }}>
             {helpText}
           </Text>
-          <Text style={{fontStyle: 'italic', marginTop: 15}}>Reference: </Text>
-          <Text
-            style={{
-              fontStyle: 'italic',
-              color: colourData[index].dominant,
-              fontSize: 17,
-            }}>
-            {helpReferenceTitle}
-          </Text>
 
-          <Text
-            style={{color: 'mediumblue'}}
-            onPress={() => Linking.openURL(helpReferenceLink)}>
-            {helpReferenceLink}
-          </Text>
+          {helpReferenceTitle !== null && (
+            <Text style={{ fontStyle: 'italic', marginTop: 15 }}>
+              Reference:{' '}
+            </Text>
+          )}
+
+          {helpReferenceTitle !== null && (
+            <Text
+              style={{
+                fontStyle: 'italic',
+                color: colourData[index].dominant,
+                fontSize: 17,
+              }}
+            >
+              {helpReferenceTitle}
+            </Text>
+          )}
+
+          {helpReferenceLink !== null && (
+            <Text
+              style={{ color: 'mediumblue' }}
+              onPress={() => Linking.openURL(helpReferenceLink)}
+            >
+              {helpReferenceLink}
+            </Text>
+          )}
         </View>
       </BottomSheetScrollView>
     </BottomSheet>
-  );
-};
+  )
+}
 
-export default BottomHelp;
+export default BottomHelp
