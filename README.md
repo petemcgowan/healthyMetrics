@@ -1,30 +1,68 @@
-## Healthy weight Calculator
-
-Find out your ideal weight
+# Healthy Weight Calculator 
 
 ## Architecture
 
-<img src="docs/images/Ideal-Architecture.png" width="100%" />
 
-# Sreenshots
+![Healthy](https://user-images.githubusercontent.com/43282635/235049163-bbd20866-24b5-4214-b8ea-a4b7f9a2a64c.png)
 
-Intro:
-<img src="docs/images/1_Intro_Ideal.png" width="50%" />
+## Video
 
-Gender selection
-<img src="docs/images/2_gender_Ideal.png" width="50%" />
+### Select Units:
 
-Age entry
-<img src="docs/images/3_age_Ideal.png" width="50%" />
+https://user-images.githubusercontent.com/43282635/235046689-b91705cc-ca14-4b87-a96b-d73e5e7f9485.mp4
 
-Body Frame Selection
-<img src="docs/images/4_Frame_Ideal.png" width="50%" />
+### Select Values:
 
-Height entry
-<img src="docs/images/5_Height_Ideal.png" width="50%" />
+https://user-images.githubusercontent.com/43282635/235046984-cc55f648-1647-4ce9-b8d3-d85dbe2ceb40.mp4
 
-Weight entry
-<img src="docs/images/6_Weight_Ideal.png" width="50%" />
+### Use the Help system:
 
-Results page
-<img src="docs/images/7_Results_Ideal.png" width="50%" />
+https://user-images.githubusercontent.com/43282635/235047033-bb59db70-0118-471b-91bc-e48eea113f6b.mp4
+
+### Get Results:
+
+https://user-images.githubusercontent.com/43282635/235047051-5239cd6d-5563-4ec3-af9b-a254aa303aa6.mp4
+
+
+
+##  Screenshots:
+
+<div style="text-align: center">
+  <img src="release/screenshots/iPhone/Healthy_Onboarding_Intro.png" width="50%" />
+</div>
+
+### Gender selection:
+
+<div style="text-align: center">
+  <img src="release/screenshots/iPhone/Healthy_Gender.png" width="50%" />
+</div>
+
+### Age entry:
+
+<div style="text-align: center">
+  <img src="release/screenshots/iPhone/Healthy_Age.png" width="50%" />
+</div>
+
+### Body Frame Selection:
+
+<div style="text-align: center">
+  <img src="release/screenshots/iPhone/Healthy_Frame.png" width="50%" />
+</div>
+
+### Height entry:
+
+<div style="text-align: center">
+  <img src="release/screenshots/iPhone/Healthy_Height.png" width="50%" />
+</div>
+
+### Weight entry:
+
+<div style="text-align: center">
+  <img src="release/screenshots/iPhone/Healthy_Weight.png" width="50%" />
+</div>
+
+### Results page:
+
+<div style="text-align: center">
+  <img src="release/screenshots/iPhone/Healthy_Results.png" width="50%" />
+</div>
