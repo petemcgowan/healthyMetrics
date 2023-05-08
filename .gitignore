@@ -71,3 +71,4 @@ src/screens/CustomSwiper.tsx
 android/app/release/app-release.aab
 server/config/config.json
 server/connection.json
+.env

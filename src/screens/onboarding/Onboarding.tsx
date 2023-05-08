@@ -1,45 +1,33 @@
-import ViewPager from '@react-native-community/viewpager';
-import {useNavigation} from '@react-navigation/native';
-import React, {useRef} from 'react';
-import {View, StyleSheet} from 'react-native';
-import Video from 'react-native-video';
-import Footer from '../../components/onboarding/Footer';
-import Page from '../../components/onboarding/Page';
-import IntroSlide from './IntroSlide';
+import ViewPager from '@react-native-community/viewpager'
+import { useNavigation } from '@react-navigation/native'
+import React, { useRef } from 'react'
+import { View, StyleSheet } from 'react-native'
+import Video from 'react-native-video'
+import Footer from '../../components/onboarding/Footer'
+import Page from '../../components/onboarding/Page'
+import IntroSlide from './IntroSlide'
 
-// import selectUnitsVideo from '../../../assets/videos/onboarding/1_SelectUnits480-30T.mp4';
-// import selectValuesVideo from '../../../assets/videos/onboarding/2_SelectValues480-30T.mp4';
-// import useHelpVideo from '../../../assets/videos/onboarding/3_UseHelp480-30T.mp4';
-// import getResultsVideo from '../../../assets/videos/onboarding/4_GetResults480-30T.mp4';
-
-// const selectUnitsVideo = require('../../../assets/videos/onboarding/1_SelectUnits480-30T.mp4');
-// const selectValuesVideo = require('../../../assets/videos/onboarding/2_SelectValues480-30T.mp4');
-const useHelpVideo = require('../../../assets/videos/onboarding/3_UseHelp480-30T.mp4');
-const getResultsVideo = require('../../../assets/videos/onboarding/4_GetResults480-30T.mp4');
-const selectUnitsVideo = require('../../../assets/videos/onboarding/1SelectUnits.mp4');
-// const selectValuesVideo = require('../../../assets/videos/onboarding/Feb18OnboardingSelectMeasurements.mp4');
-const selectValuesVideo = require('../../../assets/videos/onboarding/2SelectValues.mp4');
-// const useHelpVideo = require('../../../assets/videos/onboarding/3Screen.mp4');
-// const getResultsVideo = require('../../../assets/videos/onboarding/4Screen.mp4');
-
-// const {width, height} = Dimensions.get('screen');
+const useHelpVideo = require('../../../assets/videos/onboarding/3_UseHelp480-30T.mp4')
+const getResultsVideo = require('../../../assets/videos/onboarding/4_GetResults480-30T.mp4')
+const selectUnitsVideo = require('../../../assets/videos/onboarding/1SelectUnits.mp4')
+const selectValuesVideo = require('../../../assets/videos/onboarding/2SelectValues.mp4')
 
 const Onboarding = () => {
-  const pagerRef = useRef(null);
-  const navigation = useNavigation();
+  const pagerRef = useRef(null)
+  const navigation = useNavigation()
 
-  const handlePageChange = pageNumber => {
-    pagerRef.current.setPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => {
+    pagerRef.current.setPage(pageNumber)
+  }
 
   return (
-    <View style={{flex: 1}}>
-      <ViewPager style={{flex: 1}} initialPage={0} ref={pagerRef}>
+    <View style={{ flex: 1 }}>
+      <ViewPager style={{ flex: 1 }} initialPage={0} ref={pagerRef}>
         <View key="1" style={styles.innerContainer}>
           <View style={styles.innerBackground}>
             <Video
               source={require('../../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4')}
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               muted={true}
               repeat={true}
               paused={false}
@@ -53,7 +41,8 @@ const Onboarding = () => {
               justifyContent: 'center',
               alignItems: 'center',
               width: '100%',
-            }}>
+            }}
+          >
             {/* ************************************* */}
             <View>
               <IntroSlide />
@@ -61,7 +50,7 @@ const Onboarding = () => {
                 backgroundColor="#ffc93c"
                 rightButtonLabel="Next"
                 rightButtonPress={() => {
-                  handlePageChange(1);
+                  handlePageChange(1)
                 }}
               />
             </View>
@@ -79,11 +68,11 @@ const Onboarding = () => {
             backgroundColor="#ffc93c"
             leftButtonLabel="Back"
             leftButtonPress={() => {
-              handlePageChange(0);
+              handlePageChange(0)
             }}
             rightButtonLabel="Next"
             rightButtonPress={() => {
-              handlePageChange(2);
+              handlePageChange(2)
             }}
           />
         </View>
@@ -98,11 +87,11 @@ const Onboarding = () => {
             backgroundColor="#ffc93c"
             leftButtonLabel="Back"
             leftButtonPress={() => {
-              handlePageChange(1);
+              handlePageChange(1)
             }}
             rightButtonLabel="Next"
             rightButtonPress={() => {
-              handlePageChange(3);
+              handlePageChange(3)
             }}
           />
         </View>
@@ -117,11 +106,11 @@ const Onboarding = () => {
             backgroundColor="#ffc93c"
             leftButtonLabel="Back"
             leftButtonPress={() => {
-              handlePageChange(2);
+              handlePageChange(2)
             }}
             rightButtonLabel="Next"
             rightButtonPress={() => {
-              handlePageChange(4);
+              handlePageChange(4)
             }}
           />
         </View>
@@ -136,20 +125,20 @@ const Onboarding = () => {
             backgroundColor="#07689f"
             leftButtonLabel="Back"
             leftButtonPress={() => {
-              handlePageChange(3);
+              handlePageChange(3)
             }}
             rightButtonLabel="Continue"
             rightButtonPress={() => {
-              navigation.navigate('CustomSwiper');
+              navigation.navigate('CustomSwiper')
             }}
           />
         </View>
       </ViewPager>
     </View>
-  );
-};
+  )
+}
 
-export default Onboarding;
+export default Onboarding
 
 const styles = StyleSheet.create({
   container: {
@@ -167,4 +156,4 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'black',
   },
-});
+})
