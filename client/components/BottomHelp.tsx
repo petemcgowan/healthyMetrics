@@ -11,6 +11,7 @@ import {
 
 import ColourContext from '../state/ColourContext'
 import CustomBackground from './CustomBackground'
+import { CustomNewBackground } from './CustomNewBackground'
 import { HeaderHandle } from './handles/HeaderHandle'
 
 const { width, height } = Dimensions.get('window')
@@ -55,11 +56,9 @@ const BottomHelp = ({
 
   return (
     <BottomSheet
-      // initialSnapIndex={0}
       animateOnMount
-      backgroundComponent={CustomBackground}
-      // handleComponent={renderHeaderHandle}
-      // snapPoints={[height - ITEM_HEIGHT, ITEM_HEIGHT - 70]}
+      backgroundComponent={CustomNewBackground}
+      // backgroundComponent={CustomBackground}
       snapPoints={[
         height > 750 ? height * 0.08 : height * 0.14,
         ITEM_HEIGHT - height * 0.1,
@@ -88,15 +87,6 @@ const BottomHelp = ({
         }}
         contentContainerStyle={{ padding: 20 }}
       >
-        {/* <Text
-          style={{
-            fontWeight: "800",
-            fontSize: 16,
-            textTransform: "uppercase",
-          }}
-        >
-          {helpTitle}
-        </Text> */}
         <Text style={{ fontSize: 23 }}>{helpSubHeading}</Text>
         <View style={{ marginVertical: 20 }}>
           <Text style={{ color: colourData[index].dominant, fontSize: 17 }}>

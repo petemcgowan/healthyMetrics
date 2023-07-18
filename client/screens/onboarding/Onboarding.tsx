@@ -6,11 +6,12 @@ import Video from 'react-native-video'
 import Footer from '../../components/onboarding/Footer'
 import Page from '../../components/onboarding/Page'
 import IntroSlide from './IntroSlide'
+import slowmotionLady from '../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4'
 
-const useHelpVideo = require('../../../assets/videos/onboarding/3_UseHelp480-30T.mp4')
-const getResultsVideo = require('../../../assets/videos/onboarding/4_GetResults480-30T.mp4')
-const selectUnitsVideo = require('../../../assets/videos/onboarding/1SelectUnits.mp4')
-const selectValuesVideo = require('../../../assets/videos/onboarding/2SelectValues.mp4')
+const useHelpVideo = require('../../assets/videos/onboarding/3_UseHelp480-30T.mp4')
+const getResultsVideo = require('../../assets/videos/onboarding/4_GetResults480-30T.mp4')
+const selectUnitsVideo = require('../../assets/videos/onboarding/1SelectUnits.mp4')
+const selectValuesVideo = require('../../assets/videos/onboarding/2SelectValues.mp4')
 
 const Onboarding = () => {
   const pagerRef = useRef(null)
@@ -26,7 +27,7 @@ const Onboarding = () => {
         <View key="1" style={styles.innerContainer}>
           <View style={styles.innerBackground}>
             <Video
-              source={require('../../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4')}
+              source={slowmotionLady}
               style={{ flex: 1 }}
               muted={true}
               repeat={true}

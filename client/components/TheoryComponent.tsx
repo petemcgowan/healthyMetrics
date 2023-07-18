@@ -11,11 +11,8 @@ import Onboarding from '../screens/onboarding/Onboarding'
 const AppStack = createStackNavigator()
 
 export default function TheoryComponent({ helpData }) {
-  // const hasSeenIntro = useSelector<ReduxState, boolean>(
-  //   (state) => state.hasSeenIntro
-  // );
+  // const hasSeenIntro = false
   const hasSeenIntro = useSelector((state: State) => state.hasSeenIntro)
-
   return (
     <NavigationContainer>
       <AppStack.Navigator
