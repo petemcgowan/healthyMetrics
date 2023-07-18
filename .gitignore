@@ -20,6 +20,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+client/ios/.xcode.env.local
 ios/.xcode.env.local
 
 # Android/IntelliJ
@@ -33,6 +34,8 @@ local.properties
 
 # node.js
 #
+client/node_modules/
+server/node_modules/
 node_modules/
 npm-debug.log
 yarn-error.log
@@ -59,7 +62,9 @@ buck-out/
 *.jsbundle
 
 # Ruby / CocoaPods
-/ios/Pods/
+/client/ios/Pods/
+client/ios/Pods/
+/client/vendor/bundle/
 /vendor/bundle/
 notesdraft/
 healthyCalc.code-workspace
@@ -67,8 +72,7 @@ design/logo/design ideas
 design/design ideas
 
 release/AppMockup/Healthy Calc App Mockup with images.mockup
-src/screens/CustomSwiper.tsx
-android/app/release/app-release.aab
+client/android/app/release/app-release.aab
 server/config/config.json
 server/connection.json
 .env
