@@ -29,8 +29,8 @@ services:
     networks:
       - pern-app
     #    volumes:
-    #      - ./server/:usr/src/app
-    #      - /usr/src/app/node_modules
+    #      - ./server/:usr/client/app
+    #      - /usr/client/app/node_modules
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
