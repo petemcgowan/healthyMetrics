@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#5ECEAA"
+        android:background="#498501"
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:src="@drawable/launch_screen" />
