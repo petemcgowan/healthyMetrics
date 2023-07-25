@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native'
 import Animated, { FadeIn } from 'react-native-reanimated'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 
 interface AnimatedRadioGroupProps {
   animatedStyle: Record<string, any>
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   },
   animatedTextPlaceholder: {
     color: 'white',
-    fontSize: 32,
+    fontSize: RFPercentage(5),
   },
   animatedBlockPlaceholder: {
     height: 70,
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   },
   animatedText: {
     color: '#ffffff',
-    fontSize: 32,
+    fontSize: RFPercentage(5),
   },
 })
 

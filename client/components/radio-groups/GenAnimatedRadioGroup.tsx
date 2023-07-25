@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import Animated, { FadeIn } from 'react-native-reanimated'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 
 const { width } = Dimensions.get('window')
 const threeQuarterWidth = width * 0.8
@@ -81,8 +82,6 @@ const GenAnimatedRadioGroup = ({
 const styles = StyleSheet.create({
   animatedBlock: {
     height: 80,
-    // flex: 1,
-    // padding: 3,
     width: threeQuarterWidth,
     borderWidth: 3,
     borderColor: '#84c4ec',
@@ -92,12 +91,7 @@ const styles = StyleSheet.create({
   },
   animatedTextPlaceholder: {
     color: 'white',
-    // color: '#84c4ec',
-    fontSize: 40,
-    // alignItems: 'center',
-    // textAlignVertical: 'center',
-    // justifyContent: 'center',
-    // textAlign: 'center',
+    fontSize: RFPercentage(6),
   },
   animatedBlockPlaceholder: {
     height: 80,
@@ -113,7 +107,7 @@ const styles = StyleSheet.create({
   },
   animatedText: {
     color: '#ffffff',
-    fontSize: 40,
+    fontSize: RFPercentage(6),
   },
 })
 

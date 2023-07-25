@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -6,25 +6,26 @@ import {
   Text,
   Dimensions,
   StyleSheet,
-} from 'react-native';
-import Animated, {FadeIn} from 'react-native-reanimated';
-import {useSelector, useDispatch} from 'react-redux';
-import {bindActionCreators} from 'redux';
+} from 'react-native'
+import Animated, { FadeIn } from 'react-native-reanimated'
+import { useSelector, useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { RFPercentage } from 'react-native-responsive-fontsize'
+import { actionCreators, State } from '../../redux/index'
 
-import {actionCreators, State} from '../../redux/index';
-// import {WeightUnitsReducerType} from '../../redux/reducers/WeightUnitsReducer';
-
-const {width, height} = Dimensions.get('window');
-const threeQuarterWidth = width * 0.8;
+const { width, height } = Dimensions.get('window')
+const threeQuarterWidth = width * 0.8
 
 interface WeightUnitsRadioGroupProps {
-  animatedStyle: Record<string, any>;
+  animatedStyle: Record<string, any>
 }
 
-const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
-  const weightUnits = useSelector((state: State) => state.weightUnits);
-  const dispatch = useDispatch();
-  const {setWeightUnits} = bindActionCreators(actionCreators, dispatch);
+const WeightUnitsRadioGroup = ({
+  animatedStyle,
+}: WeightUnitsRadioGroupProps) => {
+  const weightUnits = useSelector((state: State) => state.weightUnits)
+  const dispatch = useDispatch()
+  const { setWeightUnits } = bindActionCreators(actionCreators, dispatch)
 
   const dynamicStyles = StyleSheet.create({
     animatedBlock: {
@@ -38,7 +39,7 @@ const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
     },
     animatedTextPlaceholder: {
       color: 'white',
-      fontSize: height < 800 ? 25 : 30,
+      fontSize: RFPercentage(4.8),
     },
     animatedBlockPlaceholder: {
       height: height * 0.07,
@@ -49,29 +50,30 @@ const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
       justifyContent: 'center',
       borderStyle: 'dashed',
     },
-  });
+  })
 
   return (
     <View style={styles.animatedBox}>
       {weightUnits === 'Pounds' ? (
         <TouchableWithoutFeedback //Pounds  ON
           onPress={() => {
-            setWeightUnits('kg');
-          }}>
+            setWeightUnits('kg')
+          }}
+        >
           <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>Pounds</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //Pounds  OFF
-          entering={
-            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
-          }>
+          entering={'entering' in animatedStyle ? undefined : FadeIn.delay(350)}
+        >
           <TouchableOpacity
             style={dynamicStyles.animatedBlockPlaceholder}
             onPress={() => {
-              setWeightUnits('Pounds'); // Turning POUNDS ON
-            }}>
+              setWeightUnits('Pounds') // Turning POUNDS ON
+            }}
+          >
             <Text style={dynamicStyles.animatedTextPlaceholder}>Pounds</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -79,22 +81,23 @@ const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
       {weightUnits === 'kg' ? (
         <TouchableWithoutFeedback //kg  ON
           onPress={() => {
-            setWeightUnits('Pounds');
-          }}>
+            setWeightUnits('Pounds')
+          }}
+        >
           <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>kg</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //kg  OFF
-          entering={
-            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
-          }>
+          entering={'entering' in animatedStyle ? undefined : FadeIn.delay(350)}
+        >
           <TouchableOpacity
             style={dynamicStyles.animatedBlockPlaceholder}
             onPress={() => {
-              setWeightUnits('kg'); // Turning KG ON
-            }}>
+              setWeightUnits('kg') // Turning KG ON
+            }}
+          >
             <Text style={dynamicStyles.animatedTextPlaceholder}>kg</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -102,22 +105,23 @@ const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
       {weightUnits === 'Stones/Pounds' ? (
         <TouchableWithoutFeedback //Stones/Pounds  ON
           onPress={() => {
-            setWeightUnits('Pounds');
-          }}>
+            setWeightUnits('Pounds')
+          }}
+        >
           <Animated.View style={dynamicStyles.animatedBlock} {...animatedStyle}>
             <Text style={styles.animatedText}>Stones/Pounds</Text>
           </Animated.View>
         </TouchableWithoutFeedback>
       ) : (
         <Animated.View //Stones/Pounds  OFF
-          entering={
-            'entering' in animatedStyle ? undefined : FadeIn.delay(350)
-          }>
+          entering={'entering' in animatedStyle ? undefined : FadeIn.delay(350)}
+        >
           <TouchableOpacity
             style={dynamicStyles.animatedBlockPlaceholder}
             onPress={() => {
-              setWeightUnits('Stones/Pounds'); // Turning Stones/Pounds ON
-            }}>
+              setWeightUnits('Stones/Pounds') // Turning Stones/Pounds ON
+            }}
+          >
             <Text style={dynamicStyles.animatedTextPlaceholder}>
               Stones/Pounds
             </Text>
@@ -125,8 +129,8 @@ const WeightUnitsRadioGroup = ({animatedStyle}: WeightUnitsRadioGroupProps) => {
         </Animated.View>
       )}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   animatedBox: {
@@ -135,8 +139,8 @@ const styles = StyleSheet.create({
   },
   animatedText: {
     color: '#ffffff',
-    fontSize: height < 800 ? 25 : 30,
+    fontSize: RFPercentage(4.8),
   },
-});
+})
 
-export default WeightUnitsRadioGroup;
+export default WeightUnitsRadioGroup
