@@ -1,20 +1,11 @@
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
-import React, { useContext, useCallback, useEffect } from 'react'
-import {
-  StyleSheet,
-  Linking,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native'
-
+import React, { useContext } from 'react'
+import { Linking, Text, View, Dimensions } from 'react-native'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 import ColourContext from '../state/ColourContext'
-import CustomBackground from './CustomBackground'
 import { CustomNewBackground } from './CustomNewBackground'
-import { HeaderHandle } from './handles/HeaderHandle'
 
-const { width, height } = Dimensions.get('window')
+const { height } = Dimensions.get('window')
 const ITEM_HEIGHT = height * 0.8
 
 interface BottomHelpProps {
@@ -30,16 +21,6 @@ const BottomHelp = ({
   helpReferenceTitle,
   helpReferenceLink,
 }: BottomHelpProps) => {
-  // console.log(
-  //   "BottomHelp, height:" +
-  //     height +
-  //     ", ITEM_HEIGHT:" +
-  //     ITEM_HEIGHT +
-  //     ", width:" +
-  //     width
-  // );
-  // console.log("helpSubHeading:" + helpSubHeading);
-
   /* snapPoints are the points where the bottom sheet can be pulled to
   e.g. 200 up, 500 up.
 
@@ -49,16 +30,10 @@ const BottomHelp = ({
 */
   const { colourData, index } = useContext(ColourContext)
 
-  // const renderHeaderHandle = useCallback(
-  //   (props) => <HeaderHandle {...props} children="Custom Background" />,
-  //   []
-  // );
-
   return (
     <BottomSheet
       animateOnMount
       backgroundComponent={CustomNewBackground}
-      // backgroundComponent={CustomBackground}
       snapPoints={[
         height > 750 ? height * 0.08 : height * 0.14,
         ITEM_HEIGHT - height * 0.1,
@@ -87,9 +62,14 @@ const BottomHelp = ({
         }}
         contentContainerStyle={{ padding: 20 }}
       >
-        <Text style={{ fontSize: 23 }}>{helpSubHeading}</Text>
+        <Text style={{ fontSize: RFPercentage(5) }}>{helpSubHeading}</Text>
         <View style={{ marginVertical: 20 }}>
-          <Text style={{ color: colourData[index].dominant, fontSize: 17 }}>
+          <Text
+            style={{
+              color: colourData[index].dominant,
+              fontSize: RFPercentage(2.5),
+            }}
+          >
             {helpText}
           </Text>
 
@@ -104,7 +84,7 @@ const BottomHelp = ({
               style={{
                 fontStyle: 'italic',
                 color: colourData[index].dominant,
-                fontSize: 17,
+                fontSize: RFPercentage(2),
               }}
             >
               {helpReferenceTitle}

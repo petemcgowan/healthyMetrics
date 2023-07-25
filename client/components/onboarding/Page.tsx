@@ -1,38 +1,26 @@
-import Video from 'react-native-video';
-import React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import Video from 'react-native-video'
+import React from 'react'
+import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 
-const {width, height} = Dimensions.get('window');
-const VIDEO_HEIGHT = height * 0.67;
-const VIDEO_WIDTH = width * 0.67;
+const { width, height } = Dimensions.get('window')
+const VIDEO_HEIGHT = height * 0.67
+const VIDEO_WIDTH = width * 0.67
 
 interface PageProps {
-  sintel: any;
-  title: string;
-  videoLink: string;
-  description: string;
+  title: string
+  videoLink: string
+  description: string
 }
 
-const Page = ({sintel, title, videoLink, description}: PageProps) => {
-  console.log('videoLink:' + videoLink);
-  // const videoLink2 =
-  //   '../../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4';
-  const videoLink2 =
-    '../../../assets/videos/onboarding/4_GetResults480-30T.mp4';
-  // const sintel = require('../../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4');
-  // const sintel = require(videoLink2);
-  // const sintel = require(videoLink);
+const Page = ({ title, videoLink, description }: PageProps) => {
+  console.log('videoLink:' + videoLink)
 
   return (
     <View style={styles.slideContainer}>
       {videoLink && (
         <Video
-          // source={
-          //   uri: require('../../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4'),
-          // }
           source={videoLink}
-          // source={require(videoLink2)}
-          // source={require('../../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4')}
           style={styles.video}
           muted={true}
           repeat={true}
@@ -43,38 +31,34 @@ const Page = ({sintel, title, videoLink, description}: PageProps) => {
         />
       )}
       <View style={styles.textBoxes}>
-        <View style={{margin: 10}}>
+        <View style={{ margin: 10 }}>
           <Text style={styles.basicFunctionText}>{title}</Text>
         </View>
-        <View style={{margin: 15}}>
+        <View style={{ margin: 15 }}>
           <Text style={styles.explanationText}>{description}</Text>
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   slideContainer: {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#ffc93c',
-    // backgroundColor: "#ecf0f1",
   },
   basicFunctionText: {
-    fontWeight: 'bold',
-    fontSize: 18,
+    fontWeight: '500',
+    fontSize: RFPercentage(3),
   },
   explanationText: {
-    // color:  '#656839',
-    // color: '#8338EC',
     color: '#3A86FF',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: RFPercentage(2.6),
     marginBottom: 10,
   },
   video: {
-    // flex: 1,
     alignSelf: 'center',
     width: VIDEO_WIDTH,
     height: VIDEO_HEIGHT,
@@ -85,20 +69,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // previous
-  innerContainer: {
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  innerBackground: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'black',
-  },
-  backgroundViewWrapper: {
-    // ...StyleSheet.absoluteFillObject,
-  },
-});
+})
 
-export default Page;
+export default Page
