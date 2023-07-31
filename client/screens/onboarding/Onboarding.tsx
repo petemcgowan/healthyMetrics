@@ -60,7 +60,6 @@ const Onboarding = () => {
 
         <View key="2">
           <Page
-            sintel={selectUnitsVideo}
             title="Select Measurement Units"
             videoLink={selectUnitsVideo}
             description="Select how you want to enter and see your height and weight data"
@@ -79,7 +78,6 @@ const Onboarding = () => {
         </View>
         <View key="3">
           <Page
-            sintel={selectValuesVideo}
             title="Select Your Values"
             videoLink={selectValuesVideo}
             description="Select your values using the dials and checkboxes"
@@ -98,7 +96,6 @@ const Onboarding = () => {
         </View>
         <View key="4">
           <Page
-            sintel={useHelpVideo}
             title="Use the Help system"
             videoLink={useHelpVideo}
             description="Drag up from the bottom on any page to reveal help information"
@@ -117,7 +114,6 @@ const Onboarding = () => {
         </View>
         <View key="5">
           <Page
-            sintel={getResultsVideo}
             title="Get Your Results"
             videoLink={getResultsVideo}
             description="On the Weight screen, Click Calculate to get your Healthy Weight"
@@ -143,15 +139,12 @@ export default Onboarding
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
   },
   innerContainer: {
     alignItems: 'center',
     backgroundColor: 'transparent',
-    // flex: 1,
-    // justifyContent: 'center',
   },
   innerBackground: {
     ...StyleSheet.absoluteFillObject,
