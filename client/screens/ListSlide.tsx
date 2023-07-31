@@ -1,25 +1,25 @@
-import React from 'react';
-import {View} from 'react-native';
+import React from 'react'
+import { View } from 'react-native'
 
-import AgeSlide from './AgeSlide';
-import FrameSlide from './FrameSlide';
-import GenderSlide from './GenderSlide';
-import HeightSlide from './HeightSlide';
-import ResultSlide from './ResultSlide';
-import ResultBMISlide from './ResultBMISlide';
-import UnitsSlide from './UnitsSlide';
-import WeightSlide from './WeightSlide';
+import AgeSlide from './AgeSlide'
+import FrameSlide from './FrameSlide'
+import GenderSlide from './GenderSlide'
+import HeightSlide from './HeightSlide'
+import ResultSlide from './ResultSlide'
+import ResultBMISlide from './ResultBMISlide'
+import UnitsSlide from './UnitsSlide'
+import WeightSlide from './WeightSlide'
 
 interface ListSlideProps {
-  errorText: string;
-  handleCalculate: any;
-  idealWeightStones: number;
-  idealWeightPounds: number;
-  idealWeightKg: number;
-  itemTitle: string;
-  bmiCalcResult: number;
-  setIndex: any;
-  index: number;
+  errorText: string
+  handleCalculate: any
+  idealWeightStones: number
+  idealWeightPounds: number
+  idealWeightKg: number
+  itemTitle: string
+  bmiCalcResult: number
+  setIndex: any
+  index: number
 }
 
 const ListSlide = ({
@@ -36,7 +36,7 @@ const ListSlide = ({
   return {
     units: (
       <View>
-        <UnitsSlide errorText={errorText} />
+        <UnitsSlide />
       </View>
     ),
     gender: (
@@ -46,22 +46,22 @@ const ListSlide = ({
     ),
     age: (
       <View>
-        <AgeSlide errorText={errorText} />
+        <AgeSlide />
       </View>
     ),
     height: (
       <View>
-        <HeightSlide errorText={errorText} />
+        <HeightSlide />
       </View>
     ),
     frame: (
       <View>
-        <FrameSlide errorText={errorText} />
+        <FrameSlide />
       </View>
     ),
     weight: (
       <View>
-        <WeightSlide handleCalculate={handleCalculate} errorText={errorText} />
+        <WeightSlide handleCalculate={handleCalculate} />
       </View>
     ),
     result: (
@@ -80,7 +80,7 @@ const ListSlide = ({
         <ResultBMISlide bmiCalcResult={bmiCalcResult} />
       </View>
     ),
-  }[itemTitle];
-};
+  }[itemTitle]
+}
 
-export default ListSlide;
+export default ListSlide
