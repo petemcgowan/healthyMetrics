@@ -1,17 +1,14 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext } from 'react'
 
-export const StateContext = createContext();
+export const StateContext = createContext()
 
 export const StateProvider = ({ children }) => {
-  // const [films, setFilms] = useState(["Joker1", "Joker2", "Joker3"]);
-  const [weightUnitsValue, setWeightUnitsValue] = useState("kg");
-  const [heightUnitsValue, setHeightUnitsValue] = useState("cm");
+  const [weightUnitsValue, setWeightUnitsValue] = useState('kg')
+  const [heightUnitsValue, setHeightUnitsValue] = useState('cm')
 
   return (
     <StateContext.Provider
       value={{
-        // films,
-        // setFilms,
         weightUnitsValue,
         setWeightUnitsValue,
         heightUnitsValue,
@@ -20,5 +17,5 @@ export const StateProvider = ({ children }) => {
     >
       {children}
     </StateContext.Provider>
-  );
-};
+  )
+}

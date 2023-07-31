@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet,
   Text,
@@ -10,20 +10,20 @@ import {
   Animated,
   Dimensions,
   TouchableOpacity,
-} from 'react-native';
-// import Constants from "expo-constants";
-import Svg, {G, Circle} from 'react-native-svg';
-import {useSelector} from 'react-redux';
-import {State} from '../redux/index';
+} from 'react-native'
+import Svg, { G, Circle } from 'react-native-svg'
+import { useSelector } from 'react-redux'
+import { State } from '../redux/index'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window')
 
 interface ResultSlideProps {
-  idealWeightStones: number;
-  idealWeightPounds: number;
-  idealWeightKg: number;
-  setIndex: any;
-  index: number;
+  idealWeightStones: number
+  idealWeightPounds: number
+  idealWeightKg: number
+  setIndex: any
+  index: number
 }
 
 const ResultSlide = ({
@@ -33,52 +33,41 @@ const ResultSlide = ({
   setIndex,
   index,
 }: ResultSlideProps) => {
-  // const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
-  const AnimatedCircle = Animated.createAnimatedComponent(Circle);
-  const inputRef = React.useRef();
-  const circleRef = React.useRef();
-  const weightUnits = useSelector((state: State) => state.weightUnits);
-  console.log('idealWeightPounds:' + idealWeightPounds);
+  const AnimatedCircle = Animated.createAnimatedComponent(Circle)
+  const inputRef = React.useRef()
+  const circleRef = React.useRef()
+  const weightUnits = useSelector((state: State) => state.weightUnits)
+  console.log('idealWeightPounds:' + idealWeightPounds)
 
-  const heightCm = useSelector((state: State) => state.heightCm);
-  const heightFt = useSelector((state: State) => state.heightFt);
-  const heightInches = useSelector((state: State) => state.heightInches);
-  const weightPounds = useSelector((state: State) => state.weightPounds);
-  const weightPoundsOnly = useSelector(
-    (state: State) => state.weightPoundsOnly,
-  );
-  const weightStones = useSelector((state: State) => state.weightStones);
-  const weightKg = useSelector((state: State) => state.weightKg);
-  const frame = useSelector((state: State) => state.frame);
-  const age = useSelector((state: State) => state.age);
-  const gender = useSelector((state: State) => state.gender);
-  const heightUnits = useSelector((state: State) => state.heightUnits);
+  const heightCm = useSelector((state: State) => state.heightCm)
+  const heightFt = useSelector((state: State) => state.heightFt)
+  const heightInches = useSelector((state: State) => state.heightInches)
+  const weightPounds = useSelector((state: State) => state.weightPounds)
+  const weightPoundsOnly = useSelector((state: State) => state.weightPoundsOnly)
+  const weightStones = useSelector((state: State) => state.weightStones)
+  const weightKg = useSelector((state: State) => state.weightKg)
+  const frame = useSelector((state: State) => state.frame)
+  const age = useSelector((state: State) => state.age)
+  const gender = useSelector((state: State) => state.gender)
+  const heightUnits = useSelector((state: State) => state.heightUnits)
 
-  // const percentage = 100;
-  const strokeWidth = 10;
-  const kgPoundsRadius = height < 800 ? 78 : 95;
-  const radius = height < 800 ? 65 : 80;
-  const kgCircumference = 2 * Math.PI * kgPoundsRadius;
-  const circumference = 2 * Math.PI * radius;
-  const kgHalfCircle = kgPoundsRadius + strokeWidth;
-  const halfCircle = radius + strokeWidth;
-  // const duration = 720;
-  const color = 'aqua';
-  // const color = 'tomato';
-  // const delay = 0;
-  const textColor = 'aqua';
-  // const max = 100;
+  const strokeWidth = 10
+  const kgPoundsRadius = height < 800 ? 78 : 95
+  const radius = height < 800 ? 65 : 80
+  const kgCircumference = 2 * Math.PI * kgPoundsRadius
+  const circumference = 2 * Math.PI * radius
+  const kgHalfCircle = kgPoundsRadius + strokeWidth
+  const halfCircle = radius + strokeWidth
+  const color = 'aqua'
+  const textColor = 'aqua'
 
   const moveToBMI = () => {
-    setIndex(index + 1); // move to the BMI slide
-  };
+    setIndex(index + 1) // move to the BMI slide
+  }
 
   return (
     <ScrollView>
       <SafeAreaView style={styles.vwResultSlide}>
-        {/* todo  */}
-        {/* <Text style={styles.healthyWeightText}>Healthy Weight Range:</Text> */}
-
         <View style={styles.vwTop}>
           <View style={styles.vwIdealWeight}>
             <Text style={styles.yourHealthyWeightText}>Your</Text>
@@ -86,19 +75,22 @@ const ResultSlide = ({
             <Text style={styles.yourHealthyWeightText}>Weight</Text>
 
             {weightUnits === 'kg' && (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
                     width: kgPoundsRadius * 2,
                     height: kgPoundsRadius * 2,
-                  }}>
+                  }}
+                >
                   <Svg
                     height={kgPoundsRadius * 2}
                     width={kgPoundsRadius * 2}
-                    viewBox={`0 0 ${kgHalfCircle * 2} ${kgHalfCircle * 2}`}>
+                    viewBox={`0 0 ${kgHalfCircle * 2} ${kgHalfCircle * 2}`}
+                  >
                     <G
                       rotation="-90"
-                      origin={`${kgHalfCircle}, ${kgHalfCircle}`}>
+                      origin={`${kgHalfCircle}, ${kgHalfCircle}`}
+                    >
                       <AnimatedCircle
                         ref={circleRef}
                         cx="50%"
@@ -119,7 +111,6 @@ const ResultSlide = ({
                         stroke={color}
                         strokeWidth={strokeWidth}
                         strokeLinejoin="round"
-                        // strokeOpacity=".1"
                       />
                     </G>
                   </Svg>
@@ -127,7 +118,6 @@ const ResultSlide = ({
                     ref={inputRef}
                     underlineColorAndroid="transparent"
                     editable={false}
-                    // defaultValue="0"
                     style={[
                       StyleSheet.absoluteFillObject,
                       {
@@ -135,7 +125,8 @@ const ResultSlide = ({
                         color: textColor ?? color,
                       },
                       styles.text,
-                    ]}>
+                    ]}
+                  >
                     {Math.round(idealWeightKg)}
                   </TextInput>
                 </View>
@@ -143,19 +134,22 @@ const ResultSlide = ({
               </View>
             )}
             {weightUnits === 'Pounds' && (
-              <View style={{flexDirection: 'column', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <View
                   style={{
                     width: kgPoundsRadius * 2,
                     height: kgPoundsRadius * 2,
-                  }}>
+                  }}
+                >
                   <Svg
                     height={kgPoundsRadius * 2}
                     width={kgPoundsRadius * 2}
-                    viewBox={`0 0 ${kgHalfCircle * 2} ${kgHalfCircle * 2}`}>
+                    viewBox={`0 0 ${kgHalfCircle * 2} ${kgHalfCircle * 2}`}
+                  >
                     <G
                       rotation="-90"
-                      origin={`${kgHalfCircle}, ${kgHalfCircle}`}>
+                      origin={`${kgHalfCircle}, ${kgHalfCircle}`}
+                    >
                       <AnimatedCircle
                         ref={circleRef}
                         cx="50%"
@@ -176,7 +170,6 @@ const ResultSlide = ({
                         stroke={color}
                         strokeWidth={strokeWidth}
                         strokeLinejoin="round"
-                        // strokeOpacity=".1"
                       />
                     </G>
                   </Svg>
@@ -184,7 +177,6 @@ const ResultSlide = ({
                     ref={inputRef}
                     underlineColorAndroid="transparent"
                     editable={false}
-                    // defaultValue="0"
                     style={[
                       StyleSheet.absoluteFillObject,
                       {
@@ -192,7 +184,8 @@ const ResultSlide = ({
                         color: textColor ?? color,
                       },
                       styles.text,
-                    ]}>
+                    ]}
+                  >
                     {Math.round(idealWeightPounds)}
                   </TextInput>
                 </View>
@@ -201,12 +194,13 @@ const ResultSlide = ({
             )}
 
             {weightUnits === 'Stones/Pounds' && (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{width: radius * 2, height: radius * 2}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ width: radius * 2, height: radius * 2 }}>
                   <Svg
                     height={radius * 2}
                     width={radius * 2}
-                    viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
+                    viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}
+                  >
                     <G rotation="-90" origin={`${halfCircle}, ${halfCircle}`}>
                       <AnimatedCircle
                         ref={circleRef}
@@ -228,7 +222,6 @@ const ResultSlide = ({
                         stroke={color}
                         strokeWidth={strokeWidth}
                         strokeLinejoin="round"
-                        // strokeOpacity=".1"
                       />
                     </G>
                   </Svg>
@@ -236,23 +229,24 @@ const ResultSlide = ({
                     ref={inputRef}
                     underlineColorAndroid="transparent"
                     editable={false}
-                    // defaultValue="0"
                     style={[
                       StyleSheet.absoluteFillObject,
-                      {fontSize: radius / 1.6, color: textColor ?? color},
+                      { fontSize: radius / 1.6, color: textColor ?? color },
                       styles.text,
-                    ]}>
+                    ]}
+                  >
                     {Math.round(idealWeightStones)}
                   </TextInput>
-                  <Text style={[styles.weightUnits, {textAlign: 'center'}]}>
+                  <Text style={[styles.weightUnits, { textAlign: 'center' }]}>
                     stones
                   </Text>
                 </View>
-                <View style={{width: radius * 2, height: radius * 2}}>
+                <View style={{ width: radius * 2, height: radius * 2 }}>
                   <Svg
                     height={radius * 2}
                     width={radius * 2}
-                    viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
+                    viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}
+                  >
                     <G rotation="-90" origin={`${halfCircle}, ${halfCircle}`}>
                       <AnimatedCircle
                         ref={circleRef}
@@ -274,7 +268,6 @@ const ResultSlide = ({
                         stroke={color}
                         strokeWidth={strokeWidth}
                         strokeLinejoin="round"
-                        // strokeOpacity=".1"
                       />
                     </G>
                   </Svg>
@@ -282,15 +275,15 @@ const ResultSlide = ({
                     ref={inputRef}
                     underlineColorAndroid="transparent"
                     editable={false}
-                    // defaultValue="0"
                     style={[
                       StyleSheet.absoluteFillObject,
-                      {fontSize: radius / 1.6, color: textColor ?? color},
+                      { fontSize: radius / 1.6, color: textColor ?? color },
                       styles.text,
-                    ]}>
+                    ]}
+                  >
                     {Math.round(idealWeightPounds)}
                   </TextInput>
-                  <Text style={[styles.weightUnits, {textAlign: 'center'}]}>
+                  <Text style={[styles.weightUnits, { textAlign: 'center' }]}>
                     pounds
                   </Text>
                 </View>
@@ -303,22 +296,28 @@ const ResultSlide = ({
             flexDirection: 'column',
             justifyContent: 'center',
             marginTop: idealWeightStones > 0 ? 45 : 10,
-          }}>
-          {/* <Text style={{fontSize: height < 800 ? 16 : 19, color: 'aqua'}}></Text> */}
+          }}
+        >
           <Text
             style={{
               color: '#d0b99f',
-              fontSize: height < 800 ? 12 : 14,
+              fontSize: RFPercentage(1.8),
               textAlign: 'center',
-            }}>
+            }}
+          >
             J. D. Robinson Formula: Determination of ideal body weight for drug
             dosage calculations. (Am J Hosp Parm 1983)
           </Text>
           <Text
-            style={{color: 'mediumblue', textAlign: 'center'}}
+            style={{
+              color: 'mediumblue',
+              textAlign: 'center',
+              fontSize: RFPercentage(1.8),
+            }}
             onPress={() =>
               Linking.openURL('https://pubmed.ncbi.nlm.nih.gov/6869387/')
-            }>
+            }
+          >
             https://pubmed.ncbi.nlm.nih.gov/6869387/
           </Text>
         </View>
@@ -330,22 +329,25 @@ const ResultSlide = ({
             flexDirection: 'row',
             justifyContent: 'center',
             marginTop: 10,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: '#b27f52',
-              fontSize: 24,
+              fontSize: RFPercentage(3),
               fontStyle: 'italic',
-            }}>
+            }}
+          >
             Entered Info:
           </Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <View
             style={{
               flexDirection: 'column',
               flex: 0.5,
-            }}>
+            }}
+          >
             <View>
               <Text style={styles.detailsHeaderText}>Gender:</Text>
             </View>
@@ -386,7 +388,8 @@ const ResultSlide = ({
             style={{
               flexDirection: 'column',
               flex: 0.5,
-            }}>
+            }}
+          >
             <View>
               <Text style={styles.detailText}>{gender}</Text>
             </View>
@@ -399,7 +402,7 @@ const ResultSlide = ({
               </View>
             )}
             {heightUnits === 'Feet/Inches' && (
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.detailText}>{heightFt}</Text>
                 <Text style={styles.detailText}>/</Text>
                 <Text style={styles.detailText}>{heightInches}</Text>
@@ -419,7 +422,7 @@ const ResultSlide = ({
               </View>
             )}
             {weightUnits === 'Stones/Pounds' && (
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.detailText}>{weightStones}</Text>
                 <Text style={styles.detailText}>/</Text>
                 <Text style={styles.detailText}>{weightPounds}</Text>
@@ -429,8 +432,8 @@ const ResultSlide = ({
         </View>
       </SafeAreaView>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   vwResultSlide: {
@@ -438,34 +441,27 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width,
   },
-  vwTop: {
-    // maxHeight: 180,
-    // marginBottom: 15,
-  },
+  vwTop: {},
   vwBottom: {
     alignItems: 'center',
-    // marginTop: 25,
-    // flex: 1,
   },
   detailsHeaderText: {
-    // fontWeight: 'bold',
     color: '#e4bc94',
     padding: 1,
-    // fontSize: 27,
     textAlign: 'right',
     height: 30,
-    fontSize: height < 800 ? 18 : 22,
+    fontSize: RFPercentage(3.2),
   },
   detailText: {
     color: '#173f6a',
     height: 30,
     padding: 1,
-    fontSize: height < 800 ? 16 : 20,
+    fontSize: RFPercentage(2.9),
   },
   buttonText: {
     alignSelf: 'center',
     padding: height < 800 ? 0 : 10,
-    fontSize: height < 800 ? 35 : 45,
+    fontSize: RFPercentage(5.2),
     color: '#84c4ec',
     fontWeight: 'bold',
   },
@@ -474,38 +470,34 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     marginRight: 40,
     marginLeft: 40,
-    // width: width * 0.75,
     borderColor: '#84c4ec',
     backgroundColor: '#e4bc94',
     marginTop: 10,
-    // marginBottom: height * 0.1,
   },
   idealWeightText: {
-    fontSize: height < 800 ? 100 : 125,
+    fontSize: RFPercentage(13),
     color: 'white',
     fontWeight: '500',
   },
   idealWeightSPText: {
-    fontSize: height < 800 ? 80 : 105,
+    fontSize: RFPercentage(13),
     color: 'white',
     fontWeight: '500',
   },
   yourHealthyWeightText: {
-    color: '#e4bc94', //'#96A13A', //  '#E0BAD7', // '#e4bc94', //'#0B5351', // '#5fdec4', // '#e4bc94', //,#10586a
-    fontSize: height < 800 ? 50 : 62,
+    color: '#e4bc94',
+    fontSize: RFPercentage(8.2),
     fontWeight: '500',
   },
   weightUnits: {
-    // color: '#e4bc94',
     color: 'white',
-    fontSize: height < 800 ? 26 : 36,
+    fontSize: RFPercentage(4),
   },
   vwGender: {
     flexDirection: 'row',
   },
   vwBodyFrame: {
     flexDirection: 'row',
-    // flex: 0.5,
   },
   vwWeight: {
     flexDirection: 'row',
@@ -517,17 +509,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   healthyWeightText: {
-    fontSize: 14,
+    fontSize: RFPercentage(3),
   },
   vwIdealWeight: {
-    // color: "#fff",
-    // color: "white",
     alignItems: 'center',
   },
   text: {
     fontWeight: '900',
     textAlign: 'center',
   },
-});
+})
 
-export default ResultSlide;
+export default ResultSlide

@@ -1,30 +1,21 @@
-import React from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
-import {HelperText} from 'react-native-paper';
+import React from 'react'
+import { StyleSheet, Text, View, Dimensions } from 'react-native'
 
-import HeightUnitsPicker from '../components/pickers/HeightUnitsPicker';
-import WeightUnitsPicker from '../components/pickers/WeightUnitsPicker';
+import HeightUnitsPicker from '../components/pickers/HeightUnitsPicker'
+import WeightUnitsPicker from '../components/pickers/WeightUnitsPicker'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 
-const {width, height} = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
-interface UnitsSlideProps {
-  errorText: string;
-}
-
-const UnitsSlide = ({errorText}: UnitsSlideProps) => {
-  const hasErrors = () => {
-    return errorText !== '';
-  };
-
+const UnitsSlide = () => {
   const dynamicStyles = StyleSheet.create({
     textAbove: {
       alignSelf: 'center',
       width: width,
       textAlign: 'center',
       minWidth: 100,
-      color: '#e4bc94', // "#FFCB1F",
-      fontSize: height < 800 ? 70 : 90,
-      // fontWeight: "bold",
+      color: '#e4bc94',
+      fontSize: RFPercentage(12),
     },
     textBelow: {
       alignSelf: 'center',
@@ -32,9 +23,9 @@ const UnitsSlide = ({errorText}: UnitsSlideProps) => {
       textAlign: 'center',
       minWidth: 100,
       color: '#e4bc94',
-      fontSize: height < 800 ? 103 : 123,
+      fontSize: RFPercentage(17),
     },
-  });
+  })
 
   return (
     <View>
@@ -42,24 +33,8 @@ const UnitsSlide = ({errorText}: UnitsSlideProps) => {
       <Text style={dynamicStyles.textBelow}>Units</Text>
       <HeightUnitsPicker />
       <WeightUnitsPicker />
-      <View style={styles.textContainer}>
-        <HelperText
-          style={{fontSize: 40, color: '#ddb583'}}
-          type="error"
-          visible={hasErrors()}>
-          {errorText}
-        </HelperText>
-      </View>
     </View>
-  );
-};
+  )
+}
 
-export default UnitsSlide;
-
-const styles = StyleSheet.create({
-  textContainer: {
-    alignSelf: 'center',
-    minWidth: 150,
-    height: 75,
-  },
-});
+export default UnitsSlide
