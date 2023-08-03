@@ -15,22 +15,15 @@ import helpRoute from './routes/help-routes.js'
 import referenceRoute from './routes/reference-routes.js'
 
 import Sequelize from 'sequelize'
-import connection from './connection.json' assert { type: 'json' }
 
 async function setAllHelpCache(newHelp) {
   try {
-    console.log('****setAllHelpCache:Creating client')
     const redisClientJSON = createClient({
       url: 'redis://redis-server:6379',
       port: 6379,
     })
 
-    console.log('****setAllHelpCache:Connecting')
     await redisClientJSON.connect()
-    console.log(
-      '****setAllHelpCache, Setting the cache with newHelp' +
-        JSON.stringify(newHelp)
-    )
     await redisClientJSON.json.set('allHelpCache', '.', newHelp)
     await redisClientJSON.quit()
   } catch (error) {
@@ -48,23 +41,15 @@ async function getAllHelpCache() {
 
     await redisClientJSON.connect()
     allHelpCache = await redisClientJSON.json.get('allHelpCache')
-    console.log('****value of allHelpCache:' + JSON.stringify(allHelpCache))
 
     if (!allHelpCache) {
       Help.findAll({
         include: [References],
       }).then((allHelp) => {
-        console.log(
-          '****Has retrieved all help, now cache it' + JSON.stringify(allHelp)
-        )
         setAllHelpCache(allHelp)
         return allHelp
       })
     } else {
-      console.log(
-        "****We're return allHelpCache from the cache:" +
-          JSON.stringify(allHelpCache)
-      )
       return allHelpCache
     }
     /*await*/ redisClientJSON.quit()
@@ -234,7 +219,6 @@ var resolvers = {
     return 'Hello world!'
   },
   fillHelp: () => {
-    console.log('resolvers fillHelp')
     return fillHelp()
   },
   allHelp: () => {
@@ -257,7 +241,7 @@ export const sequelize = new Sequelize({
   database: process.env.POSTGRES_DB,
   username: process.env.POSTGRES_USER,
   host: process.env.PGHOST,
-  port: connection.port,
+  port: process.env.PGPORT,
   password: process.env.POSTGRES_PASSWORD,
   dialect: 'postgres',
   operatorsAliases: 0,
@@ -305,8 +289,6 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/help', helpRoute)
 app.use('/api/reference', referenceRoute)
-
-const PORT = process.env.PORT || 5000
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
@@ -366,11 +348,3 @@ async function redisTest() {
 redisClient.connect(() => console.log('Connected to Redis server'))
 
 redisTest()
-
-// REST app listen
-app.listen(
-  PORT,
-  console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}` /*.yellow.bold*/
-  )
-)
