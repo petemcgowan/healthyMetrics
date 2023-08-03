@@ -37,7 +37,6 @@ const ResultSlide = ({
   const inputRef = React.useRef()
   const circleRef = React.useRef()
   const weightUnits = useSelector((state: State) => state.weightUnits)
-  console.log('idealWeightPounds:' + idealWeightPounds)
 
   const heightCm = useSelector((state: State) => state.heightCm)
   const heightFt = useSelector((state: State) => state.heightFt)

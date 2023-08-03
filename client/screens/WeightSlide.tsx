@@ -45,9 +45,7 @@ const WeightSlide = ({ handleCalculate }: WeightSlideProps) => {
   const { setWeightPounds, setWeightPoundsOnly, setWeightStones, setWeightKg } =
     bindActionCreators(actionCreators, dispatch)
 
-  useEffect(() => {
-    console.log('WeightSlide, useEffect:')
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <View>

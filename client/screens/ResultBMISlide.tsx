@@ -30,8 +30,6 @@ const ResultBMISlide = ({ bmiCalcResult }: ResultBMISlideProps) => {
   const circumference = 2 * Math.PI * radius
   const halfCircle = radius + strokeWidth
 
-  console.log('bmiCalcResult:' + bmiCalcResult)
-
   return (
     <SafeAreaView style={styles.vwResultBMISlide}>
       <View style={styles.vwTop}>
