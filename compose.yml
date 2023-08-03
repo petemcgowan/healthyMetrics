@@ -24,7 +24,6 @@ services:
     image: api-server
     build: ./server/
     ports:
-      - '5000:5000' # for REST (which may go away)
       - '4000:4000' # for graphQL
     networks:
       - pern-app

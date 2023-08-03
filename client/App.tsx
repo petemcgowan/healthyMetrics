@@ -16,11 +16,9 @@ export default function App() {
 
   useEffect(() => {
     console.log('App useEffect')
-    console.log('before splash screen')
 
     // We've seen the onboarding, so hide it from now on
     SplashScreen.hide()
-    console.log('after splash screen')
   }, [])
 
   return (

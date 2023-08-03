@@ -13,15 +13,6 @@ export const CustomNewBackground: React.FC<BottomSheetBackgroundProps> = ({
 }) => {
   const { colourData, index } = useContext(ColourContext)
 
-  console.log('CustomNewBackground, index' + index)
-  console.log(
-    'CustomNewBackground, colourData[index].lightVibrant:' +
-      colourData[index].lightVibrant
-  )
-  console.log(
-    'CustomNewBackground, colourData[index].lightMuted:' +
-      colourData[index].lightMuted
-  )
   const colourStart = colourData[index].lightVibrant
   const colourEnd = colourData[index].lightMuted
 
