@@ -47,11 +47,14 @@ async function getAllHelpCache() {
         include: [References],
       }).then((allHelp) => {
         setAllHelpCache(allHelp)
+        console.log('allHelp:' + JSON.stringify(allHelp))
         return allHelp
       })
     } else {
+      console.log('allHelpCache:' + JSON.stringify(allHelpCache))
       return allHelpCache
     }
+
     /*await*/ redisClientJSON.quit()
   } catch (error) {
     console.error('getAllHelpCache, error:' + error)
