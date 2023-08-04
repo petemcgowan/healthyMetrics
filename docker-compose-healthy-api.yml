@@ -1,0 +1,18 @@
+version: '3'
+services:
+  api-server:
+    image: api-server
+    build: ./server/
+    ports:
+      - '4000:4000' # for graphQL
+    networks:
+      - common-network
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGHOST: ${PGHOST} #name of the service
+      REDIS_HOST: redis-server
+networks:
+  common-network:
+    external: true
