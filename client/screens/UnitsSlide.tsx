@@ -15,7 +15,7 @@ const UnitsSlide = () => {
       textAlign: 'center',
       minWidth: 100,
       color: '#e4bc94',
-      fontSize: RFPercentage(12),
+      fontSize: RFPercentage(11.5),
     },
     textBelow: {
       alignSelf: 'center',
@@ -23,7 +23,7 @@ const UnitsSlide = () => {
       textAlign: 'center',
       minWidth: 100,
       color: '#e4bc94',
-      fontSize: RFPercentage(17),
+      fontSize: RFPercentage(15),
     },
   })
 

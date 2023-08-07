@@ -9,7 +9,7 @@ import Utils from '../components/Utils'
 import { actionCreators, State } from '../redux/index'
 
 const { width } = Dimensions.get('window')
-const threeQuarterWidth = width * 0.75
+const threeQuarterWidth = width * 0.85
 
 const cmOptions = Utils.selectionDropDownRange(100, 250).map((cm) => cm.value)
 const ftOptions = Utils.selectionDropDownRange(3, 7).map((ft) => ft.value)
@@ -175,14 +175,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     minWidth: threeQuarterWidth,
     color: '#7de6fb',
-    fontSize: RFPercentage(13),
+    fontSize: RFPercentage(12),
   },
   textBelow: {
     alignSelf: 'center',
     textAlign: 'center',
     minWidth: threeQuarterWidth,
     color: '#7de6fb',
-    fontSize: RFPercentage(14),
+    fontSize: RFPercentage(13),
   },
   feetContainer: {
     alignSelf: 'center',

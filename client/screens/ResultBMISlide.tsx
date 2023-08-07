@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   },
   bmiCalcResult: {
     color: '#694a2f',
-    fontSize: RFPercentage(7.6),
+    fontSize: RFPercentage(7.2),
     fontWeight: '500',
   },
   bmiTableHeaderText: {

@@ -446,16 +446,16 @@ const styles = StyleSheet.create({
   },
   detailsHeaderText: {
     color: '#e4bc94',
-    padding: 1,
+    // padding: 1,
     textAlign: 'right',
-    height: 30,
-    fontSize: RFPercentage(3.2),
+    // height: 30,
+    fontSize: RFPercentage(2.7),
   },
   detailText: {
     color: '#173f6a',
-    height: 30,
-    padding: 1,
-    fontSize: RFPercentage(2.9),
+    // height: 30,
+    // padding: 1,
+    fontSize: RFPercentage(2.7),
   },
   buttonText: {
     alignSelf: 'center',
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   },
   yourHealthyWeightText: {
     color: '#e4bc94',
-    fontSize: RFPercentage(8.2),
+    fontSize: RFPercentage(7.7),
     fontWeight: '500',
   },
   weightUnits: {

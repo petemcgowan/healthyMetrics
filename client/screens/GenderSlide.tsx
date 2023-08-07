@@ -31,7 +31,7 @@ const GenderSlide = ({ errorText }: GenderSlideProps) => {
       width: width,
       color: '#84c4ec',
       fontWeight: '500',
-      fontSize: RFPercentage(12),
+      fontSize: RFPercentage(11),
     },
     textBelow: {
       alignSelf: 'center',
@@ -39,7 +39,7 @@ const GenderSlide = ({ errorText }: GenderSlideProps) => {
       width: width,
       color: '#84c4ec',
       fontWeight: '500',
-      fontSize: RFPercentage(13),
+      fontSize: RFPercentage(12),
     },
   })
 
@@ -50,7 +50,7 @@ const GenderSlide = ({ errorText }: GenderSlideProps) => {
       <GenderPicker gender={gender} setGender={setGender} />
       <View style={styles.textContainer}>
         <HelperText
-          style={{ fontSize: RFPercentage(6.5), color: '#5b4028' }}
+          style={{ fontSize: RFPercentage(4.5), color: '#5b4028' }}
           type="error"
           visible={hasErrors()}
         >
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   textContainer: {
     alignSelf: 'center',
     minWidth: 150,
-    height: 55,
+    height: RFPercentage(7.5),
   },
 })
 

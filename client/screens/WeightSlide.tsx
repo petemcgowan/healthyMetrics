@@ -17,7 +17,7 @@ import Utils from '../components/Utils'
 import { actionCreators, State } from '../redux/index'
 
 const { width, height } = Dimensions.get('window')
-const threeQuarterWidth = width * 0.75
+const threeQuarterWidth = width * 0.85
 
 const poundsOnlyOptions = Utils.selectionDropDownRange(100, 260).map(
   (pound) => pound.value
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     minWidth: threeQuarterWidth,
     color: '#8ac4e4',
     fontWeight: '500',
-    fontSize: RFPercentage(12),
+    fontSize: RFPercentage(11),
   },
   textBelow: {
     alignSelf: 'center',
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     minWidth: 100,
     color: '#8ac4e4',
     fontWeight: '500',
-    fontSize: RFPercentage(13),
+    fontSize: RFPercentage(12),
   },
   weightEntry: {
     textAlign: 'center',

@@ -10,12 +10,7 @@ const IntroSlide = () => {
       <View style={[styles.topContainer, { height: height * 0.7 }]}>
         <Text style={styles.mainText}>Welcome to Healthy</Text>
       </View>
-      <View style={[styles.bottomContainer, { height: height * 0.3 }]}>
-        <Text style={styles.secondaryText}>
-          Find the recommended healthy weight for your age, weight, height and
-          wrist size...
-        </Text>
-      </View>
+      <View style={[styles.bottomContainer, { height: height * 0.3 }]}></View>
     </View>
   )
 }
