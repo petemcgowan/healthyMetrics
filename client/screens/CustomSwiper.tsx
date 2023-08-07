@@ -64,7 +64,7 @@ function CustomSwiper() {
   // useEffect notices the change in state index, so changes the Flatlist's scrollToIndex
   useEffect(() => {
     const endpoint =
-      'http://ec2-34-233-126-244.compute-1.amazonaws.com:4000/graphql'
+      'http://ec2-52-23-111-225.compute-1.amazonaws.com:4000/graphql'
     // const endpoint = 'http://localhost:4000/graphql'
     const graphqlQuery = {
       operationName: 'allHelp',
@@ -97,11 +97,8 @@ function CustomSwiper() {
           data: graphqlQuery,
         }
 
-        const data = ''
         const response = await axios(config)
-        console.log('data:' + JSON.stringify(data))
         const dataResponse = await response.data
-
         setNewHelpData(dataResponse.data.allHelp)
       } catch (error) {
         console.error('fetchHelp (axios), error:' + error)
@@ -109,10 +106,10 @@ function CustomSwiper() {
 
         if (error.response) {
           console.log('client received an error response (5xx, 4xx)')
+          console.error('error details', error)
         } else if (error.request) {
           console.log('client never received a response, or request never left')
-        } else {
-          // anything else
+          console.error('error details', error)
         }
       }
     }
@@ -164,7 +161,6 @@ function CustomSwiper() {
       // 5ft = 60 inches
       let idealWeightInt = 0
       if (gender === 'Male') {
-        console.log('Doing Male calc')
         if (heightCmValue > 152.4) {
           const heightAbove = heightCmValue - 152.4
           const extraWeight = 0.7480319 * heightAbove
@@ -175,7 +171,6 @@ function CustomSwiper() {
           idealWeightInt = 0.3412 * heightCmValue //  it's 0.3412 per cm(52kg/152.4)
         }
       } else if (gender === 'Female') {
-        console.log('Doing Female calc')
         if (heightCmValue > 152.4) {
           const heightAbove = heightCmValue - 152.4
           const extraWeight = 0.6692917 * heightAbove
@@ -207,7 +202,6 @@ function CustomSwiper() {
 
         // deal with case where pounds round up to the next stone (making it 14 pounds)
         if (inPounds === 14) {
-          console.log('Augmenting for edge rounding case...')
           stones++
           inPounds = 0
         }
@@ -268,7 +262,6 @@ function CustomSwiper() {
 
   const renderMainItem = ({ item }) => {
     const hasImage = item.image !== null
-    console.log('MAIN renderItem called:' + JSON.stringify(item))
 
     return (
       <View style={{ width, height, backgroundColor: 'white' }}>
