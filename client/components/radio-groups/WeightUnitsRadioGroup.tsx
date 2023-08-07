@@ -29,7 +29,7 @@ const WeightUnitsRadioGroup = ({
 
   const dynamicStyles = StyleSheet.create({
     animatedBlock: {
-      height: height * 0.07,
+      height: RFPercentage(7.0),
       width: threeQuarterWidth,
       borderWidth: 3,
       borderColor: '#84c4ec',
@@ -39,10 +39,10 @@ const WeightUnitsRadioGroup = ({
     },
     animatedTextPlaceholder: {
       color: 'white',
-      fontSize: RFPercentage(4.8),
+      fontSize: RFPercentage(4.2),
     },
     animatedBlockPlaceholder: {
-      height: height * 0.07,
+      height: RFPercentage(7.5),
       width: threeQuarterWidth,
       borderWidth: 3,
       borderColor: '#84c4ec',
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   animatedText: {
     color: '#ffffff',
-    fontSize: RFPercentage(4.8),
+    fontSize: RFPercentage(4.2),
   },
 })
 

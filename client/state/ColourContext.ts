@@ -10,6 +10,8 @@ export type ColourType = {
   darkVibrant: string
   lightVibrant: string
   lightMuted: string
+  bottom1: string
+  bottom2: string
 }
 
 const ColourContext = React.createContext({
@@ -26,6 +28,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#3389a4',
       lightVibrant: '#ddb583',
       lightMuted: '#aac8d0',
+      bottom1: 'rgb(25, 26, 29)',
+      bottom2: 'rgb(9, 21, 39)',
     },
     {
       key: 2,
@@ -37,6 +41,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#5b4028',
       lightVibrant: '#e4bc94',
       lightMuted: '#d4beaf',
+      bottom1: 'rgb(25, 26, 29)',
+      bottom2: 'rgb(9, 21, 39)',
     },
     {
       key: 3,
@@ -48,6 +54,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#166f8c',
       lightVibrant: '#84c4ec',
       lightMuted: '#c4bab9',
+      bottom1: 'rgb(25, 26, 29)',
+      bottom2: 'rgb(9, 21, 39)',
     },
     {
       key: 4,
@@ -59,6 +67,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#046c81',
       lightVibrant: '#7de6fb',
       lightMuted: '#c6baae',
+      bottom1: 'rgb(38, 27, 21)',
+      bottom2: 'rgb(25, 26, 29)',
     },
     {
       key: 5,
@@ -70,6 +80,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#3389a4',
       lightVibrant: '#ddb583',
       lightMuted: '#aac8d0',
+      bottom1: 'rgb(25, 26, 29)',
+      bottom2: 'rgb(9, 21, 39)',
     },
     {
       key: 6,
@@ -81,6 +93,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#056478',
       lightVibrant: '#8ac4e4',
       lightMuted: '#9cb7cb',
+      bottom1: 'rgb(38, 27, 21)',
+      bottom2: 'rgb(25, 26, 29)',
     },
     {
       key: 7,
@@ -92,6 +106,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#173f6a',
       lightVibrant: '#efa450',
       lightMuted: '#d0b99f',
+      bottom1: 'rgb(38, 27, 21)',
+      bottom2: 'rgb(25, 26, 29)',
     },
     {
       key: 8,
@@ -103,6 +119,8 @@ const ColourContext = React.createContext({
       darkVibrant: '#173f6a',
       lightVibrant: '#efa450',
       lightMuted: '#d0b99f',
+      bottom1: 'rgb(25, 26, 29)',
+      bottom2: 'rgb(9, 21, 39)',
     },
   ],
 })

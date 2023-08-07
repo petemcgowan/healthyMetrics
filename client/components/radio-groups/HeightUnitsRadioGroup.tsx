@@ -14,7 +14,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { actionCreators, State } from '../../redux/index'
 
 const { width, height } = Dimensions.get('window')
-const threeQuarterWidth = width * 0.8
+const threeQuarterWidth = width * 0.85
 
 interface HeightUnitsBlockProps {
   animatedStyle: Record<string, any>
@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
   },
   animatedText: {
     color: '#ffffff',
-    fontSize: RFPercentage(4.8),
+    fontSize: RFPercentage(4.2),
   },
   animatedBlock: {
-    height: height * 0.07,
+    height: RFPercentage(7.5),
     width: threeQuarterWidth,
     borderWidth: 3,
     borderColor: '#84c4ec',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   animatedBlockPlaceholder: {
-    height: height * 0.07,
+    height: RFPercentage(7.5),
     width: threeQuarterWidth,
     borderWidth: 3,
     borderColor: '#84c4ec',
@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
   },
   animatedTextPlaceholder: {
     color: 'white',
-    fontSize: RFPercentage(5.5),
+    fontSize: RFPercentage(4.2),
   },
 })

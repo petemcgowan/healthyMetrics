@@ -81,7 +81,7 @@ const GenAnimatedRadioGroup = ({
 
 const styles = StyleSheet.create({
   animatedBlock: {
-    height: 80,
+    height: RFPercentage(9.0),
     width: threeQuarterWidth,
     borderWidth: 3,
     borderColor: '#84c4ec',
@@ -91,10 +91,10 @@ const styles = StyleSheet.create({
   },
   animatedTextPlaceholder: {
     color: 'white',
-    fontSize: RFPercentage(6),
+    fontSize: RFPercentage(5.5),
   },
   animatedBlockPlaceholder: {
-    height: 80,
+    height: RFPercentage(9.0),
     width: threeQuarterWidth,
     borderWidth: 4,
     borderColor: '#84c4ec',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   animatedText: {
     color: '#ffffff',
-    fontSize: RFPercentage(6),
+    fontSize: RFPercentage(5.5),
   },
 })
 
