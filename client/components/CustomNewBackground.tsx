@@ -13,8 +13,8 @@ export const CustomNewBackground: React.FC<BottomSheetBackgroundProps> = ({
 }) => {
   const { colourData, index } = useContext(ColourContext)
 
-  const colourStart = colourData[index].lightVibrant
-  const colourEnd = colourData[index].lightMuted
+  const colourStart = colourData[index].bottom1
+  const colourEnd = colourData[index].bottom2
 
   const containerAnimatedStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(

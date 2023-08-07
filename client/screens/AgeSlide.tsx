@@ -11,7 +11,7 @@ import Utils from '../components/Utils'
 import { actionCreators, State } from '../redux/index'
 
 const { width } = Dimensions.get('window')
-const threeQuarterWidth = width * 0.75
+const threeQuarterWidth = width * 0.85
 
 const AgeSlide = () => {
   const ageOptions = Utils.selectionDropDownRange(18, 74).map(
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     minWidth: threeQuarterWidth,
     color: '#84c4ec',
     fontWeight: '500',
-    fontSize: RFPercentage(14),
+    fontSize: RFPercentage(12.5),
   },
   textBelow: {
     alignSelf: 'center',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     minWidth: threeQuarterWidth,
     color: '#84c4ec',
     fontWeight: '500',
-    fontSize: RFPercentage(18),
+    fontSize: RFPercentage(15.5),
   },
   input: {
     textAlign: 'center',
