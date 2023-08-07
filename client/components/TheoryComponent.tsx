@@ -6,13 +6,14 @@ import { useSelector } from 'react-redux'
 import { State } from '../redux/index'
 // import { ReduxState } from "../redux/store";
 import CustomSwiper from '../screens/CustomSwiper'
-import Onboarding from '../screens/onboarding/Onboarding'
+// import Onboarding from '../screens/onboarding/Onboarding'
+import OnboardingDeck from '../screens/onboarding/OnboardingDeck'
 
 const AppStack = createStackNavigator()
 
 export default function TheoryComponent({ helpData }) {
-  // const hasSeenIntro = false
-  const hasSeenIntro = useSelector((state: State) => state.hasSeenIntro)
+  const hasSeenIntro = false
+  // const hasSeenIntro = useSelector((state: State) => state.hasSeenIntro)
   return (
     <NavigationContainer>
       <AppStack.Navigator
@@ -21,7 +22,8 @@ export default function TheoryComponent({ helpData }) {
         }}
       >
         {!hasSeenIntro && (
-          <AppStack.Screen name="Onboarding" component={Onboarding} />
+          // <AppStack.Screen name="Onboarding" component={Onboarding} />
+          <AppStack.Screen name="OnboardingDeck" component={OnboardingDeck} />
         )}
         <AppStack.Screen
           name="CustomSwiper"
