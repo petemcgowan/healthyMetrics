@@ -21,6 +21,7 @@
     "start": "npx react-native start",
     "ios": "npx react-native run-ios",
     "android": "npx react-native run-android",
+    "androidRelease": "npx react-native run-android --variant=release",
     "start-reset-cache": "npx react-native start -- --reset-cache",
     "test": "jest",
     "lint": "eslint ."
@@ -37,6 +38,7 @@
     "@reduxjs/toolkit": "^1.9.1",
     "react": "18.0.0",
     "react-native": "0.69.9",
+    "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-modal-dropdown": "git+https://github.com/siemiatj/react-native-modal-dropdown.git",
     "react-native-paper": "^4.12.0",
