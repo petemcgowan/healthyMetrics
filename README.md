@@ -1,4 +1,3 @@
-# Healthy
 
 <div align="center">
 
@@ -6,11 +5,14 @@
 
 </div>
 
-<div align="center">
+<div align="center" display="flex" style="display:flex;flex-direction:column">
 
-[<img src="/img/app-store-available-on-the.svg" width="50%">](https://apps.apple.com/us/app/healthy-weight-calculator/id1673239197)
-[<img src="/img/Google_Play_2022_logo.svg" width="50%">](https://play.google.com/store/apps/details?id=com.buachaillmaith.healthycalc)
-[<img src="/img/github-full.svg" width="50%">](https://github.com/petemcgowan/healthyMetrics)
+[<img src="/img/app-store-available-on-the.svg" width="33%">](https://apps.apple.com/us/app/healthy-weight-calculator/id1673239197)
+<br>
+[<img src="/img/Google_Play_2022_logo.svg" width="33%">](https://play.google.com/store/apps/details?id=com.buachaillmaith.healthycalc)
+<br>
+[<img src="/img/github-full.svg" width="33%">](https://github.com/petemcgowan/healthyMetrics)
+<br>
 
 </div>
 
@@ -25,10 +27,16 @@ Healthy is an intuitively designed app crafted to help users determine their hea
 
 </div>
 
+<div align="center">
+
 ## Architecture
+
+</div>
 
 <div align="center">
 
 ![Healthy Architecture](/img/presentation/024slide_HealthyArchReplace.png)
 
 </div>
+<br>
+<br>
