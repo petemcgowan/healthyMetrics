@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { View, Text, Dimensions, StyleSheet, Image } from 'react-native'
 import Video from 'react-native-video'
 import { RFPercentage } from 'react-native-responsive-fontsize'
+import FastImage from 'react-native-fast-image'
 
 const { width, height } = Dimensions.get('window')
 
@@ -39,7 +40,11 @@ const SlideComponent = ({
     <View style={styles.slideContainer}>
       {gifLink && (
         <View style={styles.videoContainer}>
-          <Image style={styles.video} source={gifLink} resizeMode="contain" />
+          <FastImage
+            style={styles.video}
+            source={gifLink}
+            resizeMode={FastImage.resizeMode.contain}
+          />
         </View>
       )}
       {videoLink && (

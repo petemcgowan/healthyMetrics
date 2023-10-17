@@ -11,21 +11,21 @@ VALUES
 
 INSERT INTO public.help
 ("subHeading", "helpText", reference_id)
-VALUES 
+VALUES
 ("", "", null);
 
 INSERT INTO public.help
 ("subHeading", "helpText", reference_id)
-VALUES 
-("Units", 
-"Do you weigh yourself in pounds?  Stones and Pounds?  Kg?  Specify that on this page!\n\n\nDo you measure your height in cm (metric) or feet and inches (imperial)?\n\n\nSpecify here and we'll stick to that unless you change it here...\n", 
+VALUES
+("Units",
+"Do you weigh yourself in pounds?  Stones and Pounds?  Kg?  Specify that on this page!\n\n\nDo you measure your height in cm (metric) or feet and inches (imperial)?\n\n\nSpecify here and we'll stick to that unless you change it here...\n",
 null);
 
 INSERT INTO public.help
 ("subHeading", "helpText", reference_id)
-VALUES 
-("Gender", 
-"Generally, females weigh less than males even though they naturally have a higher percentage of body fat.\n\n     This is because the male body generally has higher muscle mass, and muscle is heavier than fat.\n\n    * Women generally have lower bone density.\n\n    * Last but not least, males tend to be taller than females\n", 
+VALUES
+("Gender",
+"Generally, females weigh less than males even though they naturally have a higher percentage of body fat.\n\n     This is because the male body generally has higher muscle mass, and muscle is heavier than fat.\n\n    * Women generally have lower bone density.\n\n    * Last but not least, males tend to be taller than females\n",
 null);
 
 --TODO Continue this on getting the text in a form that can be stored in a non-backtick string
@@ -149,13 +149,13 @@ Specify here and we'll stick to that unless you change it here...
     null,
     null,
   ]
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
 
 
 
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS public.reference
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.reference
-    OWNER to postgres;
+    OWNER to healthier;
 
 
 
@@ -227,5 +227,5 @@ CREATE TABLE IF NOT EXISTS public.help
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.help
-    OWNER to postgres;
+    OWNER to healthier;
 
