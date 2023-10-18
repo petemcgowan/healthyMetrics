@@ -1,0 +1,203 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.3 (Debian 15.3-1.pgdg120+1)
+-- Dumped by pg_dump version 15.3
+
+-- Started on 2023-08-04 09:47:24 BST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 215 (class 1259 OID 81948)
+-- Name: Help; Type: TABLE; Schema: public; Owner: healthier
+--
+
+CREATE TABLE public."Help" (
+    id integer NOT NULL,
+    "subHeading" character varying(255) NOT NULL,
+    "helpText" text NOT NULL
+);
+
+
+ALTER TABLE public."Help" OWNER TO healthier;
+
+--
+-- TOC entry 214 (class 1259 OID 81947)
+-- Name: Help_id_seq; Type: SEQUENCE; Schema: public; Owner: healthier
+--
+
+CREATE SEQUENCE public."Help_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Help_id_seq" OWNER TO healthier;
+
+--
+-- TOC entry 3339 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: Help_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: healthier
+--
+
+ALTER SEQUENCE public."Help_id_seq" OWNED BY public."Help".id;
+
+
+--
+-- TOC entry 217 (class 1259 OID 81957)
+-- Name: References; Type: TABLE; Schema: public; Owner: healthier
+--
+
+CREATE TABLE public."References" (
+    id integer NOT NULL,
+    "shortTitle" character varying(255),
+    title character varying(255),
+    link character varying(255),
+    "HelpId" integer
+);
+
+
+ALTER TABLE public."References" OWNER TO healthier;
+
+--
+-- TOC entry 216 (class 1259 OID 81956)
+-- Name: References_id_seq; Type: SEQUENCE; Schema: public; Owner: healthier
+--
+
+CREATE SEQUENCE public."References_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."References_id_seq" OWNER TO healthier;
+
+--
+-- TOC entry 3340 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: References_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: healthier
+--
+
+ALTER SEQUENCE public."References_id_seq" OWNED BY public."References".id;
+
+
+--
+-- TOC entry 3181 (class 2604 OID 81951)
+-- Name: Help id; Type: DEFAULT; Schema: public; Owner: healthier
+--
+
+ALTER TABLE ONLY public."Help" ALTER COLUMN id SET DEFAULT nextval('public."Help_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3182 (class 2604 OID 81960)
+-- Name: References id; Type: DEFAULT; Schema: public; Owner: healthier
+--
+
+ALTER TABLE ONLY public."References" ALTER COLUMN id SET DEFAULT nextval('public."References_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3331 (class 0 OID 81948)
+-- Dependencies: 215
+-- Data for Name: Help; Type: TABLE DATA; Schema: public; Owner: healthier
+--
+
+COPY public."Help" (id, "subHeading", "helpText") FROM stdin;
+1	Units	Do you weigh yourself in pounds?  Stones and Pounds?  Kg?  Specify that on this page!\n\n\nDo you measure your height in cm (metric) or feet and inches (imperial)?\n\n\nSpecify here and we'll stick to that unless you change it here...\n
+2	Gender	Generally, females weigh less than males even though they naturally have a higher percentage of body fat.\n\n     This is because the male body generally has higher muscle mass, and muscle is heavier than fat.\n\n    * Women generally have lower bone density.\n\n    * Last but not least, males tend to be taller than females\n
+3	Age	In theory, age shouldn't be a large determinant of an ideal body weight past the ages of 14-15 for girls and 16-17 for boys, after which most people stop growing.\n\n      It is actually expected that human males and females to lose 1.5 and 2 inches in height respectively by age 70.\n\n      It is possible to remove the effects of aging by adopting various habits such as monitoring diet, exercise, stress, supplementation and sleep.
+4	Height	The taller the person, the more muscle mass and body fat they have, which results in more weight. A male at a similar height to a female should weigh about 10-20% heavier.
+5	Frame	Body frame size is another factor that can have a significant impact on the measurement of ideal weight.\n\n      Body frame size is typically categorized as small, medium, or large boned. It is measured based on the circumference of a person's wrist in relation to their height, as shown below.\n\n      For women:\n\n      Height under 5 ft 2 in\n      Small boned = wrist size less than 5.5 in\n      Medium boned = wrist size 5.5 in to 5.75 in\n      Large boned = wrist size over 5.75 in\n      Height between 5 ft 2 in and 5 ft 5 in\n      Small boned = wrist size less than 6 in\n      Medium boned = wrist size 6 in to 6.25 in\n      Large boned = wrist size over 6.25 in\n      Height over 5 ft 5 in\n      Small boned = wrist size less than 6.25 in\n      Medium boned = wrist size 6.25 in to 6.5 in\n      Large boned = wrist size over 6.5 in\n\n      For men:\n\n      Height over 5 ft 5 in\n      Small boned = wrist size 5.5 in to 6.5 in\n      Medium boned = wrist size 6.5 in to 7.5 in\n      Large boned = wrist size over 7.5 in\n\n      A person who is large boned will naturally weigh more than someone who is small boned, even at the same height, making body frame size a factor that can affect measurements such as IBW and BMI.\n
+6	Weight	      Although healthy body weight (HBW) today is sometimes based on perceived visual appeal, HBW was actually introduced to estimate dosages for medical use, and the formulas that calculate it are not at all related to how a person looks at a given weight.\n\n      It has since been determined that the metabolism of certain drugs is more based on HBW than it is total body weight. Today, HBW is also used widely throughout sports, since many sports classify people based on their body weight.\n\n      Note that HBW is not a perfect measurement. It does not consider the percentages of body fat and muscle in a person's body. This means that it is possible for highly fit, healthy athletes to be considered overweight based on their HBW.\n\n      This is why HBW should be considered with the perspective that it is an imperfect measure and not necessarily indicative of health, or a weight that a person should necessarily strive toward; it is possible to be over or under your "HBW" and be perfectly healthy.\n\n      How much a person should weigh is not an exact science. It is highly dependent on each individual. Thus far, there is no measure, be it HBW, body mass index (BMI), or any other that can definitively state how much a person should weigh to be healthy.\n\n      They are only references, and it's more important to adhere to making healthy life choices such as regular exercise, eating a variety of unprocessed foods, getting enough sleep, etc. than it is to chase a specific weight based on a generalized formula.\n\n      That being said, many factors can affect the healthy weight; the major factors are listed below. Other factors include health conditions, fat distribution, progeny, etc.\n
+\.
+
+
+--
+-- TOC entry 3333 (class 0 OID 81957)
+-- Dependencies: 217
+-- Data for Name: References; Type: TABLE DATA; Schema: public; Owner: healthier
+--
+
+COPY public."References" (id, "shortTitle", title, link, "HelpId") FROM stdin;
+1	\N	\N	\N	1
+2	sex differences	Sex differences in human adipose tissues: the biology of pear shape	https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3411490/	2
+3	relationship aging	A Research Agenda: The Changing Relationship Between Body Weight and Health in Aging	https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4984841/	3
+4	drug dosage	Robinson JD, Lupkiewicz SM, Palenik L, Lopez LM, Ariet M, Determination of ideal body weight for drug dosage calculations. Am J Hosp Parm 1983	https://pubmed.ncbi.nlm.nih.gov/6869387/	4
+5	How to Measure	How to Measure Your Wrist to Get Your Body Frame Size	https://www.livestrong.com/article/175491-how-to-measure-wrist-size-for-body-frame-measurement/	5
+6	Ideal Body Weight	Ideal Body Weight	https://www.sciencedirect.com/topics/medicine-and-dentistry/ideal-body-weight	6
+\.
+
+
+--
+-- TOC entry 3341 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: Help_id_seq; Type: SEQUENCE SET; Schema: public; Owner: healthier
+--
+
+SELECT pg_catalog.setval('public."Help_id_seq"', 6, true);
+
+
+--
+-- TOC entry 3342 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: References_id_seq; Type: SEQUENCE SET; Schema: public; Owner: healthier
+--
+
+SELECT pg_catalog.setval('public."References_id_seq"', 6, true);
+
+
+--
+-- TOC entry 3184 (class 2606 OID 81955)
+-- Name: Help Help_pkey; Type: CONSTRAINT; Schema: public; Owner: healthier
+--
+
+ALTER TABLE ONLY public."Help"
+    ADD CONSTRAINT "Help_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3186 (class 2606 OID 81964)
+-- Name: References References_pkey; Type: CONSTRAINT; Schema: public; Owner: healthier
+--
+
+ALTER TABLE ONLY public."References"
+    ADD CONSTRAINT "References_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3187 (class 2606 OID 81965)
+-- Name: References References_HelpId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: healthier
+--
+
+ALTER TABLE ONLY public."References"
+    ADD CONSTRAINT "References_HelpId_fkey" FOREIGN KEY ("HelpId") REFERENCES public."Help"(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+-- Completed on 2023-08-04 09:47:27 BST
+
+--
+-- PostgreSQL database dump complete
+--
+
