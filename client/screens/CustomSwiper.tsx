@@ -106,10 +106,29 @@ function CustomSwiper() {
 
         if (error.response) {
           console.log('client received an error response (5xx, 4xx)')
-          console.error('error details', error)
+          console.log(
+            'Response Error details:',
+            error.config,
+            error.request,
+            error.message,
+            error.response
+          )
         } else if (error.request) {
           console.log('client never received a response, or request never left')
-          console.error('error details', error)
+          if (error.request) {
+            console.log('error.config:', error.config)
+            console.log('error.request:', error.request)
+            console.log('error.message:', error.message)
+            console.log('error.response:', error.response)
+          }
+
+          console.log(
+            'Request Error details:',
+            error.config,
+            error.request,
+            error.message,
+            error.response
+          )
         }
       }
     }
