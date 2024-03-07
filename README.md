@@ -1,3 +1,12 @@
+## Main vs design/release project versions
+
+This is the main code project for Healthy Metrics.
+
+You can find its design/release project here:
+https://github.com/petemcgowan/healthyMetrics_design_release
+
+## Healthy Metrics
+
 
 <div align="center">
 
