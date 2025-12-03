@@ -1,13 +1,13 @@
-import {GenderAction} from '../actions/index';
+import {GenderAction} from '../actions/index'
 
-const initialState = '';
+const initialState = ''
 
 export const gender = (state = initialState, action: GenderAction) => {
   switch (action.type) {
     case 'UPDATE_GENDER_VALUE':
-      state = action.payload;
-      return action.payload;
+      state = action.payload
+      return action.payload
     default:
-      return state;
+      return state
   }
-};
+}

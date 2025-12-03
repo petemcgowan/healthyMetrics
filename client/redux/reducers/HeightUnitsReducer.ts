@@ -1,15 +1,15 @@
-import { HeightUnitsAction } from "../actions/index";
-const initialState = "cm";
+import {HeightUnitsAction} from '../actions/index'
+const initialState = 'cm'
 
 export const heightUnits = (
   state = initialState,
-  action: HeightUnitsAction
+  action: HeightUnitsAction,
 ) => {
   switch (action.type) {
-    case "UPDATE_HEIGHT_UNITS_VALUE":
-      state = action.payload;
-      return state;
+    case 'UPDATE_HEIGHT_UNITS_VALUE':
+      state = action.payload
+      return state
     default:
-      return state;
+      return state
   }
-};
+}
