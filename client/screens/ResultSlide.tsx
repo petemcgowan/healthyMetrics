@@ -3,20 +3,18 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   ScrollView,
-  Linking,
-  TextInput,
-  Animated,
   Dimensions,
   TouchableOpacity,
+  Linking,
 } from 'react-native'
-import Svg, { G, Circle } from 'react-native-svg'
-import { useSelector } from 'react-redux'
-import { State } from '../redux/index'
-import { RFPercentage } from 'react-native-responsive-fontsize'
+import {SafeAreaView} from 'react-native-safe-area-context'
+import {useSelector} from 'react-redux'
+import {State} from '../redux/index'
+import {RFPercentage} from 'react-native-responsive-fontsize'
+import WeightDisplay from '../components/WeightDisplay.tsx'
 
-const { width, height } = Dimensions.get('window')
+const {width, height} = Dimensions.get('window')
 
 interface ResultSlideProps {
   idealWeightStones: number
@@ -33,400 +31,123 @@ const ResultSlide = ({
   setIndex,
   index,
 }: ResultSlideProps) => {
-  const AnimatedCircle = Animated.createAnimatedComponent(Circle)
-  const inputRef = React.useRef()
-  const circleRef = React.useRef()
-  const weightUnits = useSelector((state: State) => state.weightUnits)
+  const {
+    weightUnits,
+    heightCm,
+    heightFt,
+    heightInches,
+    weightPounds,
+    weightPoundsOnly,
+    weightStones,
+    weightKg,
+    frame,
+    age,
+    gender,
+    heightUnits,
+  } = useSelector((state: State) => state)
 
-  const heightCm = useSelector((state: State) => state.heightCm)
-  const heightFt = useSelector((state: State) => state.heightFt)
-  const heightInches = useSelector((state: State) => state.heightInches)
-  const weightPounds = useSelector((state: State) => state.weightPounds)
-  const weightPoundsOnly = useSelector((state: State) => state.weightPoundsOnly)
-  const weightStones = useSelector((state: State) => state.weightStones)
-  const weightKg = useSelector((state: State) => state.weightKg)
-  const frame = useSelector((state: State) => state.frame)
-  const age = useSelector((state: State) => state.age)
-  const gender = useSelector((state: State) => state.gender)
-  const heightUnits = useSelector((state: State) => state.heightUnits)
-
-  const strokeWidth = 10
-  const kgPoundsRadius = height < 800 ? 78 : 95
-  const radius = height < 800 ? 65 : 80
-  const kgCircumference = 2 * Math.PI * kgPoundsRadius
-  const circumference = 2 * Math.PI * radius
-  const kgHalfCircle = kgPoundsRadius + strokeWidth
-  const halfCircle = radius + strokeWidth
-  const color = 'aqua'
-  const textColor = 'aqua'
+  // Large radius for single view, smaller for side-by-side
+  const largeRadius = height < 800 ? 78 : 95
+  const smallRadius = height < 800 ? 65 : 80
 
   const moveToBMI = () => {
-    setIndex(index + 1) // move to the BMI slide
+    setIndex(index + 1)
+  }
+
+  const openInfoLink = () => {
+    Linking.openURL('https://pubmed.ncbi.nlm.nih.gov/6869387/')
   }
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.vwResultSlide}>
-        <View style={styles.vwTop}>
-          <View style={styles.vwIdealWeight}>
-            <Text style={styles.yourHealthyWeightText}>Your</Text>
-            <Text style={styles.yourHealthyWeightText}>Healthy</Text>
-            <Text style={styles.yourHealthyWeightText}>Weight</Text>
+    <ScrollView contentContainerStyle={styles.scrollContent}>
+      <SafeAreaView style={styles.container}>
+        {/* --- CARD 1: THE MAIN RESULT --- */}
+        <View style={styles.glassCard}>
+          {/* Info Icon (Top Right) */}
+          <TouchableOpacity style={styles.infoIcon} onPress={openInfoLink}>
+            <Text style={styles.infoIconText}>ⓘ</Text>
+          </TouchableOpacity>
 
+          <Text style={styles.headerText}>Your Healthy Weight</Text>
+
+          <View style={styles.circleContainer}>
+            {/* KG VIEW */}
             {weightUnits === 'kg' && (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View
-                  style={{
-                    width: kgPoundsRadius * 2,
-                    height: kgPoundsRadius * 2,
-                  }}
-                >
-                  <Svg
-                    height={kgPoundsRadius * 2}
-                    width={kgPoundsRadius * 2}
-                    viewBox={`0 0 ${kgHalfCircle * 2} ${kgHalfCircle * 2}`}
-                  >
-                    <G
-                      rotation="-90"
-                      origin={`${kgHalfCircle}, ${kgHalfCircle}`}
-                    >
-                      <AnimatedCircle
-                        ref={circleRef}
-                        cx="50%"
-                        cy="50%"
-                        r={kgPoundsRadius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinecap="round"
-                        strokeDashoffset={kgCircumference}
-                        strokeDasharray={kgCircumference}
-                      />
-                      <Circle
-                        cx="50%"
-                        cy="50%"
-                        r={kgPoundsRadius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinejoin="round"
-                      />
-                    </G>
-                  </Svg>
-                  <TextInput
-                    ref={inputRef}
-                    underlineColorAndroid="transparent"
-                    editable={false}
-                    style={[
-                      StyleSheet.absoluteFillObject,
-                      {
-                        fontSize: kgPoundsRadius / 1.6,
-                        color: textColor ?? color,
-                      },
-                      styles.text,
-                    ]}
-                  >
-                    {Math.round(idealWeightKg)}
-                  </TextInput>
-                </View>
-                <Text style={[styles.weightUnits]}>kg</Text>
-              </View>
-            )}
-            {weightUnits === 'Pounds' && (
-              <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                <View
-                  style={{
-                    width: kgPoundsRadius * 2,
-                    height: kgPoundsRadius * 2,
-                  }}
-                >
-                  <Svg
-                    height={kgPoundsRadius * 2}
-                    width={kgPoundsRadius * 2}
-                    viewBox={`0 0 ${kgHalfCircle * 2} ${kgHalfCircle * 2}`}
-                  >
-                    <G
-                      rotation="-90"
-                      origin={`${kgHalfCircle}, ${kgHalfCircle}`}
-                    >
-                      <AnimatedCircle
-                        ref={circleRef}
-                        cx="50%"
-                        cy="50%"
-                        r={kgPoundsRadius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinecap="round"
-                        strokeDashoffset={kgCircumference}
-                        strokeDasharray={kgCircumference}
-                      />
-                      <Circle
-                        cx="50%"
-                        cy="50%"
-                        r={kgPoundsRadius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinejoin="round"
-                      />
-                    </G>
-                  </Svg>
-                  <TextInput
-                    ref={inputRef}
-                    underlineColorAndroid="transparent"
-                    editable={false}
-                    style={[
-                      StyleSheet.absoluteFillObject,
-                      {
-                        fontSize: kgPoundsRadius / 1.6,
-                        color: textColor ?? color,
-                      },
-                      styles.text,
-                    ]}
-                  >
-                    {Math.round(idealWeightPounds)}
-                  </TextInput>
-                </View>
-                <Text style={[styles.weightUnits]}>pounds</Text>
-              </View>
+              <WeightDisplay
+                value={idealWeightKg}
+                label="kg"
+                radius={largeRadius}
+              />
             )}
 
-            {weightUnits === 'Stones/Pounds' && (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ width: radius * 2, height: radius * 2 }}>
-                  <Svg
-                    height={radius * 2}
-                    width={radius * 2}
-                    viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}
-                  >
-                    <G rotation="-90" origin={`${halfCircle}, ${halfCircle}`}>
-                      <AnimatedCircle
-                        ref={circleRef}
-                        cx="50%"
-                        cy="50%"
-                        r={radius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinecap="round"
-                        strokeDashoffset={circumference}
-                        strokeDasharray={circumference}
-                      />
-                      <Circle
-                        cx="50%"
-                        cy="50%"
-                        r={radius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinejoin="round"
-                      />
-                    </G>
-                  </Svg>
-                  <TextInput
-                    ref={inputRef}
-                    underlineColorAndroid="transparent"
-                    editable={false}
-                    style={[
-                      StyleSheet.absoluteFillObject,
-                      { fontSize: radius / 1.6, color: textColor ?? color },
-                      styles.text,
-                    ]}
-                  >
-                    {Math.round(idealWeightStones)}
-                  </TextInput>
-                  <Text style={[styles.weightUnits, { textAlign: 'center' }]}>
-                    stones
-                  </Text>
-                </View>
-                <View style={{ width: radius * 2, height: radius * 2 }}>
-                  <Svg
-                    height={radius * 2}
-                    width={radius * 2}
-                    viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}
-                  >
-                    <G rotation="-90" origin={`${halfCircle}, ${halfCircle}`}>
-                      <AnimatedCircle
-                        ref={circleRef}
-                        cx="50%"
-                        cy="50%"
-                        r={radius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinecap="round"
-                        strokeDashoffset={circumference}
-                        strokeDasharray={circumference}
-                      />
-                      <Circle
-                        cx="50%"
-                        cy="50%"
-                        r={radius}
-                        fill="transparent"
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        strokeLinejoin="round"
-                      />
-                    </G>
-                  </Svg>
-                  <TextInput
-                    ref={inputRef}
-                    underlineColorAndroid="transparent"
-                    editable={false}
-                    style={[
-                      StyleSheet.absoluteFillObject,
-                      { fontSize: radius / 1.6, color: textColor ?? color },
-                      styles.text,
-                    ]}
-                  >
-                    {Math.round(idealWeightPounds)}
-                  </TextInput>
-                  <Text style={[styles.weightUnits, { textAlign: 'center' }]}>
-                    pounds
-                  </Text>
-                </View>
-              </View>
-            )}
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            marginTop: idealWeightStones > 0 ? 45 : 10,
-          }}
-        >
-          <Text
-            style={{
-              color: '#d0b99f',
-              fontSize: RFPercentage(1.8),
-              textAlign: 'center',
-            }}
-          >
-            J. D. Robinson Formula: Determination of ideal body weight for drug
-            dosage calculations. (Am J Hosp Parm 1983)
-          </Text>
-          <Text
-            style={{
-              color: 'mediumblue',
-              textAlign: 'center',
-              fontSize: RFPercentage(1.8),
-            }}
-            onPress={() =>
-              Linking.openURL('https://pubmed.ncbi.nlm.nih.gov/6869387/')
-            }
-          >
-            https://pubmed.ncbi.nlm.nih.gov/6869387/
-          </Text>
-        </View>
-        <TouchableOpacity style={styles.button} onPress={moveToBMI}>
-          <Text style={styles.buttonText}>BMI &#10140; </Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: 10,
-          }}
-        >
-          <Text
-            style={{
-              color: '#b27f52',
-              fontSize: RFPercentage(3),
-              fontStyle: 'italic',
-            }}
-          >
-            Entered Info:
-          </Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <View
-            style={{
-              flexDirection: 'column',
-              flex: 0.5,
-            }}
-          >
-            <View>
-              <Text style={styles.detailsHeaderText}>Gender:</Text>
-            </View>
-            <View>
-              <Text style={styles.detailsHeaderText}>Body Frame:</Text>
-            </View>
-            {heightUnits === 'cm' && (
-              <View>
-                <Text style={styles.detailsHeaderText}>Height(cm):</Text>
-              </View>
-            )}
-            {heightUnits === 'Feet/Inches' && (
-              <View>
-                <Text style={styles.detailsHeaderText}>Height (ft/in):</Text>
-              </View>
-            )}
-            <View>
-              <Text style={styles.detailsHeaderText}>Age:</Text>
-            </View>
-            {weightUnits === 'kg' && (
-              <View>
-                <Text style={styles.detailsHeaderText}>Weight(kg):</Text>
-              </View>
-            )}
+            {/* POUNDS VIEW */}
             {weightUnits === 'Pounds' && (
-              <View>
-                <Text style={styles.detailsHeaderText}>Weight (Pounds):</Text>
-              </View>
+              <WeightDisplay
+                value={idealWeightPounds}
+                label="pounds"
+                radius={largeRadius}
+              />
             )}
+
+            {/* STONES / POUNDS VIEW (Side by Side) */}
             {weightUnits === 'Stones/Pounds' && (
-              <View>
-                <Text style={styles.detailsHeaderText}>Weight(St/Po):</Text>
+              <View style={{flexDirection: 'row'}}>
+                <WeightDisplay
+                  value={idealWeightStones}
+                  label="stones"
+                  radius={smallRadius}
+                />
+                <WeightDisplay
+                  value={idealWeightPounds}
+                  label="pounds"
+                  radius={smallRadius}
+                />
               </View>
             )}
           </View>
 
-          <View
-            style={{
-              flexDirection: 'column',
-              flex: 0.5,
-            }}
-          >
-            <View>
-              <Text style={styles.detailText}>{gender}</Text>
+          {/* Action Button */}
+          <TouchableOpacity style={styles.actionButton} onPress={moveToBMI}>
+            <Text style={styles.actionButtonText}>View BMI</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* --- CARD 2: ENTERED INFO --- */}
+        <View style={[styles.glassCard, styles.infoCard]}>
+          <Text style={styles.subHeaderText}>Your Details</Text>
+
+          <View style={styles.detailsGrid}>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Gender:</Text>
+              <Text style={styles.detailValue}>{gender}</Text>
             </View>
-            <View>
-              <Text style={styles.detailText}>{frame}</Text>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Frame:</Text>
+              <Text style={styles.detailValue}>{frame}</Text>
             </View>
-            {heightUnits === 'cm' && (
-              <View>
-                <Text style={styles.detailText}>{heightCm}</Text>
-              </View>
-            )}
-            {heightUnits === 'Feet/Inches' && (
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.detailText}>{heightFt}</Text>
-                <Text style={styles.detailText}>/</Text>
-                <Text style={styles.detailText}>{heightInches}</Text>
-              </View>
-            )}
-            <View>
-              <Text style={styles.detailText}>{age}</Text>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Age:</Text>
+              <Text style={styles.detailValue}>{age}</Text>
             </View>
-            {weightUnits === 'kg' && (
-              <View>
-                <Text style={styles.detailText}>{weightKg}</Text>
-              </View>
-            )}
-            {weightUnits === 'Pounds' && (
-              <View>
-                <Text style={styles.detailText}>{weightPoundsOnly}</Text>
-              </View>
-            )}
-            {weightUnits === 'Stones/Pounds' && (
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.detailText}>{weightStones}</Text>
-                <Text style={styles.detailText}>/</Text>
-                <Text style={styles.detailText}>{weightPounds}</Text>
-              </View>
-            )}
+
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Height:</Text>
+              <Text style={styles.detailValue}>
+                {heightUnits === 'cm'
+                  ? `${heightCm} cm`
+                  : `${heightFt}' ${heightInches}"`}
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Current:</Text>
+              <Text style={styles.detailValue}>
+                {weightUnits === 'kg'
+                  ? `${weightKg} kg`
+                  : weightUnits === 'Pounds'
+                  ? `${weightPoundsOnly} lbs`
+                  : `${weightStones}st ${weightPounds}lb`}
+              </Text>
+            </View>
           </View>
         </View>
       </SafeAreaView>
@@ -435,87 +156,107 @@ const ResultSlide = ({
 }
 
 const styles = StyleSheet.create({
-  vwResultSlide: {
-    flexDirection: 'column',
+  container: {
     flex: 1,
+    alignItems: 'center',
     width: width,
   },
-  vwTop: {},
-  vwBottom: {
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingVertical: 20,
+  },
+  // GLASSMORPHISM CARD STYLE
+  glassCard: {
+    width: width * 0.9,
+    backgroundColor: 'rgba(30, 30, 40, 0.75)', // Dark semi-transparent
+    borderRadius: 25,
+    padding: 25,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255, 0.1)',
     alignItems: 'center',
+    // Shadow for depth
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
   },
-  detailsHeaderText: {
-    color: '#e4bc94',
-    // padding: 1,
-    textAlign: 'right',
-    // height: 30,
-    fontSize: RFPercentage(2.7),
+  infoCard: {
+    paddingVertical: 15,
   },
-  detailText: {
-    color: '#173f6a',
-    // height: 30,
-    // padding: 1,
-    fontSize: RFPercentage(2.7),
+  headerText: {
+    color: '#FFFFFF',
+    fontSize: RFPercentage(4),
+    fontWeight: '600',
+    marginBottom: 20,
+    textAlign: 'center',
   },
-  buttonText: {
-    alignSelf: 'center',
-    padding: height < 800 ? 0 : 10,
-    fontSize: RFPercentage(5.2),
-    color: '#84c4ec',
-    fontWeight: 'bold',
+  subHeaderText: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: RFPercentage(2.5),
+    fontWeight: '500',
+    marginBottom: 15,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
-  button: {
-    borderRadius: 20,
-    borderWidth: 0.5,
-    marginRight: 40,
-    marginLeft: 40,
-    borderColor: '#84c4ec',
-    backgroundColor: '#e4bc94',
+  // Circle & Value
+  circleContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+
+  // Info Icon
+  infoIcon: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+    padding: 5,
+  },
+  infoIconText: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 20,
+  },
+
+  // Action Button
+  actionButton: {
+    backgroundColor: '#4FD1C5',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 30,
     marginTop: 10,
   },
-  idealWeightText: {
-    fontSize: RFPercentage(13),
-    color: 'white',
-    fontWeight: '500',
+  actionButtonText: {
+    color: '#1A202C',
+    fontSize: RFPercentage(2.5),
+    fontWeight: 'bold',
   },
-  idealWeightSPText: {
-    fontSize: RFPercentage(13),
-    color: 'white',
-    fontWeight: '500',
+
+  // Details Grid
+  detailsGrid: {
+    width: '100%',
   },
-  yourHealthyWeightText: {
-    color: '#e4bc94',
-    fontSize: RFPercentage(7.7),
-    fontWeight: '500',
-  },
-  weightUnits: {
-    color: 'white',
-    fontSize: RFPercentage(4),
-  },
-  vwGender: {
+  detailRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.1)',
   },
-  vwBodyFrame: {
-    flexDirection: 'row',
+  detailLabel: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: RFPercentage(2.2),
   },
-  vwWeight: {
-    flexDirection: 'row',
-  },
-  vwHeight: {
-    flexDirection: 'row',
-  },
-  vwAge: {
-    flexDirection: 'row',
-  },
-  healthyWeightText: {
-    fontSize: RFPercentage(3),
-  },
-  vwIdealWeight: {
-    alignItems: 'center',
-  },
-  text: {
-    fontWeight: '900',
-    textAlign: 'center',
+  detailValue: {
+    color: '#FFFFFF',
+    fontSize: RFPercentage(2.2),
+    fontWeight: '600',
   },
 })
 
