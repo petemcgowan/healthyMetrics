@@ -1,18 +1,21 @@
-import {combineReducers} from 'redux';
+import {combineReducers} from 'redux'
 
-import {age} from './AgeReducer';
-import {frame} from './FrameReducer';
-import {gender} from './GenderReducer';
-import {hasSeenIntro} from './HasSeenIntroReducer';
-import {heightCm, heightFt, heightInches} from './HeightReducer';
-import {heightUnits} from './HeightUnitsReducer';
+import {age} from './AgeReducer'
+import {frame} from './FrameReducer'
+import {gender} from './GenderReducer'
+import {hasSeenIntro} from './HasSeenIntroReducer'
+import {heightCm, heightFt, heightInches} from './HeightReducer'
+import {heightUnits} from './HeightUnitsReducer'
 import {
   weightPounds,
   weightStones,
   weightPoundsOnly,
   weightKg,
-} from './WeightReducer';
-import {weightUnits} from './WeightUnitsReducer';
+} from './WeightReducer'
+import {weightUnits} from './WeightUnitsReducer'
+
+import {bmiCalcResult} from './BMIReducer'
+import {idealWeightKg} from './IdealWeightKgReducer'
 
 const reducers = combineReducers({
   hasSeenIntro,
@@ -28,8 +31,10 @@ const reducers = combineReducers({
   gender,
   heightUnits,
   weightUnits,
-});
+  idealWeightKg,
+  bmiCalcResult,
+})
 
-export default reducers;
+export default reducers
 
-export type State = ReturnType<typeof reducers>;
+export type State = ReturnType<typeof reducers>

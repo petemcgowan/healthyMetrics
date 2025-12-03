@@ -1,4 +1,4 @@
-import { ActionType } from '../action-types'
+import {ActionType} from '../action-types'
 
 interface HasSeenIntroAction {
   type: ActionType.UPDATE_HAS_SEEN_INTRO_VALUE
@@ -90,3 +90,17 @@ interface UpdateWeightUnitsAction {
 }
 
 export type WeightUnitsAction = UpdateWeightUnitsAction
+
+interface UpdateIdealWeightKgAction {
+  type: ActionType.UPDATE_IDEAL_WEIGHT_KG_VALUE
+  payload: number
+}
+
+export type IdealWeightKgAction = UpdateIdealWeightKgAction
+
+interface UpdateBMIAction {
+  type: ActionType.UPDATE_BMI_VALUE
+  payload: number
+}
+
+export type BMIAction = UpdateBMIAction
