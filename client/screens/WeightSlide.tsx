@@ -1,40 +1,40 @@
 import React from 'react'
-import { Picker as Select } from '@react-native-picker/picker'
-import { useEffect } from 'react'
+import {Picker as Select} from '@react-native-picker/picker'
+
 import {
   StyleSheet,
   Text,
-  Platform,
   View,
+  Platform,
   Dimensions,
   TouchableOpacity,
 } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Picker, PickerColumn, PickerItem } from 'react-native-picky'
-import { RFPercentage } from 'react-native-responsive-fontsize'
+import {useSelector, useDispatch} from 'react-redux'
+import {bindActionCreators} from 'redux'
+// import { Picker, PickerColumn, PickerItem } from 'react-native-picky'
+import {RFPercentage} from 'react-native-responsive-fontsize'
 import Utils from '../components/Utils'
-import { actionCreators, State } from '../redux/index'
+import {actionCreators, State} from '../redux/index'
 
-const { width, height } = Dimensions.get('window')
-const threeQuarterWidth = width * 0.85
+const {width, height} = Dimensions.get('window')
+const threeQuarterWidth = width * 0.65
 
 const poundsOnlyOptions = Utils.selectionDropDownRange(100, 260).map(
-  (pound) => pound.value
+  pound => pound.value,
 )
 const stoneOptions = Utils.selectionDropDownRange(5, 25).map(
-  (stone) => stone.value
+  stone => stone.value,
 )
 const stonePoundOptions = Utils.selectionDropDownRange(0, 13).map(
-  (stone) => stone.value
+  stone => stone.value,
 )
-const kgOptions = Utils.selectionDropDownRange(40, 160).map((kg) => kg.value)
+const kgOptions = Utils.selectionDropDownRange(40, 160).map(kg => kg.value)
 
 interface WeightSlideProps {
   handleCalculate: any
 }
 
-const WeightSlide = ({ handleCalculate }: WeightSlideProps) => {
+const WeightSlide = ({handleCalculate}: WeightSlideProps) => {
   const weightPoundsOnly = useSelector((state: State) => state.weightPoundsOnly)
   const weightPounds = useSelector((state: State) => state.weightPounds)
   const weightStones = useSelector((state: State) => state.weightStones)
@@ -42,125 +42,24 @@ const WeightSlide = ({ handleCalculate }: WeightSlideProps) => {
   const weightKg = useSelector((state: State) => state.weightKg)
 
   const dispatch = useDispatch()
-  const { setWeightPounds, setWeightPoundsOnly, setWeightStones, setWeightKg } =
+  const {setWeightPounds, setWeightPoundsOnly, setWeightStones, setWeightKg} =
     bindActionCreators(actionCreators, dispatch)
-
-  useEffect(() => {}, [])
 
   return (
     <View>
-      {weightUnits === 'Pounds' && Platform.OS === 'ios' && (
+      {weightUnits === 'Pounds' && (
         <View>
           <Text style={styles.textAbove}>Enter</Text>
           <Text style={styles.textBelow}>Weight</Text>
-          <View style={[styles.inputContainer, { width: width }]}>
-            <Select
-              selectedValue={weightPoundsOnly}
-              itemStyle={[styles.weightEntry, { width: width }]}
-              onValueChange={(itemPoundsOnly: string) => {
-                setWeightPoundsOnly(itemPoundsOnly)
-              }}
-            >
-              {poundsOnlyOptions.map((weightValue) => (
-                <Select.Item
-                  value={weightValue}
-                  label={weightValue}
-                  key={weightValue}
-                  style={styles.weightEntry}
-                />
-              ))}
-            </Select>
-          </View>
-        </View>
-      )}
-      {weightUnits === 'Pounds' && Platform.OS === 'android' && (
-        <View>
-          <Text style={styles.textAbove}>Enter</Text>
-          <Text style={styles.textBelow}>Weight</Text>
-          <View style={[styles.inputContainer, { width: width }]}>
-            <Picker textColor="#7de6fb" textSize={60}>
-              <PickerColumn
-                selectedValue={weightPoundsOnly}
-                onChange={(event) =>
-                  setWeightPoundsOnly(event.value.toString())
-                }
-              >
-                {poundsOnlyOptions.map((poundsOnlyValue) => (
-                  <PickerItem
-                    label={poundsOnlyValue.toString()}
-                    value={poundsOnlyValue.toString()}
-                    key={poundsOnlyValue}
-                  />
-                ))}
-              </PickerColumn>
-            </Picker>
-          </View>
-        </View>
-      )}
-      {weightUnits === 'Stones/Pounds' && Platform.OS === 'android' && (
-        <View>
-          <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-            <View
-              style={[
-                styles.inputContainer,
-                { width: width * 0.45, height: height * 0.35 },
-              ]}
-            >
-              <Picker textColor="#8ac4e4" textSize={height < 800 ? 53 : 60}>
-                <PickerColumn
-                  selectedValue={weightStones}
-                  onChange={(event) => setWeightPounds(event.value.toString())}
-                >
-                  {stoneOptions.map((stoneValue) => (
-                    <PickerItem
-                      label={stoneValue.toString()}
-                      value={stoneValue.toString()}
-                      key={stoneValue}
-                    />
-                  ))}
-                </PickerColumn>
-              </Picker>
-            </View>
-            <View
-              style={[
-                styles.inputContainer,
-                { width: width * 0.45, height: height * 0.35 },
-              ]}
-            >
-              <Picker textColor="#8ac4e4" textSize={height < 800 ? 53 : 60}>
-                <PickerColumn
-                  selectedValue={weightPounds}
-                  onChange={(event) => setWeightPounds(event.value.toString())}
-                >
-                  {stonePoundOptions.map((poundValue) => (
-                    <PickerItem
-                      label={poundValue.toString()}
-                      value={poundValue.toString()}
-                      key={poundValue}
-                    />
-                  ))}
-                </PickerColumn>
-              </Picker>
-            </View>
-          </View>
-          <Text style={styles.textAbove}>Enter</Text>
-          <Text style={styles.textBelow}>Weight</Text>
-        </View>
-      )}
-      {weightUnits === 'Stones/Pounds' && Platform.OS === 'ios' && (
-        <View>
-          <Text style={styles.textAbove}>Enter</Text>
-          <Text style={styles.textBelow}>Weight</Text>
-          <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-            <View style={[styles.inputContainer, { width: width / 2 }]}>
+          <View style={styles.inputParentContainer}>
+            <View style={styles.inputContainer}>
               <Select
-                selectedValue={weightStones}
-                itemStyle={[styles.weightEntry, { width: width / 2 }]}
-                onValueChange={(itemWeightStones: string) => {
-                  setWeightStones(itemWeightStones)
-                }}
-              >
-                {stoneOptions.map((weightValue) => (
+                selectedValue={weightPoundsOnly}
+                itemStyle={styles.weightEntry}
+                onValueChange={(itemPoundsOnly: string) => {
+                  setWeightPoundsOnly(itemPoundsOnly)
+                }}>
+                {poundsOnlyOptions.map(weightValue => (
                   <Select.Item
                     value={weightValue}
                     label={weightValue}
@@ -170,15 +69,39 @@ const WeightSlide = ({ handleCalculate }: WeightSlideProps) => {
                 ))}
               </Select>
             </View>
-            <View style={[styles.inputContainer, { width: width / 2 }]}>
+          </View>
+        </View>
+      )}
+      {weightUnits === 'Stones/Pounds' && (
+        <View>
+          <Text style={styles.textAbove}>Enter</Text>
+          <Text style={styles.textBelow}>Weight</Text>
+          <View style={styles.inputParentContainer}>
+            <View style={[styles.inputContainer, {width: width * 0.47}]}>
+              <Select
+                selectedValue={weightStones}
+                itemStyle={[styles.weightEntry, {width: width * 0.47}]}
+                onValueChange={(itemWeightStones: string) => {
+                  setWeightStones(itemWeightStones)
+                }}>
+                {stoneOptions.map(weightValue => (
+                  <Select.Item
+                    value={weightValue}
+                    label={weightValue}
+                    key={weightValue}
+                    style={styles.weightEntry}
+                  />
+                ))}
+              </Select>
+            </View>
+            <View style={[styles.inputContainer, {width: width * 0.47}]}>
               <Select
                 selectedValue={weightPounds}
-                itemStyle={[styles.weightEntry, { width: width / 2 }]}
+                itemStyle={[styles.weightEntry, {width: width * 0.47}]}
                 onValueChange={(itemWeightPounds: string) => {
                   setWeightPounds(itemWeightPounds)
-                }}
-              >
-                {stonePoundOptions.map((weightPound) => (
+                }}>
+                {stonePoundOptions.map(weightPound => (
                   <Select.Item
                     value={weightPound}
                     label={weightPound}
@@ -191,49 +114,28 @@ const WeightSlide = ({ handleCalculate }: WeightSlideProps) => {
           </View>
         </View>
       )}
-      {weightUnits === 'kg' && Platform.OS === 'android' && (
+      {weightUnits === 'kg' && (
         <View>
-          <View style={styles.inputContainer}>
-            <Picker textColor="#8ac4e4" textSize={height < 800 ? 50 : 60}>
-              <PickerColumn
+          <Text style={styles.textAbove}>Enter</Text>
+          <Text style={styles.textBelow}>Weight</Text>
+          <View style={styles.inputParentContainer}>
+            <View style={styles.inputContainer}>
+              <Select
                 selectedValue={weightKg}
-                onChange={(event) => setWeightKg(event.value.toString())}
-              >
-                {kgOptions.map((kgValue) => (
-                  <PickerItem
-                    label={kgValue.toString()}
-                    value={kgValue.toString()}
+                itemStyle={styles.weightEntry}
+                onValueChange={(itemKg: string) => {
+                  setWeightKg(itemKg)
+                }}>
+                {kgOptions.map(kgValue => (
+                  <Select.Item
+                    value={kgValue}
+                    label={kgValue}
                     key={kgValue}
+                    style={styles.weightEntry}
                   />
                 ))}
-              </PickerColumn>
-            </Picker>
-          </View>
-          <Text style={styles.textAbove}>Enter</Text>
-          <Text style={styles.textBelow}>Weight</Text>
-        </View>
-      )}
-      {weightUnits === 'kg' && Platform.OS === 'ios' && (
-        <View>
-          <Text style={styles.textAbove}>Enter</Text>
-          <Text style={styles.textBelow}>Weight</Text>
-          <View style={[styles.inputContainer, { width: width }]}>
-            <Select
-              selectedValue={weightKg}
-              itemStyle={styles.weightEntry}
-              onValueChange={(itemKg: string) => {
-                setWeightKg(itemKg)
-              }}
-            >
-              {kgOptions.map((kgValue) => (
-                <Select.Item
-                  value={kgValue}
-                  label={kgValue}
-                  key={kgValue}
-                  style={styles.weightEntry}
-                />
-              ))}
-            </Select>
+              </Select>
+            </View>
           </View>
         </View>
       )}
@@ -246,6 +148,7 @@ const WeightSlide = ({ handleCalculate }: WeightSlideProps) => {
 
 const styles = StyleSheet.create({
   textAbove: {
+    marginTop: height * 0.11,
     alignSelf: 'center',
     textAlign: 'center',
     minWidth: threeQuarterWidth,
@@ -260,23 +163,33 @@ const styles = StyleSheet.create({
     color: '#8ac4e4',
     fontWeight: '500',
     fontSize: RFPercentage(12),
+    marginBottom: height * 0.015,
   },
   weightEntry: {
-    textAlign: 'center',
-    // fontSize: height < 800 ? 75 : 95,
+    // textAlign: 'center',
     fontWeight: '500',
-    fontSize: RFPercentage(16),
+    fontSize: RFPercentage(11),
     color: '#84c4ec',
+    width: threeQuarterWidth,
+  },
+  inputParentContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   inputContainer: {
+    justifyContent: 'center',
     borderWidth: 3,
     borderRadius: 30,
     borderColor: '#84c4ec',
+    paddingLeft: Platform.OS === 'android' ? 20 : 1,
+    width: threeQuarterWidth,
   },
   buttonText: {
     alignSelf: 'center',
     padding: 20,
-    fontSize: RFPercentage(6.2),
+    fontSize: RFPercentage(6.5),
     color: '#84c4ec',
     fontWeight: 'bold',
   },
@@ -285,7 +198,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#84c4ec',
     backgroundColor: '#e4bc94',
-    marginTop: 20,
+    marginTop: height * 0.03,
   },
 })
 

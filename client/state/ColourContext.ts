@@ -122,6 +122,19 @@ const ColourContext = React.createContext({
       bottom1: 'rgb(25, 26, 29)',
       bottom2: 'rgb(9, 21, 39)',
     },
+    {
+      key: 9,
+      title: 'resultAI',
+      image: require('../assets/images/beach-white-sands-oh-so-ronery-small.jpg'),
+      video: null,
+      dominant: '#784b3c',
+      vibrant: '#d27e38',
+      darkVibrant: '#173f6a',
+      lightVibrant: '#efa450',
+      lightMuted: '#d0b99f',
+      bottom1: 'rgb(25, 26, 29)',
+      bottom2: 'rgb(9, 21, 39)',
+    },
   ],
 })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import {View} from 'react-native'
 
 import AgeSlide from './AgeSlide'
 import FrameSlide from './FrameSlide'
@@ -9,6 +9,7 @@ import ResultSlide from './ResultSlide'
 import ResultBMISlide from './ResultBMISlide'
 import UnitsSlide from './UnitsSlide'
 import WeightSlide from './WeightSlide'
+import AIChatSlide from './AIChatSlide.tsx'
 
 interface ListSlideProps {
   errorText: string
@@ -77,7 +78,16 @@ const ListSlide = ({
     ),
     resultBMI: (
       <View>
-        <ResultBMISlide bmiCalcResult={bmiCalcResult} />
+        <ResultBMISlide
+          bmiCalcResult={bmiCalcResult}
+          setIndex={setIndex}
+          index={index}
+        />
+      </View>
+    ),
+    resultAI: (
+      <View>
+        <AIChatSlide />
       </View>
     ),
   }[itemTitle]
