@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, {useState, useEffect, useContext, useMemo} from 'react'
 import 'react-native-gesture-handler'
 import {
   StyleSheet,
@@ -7,21 +7,21 @@ import {
   Animated,
   ImageBackground,
 } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import {useSelector, useDispatch} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
-import { actionCreators, State } from '../redux/index'
+import {actionCreators, State} from '../redux/index'
 import BottomHelp from '../components/BottomHelp'
-import ColourContext, { ColourProvider } from '../state/ColourContext'
+import ColourContext, {ColourProvider} from '../state/ColourContext'
 
 import ListSlide from './ListSlide'
 import axios from 'axios'
 
-const { width, height } = Dimensions.get('window')
+const {width, height} = Dimensions.get('window')
 const widthBasedDiff = width * 0.85
 
 function CustomSwiper() {
-  const { colourData } = useContext(ColourContext)
+  const {colourData} = useContext(ColourContext)
 
   const [index, setIndex] = React.useState(0)
   const weightPounds = useSelector((state: State) => state.weightPounds)
@@ -35,7 +35,8 @@ function CustomSwiper() {
   const weightUnits = useSelector((state: State) => state.weightUnits)
 
   const dispatch = useDispatch()
-  const { updateHasSeenIntro } = bindActionCreators(actionCreators, dispatch)
+  const {updateHasSeenIntro, setReduxIdealWeightKg, setReduxBMICalcResult} =
+    bindActionCreators(actionCreators, dispatch)
 
   const frame = useSelector((state: State) => state.frame)
   // const age = useSelector((state: State) => state.age);
@@ -58,14 +59,15 @@ function CustomSwiper() {
       colourData,
       index,
     }),
-    [index]
+    [index],
   )
 
   // useEffect notices the change in state index, so changes the Flatlist's scrollToIndex
   useEffect(() => {
     const endpoint =
       'http://ec2-52-23-111-225.compute-1.amazonaws.com:4000/graphql'
-    // const endpoint = 'http://localhost:4000/graphql'
+    // const endpoint = `http://localhost:4000/graphql`;
+
     const graphqlQuery = {
       operationName: 'allHelp',
       query: `query allHelp {
@@ -99,6 +101,7 @@ function CustomSwiper() {
 
         const response = await axios(config)
         const dataResponse = await response.data
+        console.log('dataResponse.data.allHelp:', dataResponse.data.allHelp)
         setNewHelpData(dataResponse.data.allHelp)
       } catch (error) {
         console.error('fetchHelp (axios), error:' + error)
@@ -111,7 +114,7 @@ function CustomSwiper() {
             error.config,
             error.request,
             error.message,
-            error.response
+            error.response,
           )
         } else if (error.request) {
           console.log('client never received a response, or request never left')
@@ -127,7 +130,7 @@ function CustomSwiper() {
             error.config,
             error.request,
             error.message,
-            error.response
+            error.response,
           )
         }
       }
@@ -168,7 +171,10 @@ function CustomSwiper() {
       // BMI CALC
       const heightMSquared = (heightCmValue * heightCmValue) / 100 / 100
       const bmiCalcValue = weightKgValue / heightMSquared
+      console.log('bmiCalcValue:', bmiCalcValue)
       setBMICalcResult(bmiCalcValue)
+
+      setReduxBMICalcResult(bmiCalcValue)
 
       // Note: Weight is not currently used in the calc
 
@@ -206,6 +212,8 @@ function CustomSwiper() {
         idealWeightInt += idealWeightInt * 0.1
       } // medium needs no mods
 
+      setReduxIdealWeightKg(idealWeightInt) // will be used for AI querying
+
       let inPounds = idealWeightInt * 2.205
 
       if (weightUnits === 'kg') {
@@ -236,7 +244,7 @@ function CustomSwiper() {
     } // weight entry validation
   }
 
-  const validate = (title) => {
+  const validate = title => {
     switch (title) {
       case 'gender': {
         if (gender === '') {
@@ -262,6 +270,7 @@ function CustomSwiper() {
       }
       case 'intro':
       case 'result':
+      case 'resultBMI':
         break
       case 'weight': {
         break
@@ -271,7 +280,7 @@ function CustomSwiper() {
       }
       default: {
         console.error(
-          'Unknown/unhandled value in switch statement :title:' + title
+          'Unknown/unhandled value in switch statement :title:' + title,
         )
       }
     }
@@ -279,25 +288,25 @@ function CustomSwiper() {
     return true
   }
 
-  const renderMainItem = ({ item }) => {
+  const renderMainItem = ({item}) => {
     const hasImage = item.image !== null
 
     return (
-      <View style={{ width, height, backgroundColor: 'white' }}>
+      <View style={{width, height, backgroundColor: 'white'}}>
         {hasImage && (
           <ImageBackground
             source={item.image}
             resizeMode={'cover'}
-            style={{ flex: 1 }}
-          >
+            style={{flex: 1}}>
             <View
               style={{
                 flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                // marginTop: 120,
+                // marginBottom: 100,
                 width: '100%',
-              }}
-            >
+              }}>
               {/* ************************************* */}
               <ListSlide
                 errorText={errorText}
@@ -367,7 +376,7 @@ function CustomSwiper() {
           showsHorizontalScrollIndicator={false}
           pagingEnabled
           bounces={false}
-          onScroll={(e) => {
+          onScroll={e => {
             const swipeDiff = this.touchX - e.nativeEvent.contentOffset.x
             if (trackingScrolling && swipeDiff < -widthBasedDiff) {
               const result = validate(colourData[index].title) // did they enter relevant info?
@@ -391,7 +400,7 @@ function CustomSwiper() {
               trackingScrolling = false
             }
           }}
-          onScrollBeginDrag={(e) => {
+          onScrollBeginDrag={e => {
             if (this && e) {
               trackingScrolling = true
               localTouchX = e.nativeEvent.contentOffset.x
