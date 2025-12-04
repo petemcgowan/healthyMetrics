@@ -31,6 +31,10 @@ build/
 local.properties
 *.iml
 *.hprof
+.cxx/
+*.keystore
+!debug.keystore
+.kotlin/
 
 # node.js
 #
@@ -39,6 +43,7 @@ server/node_modules/
 node_modules/
 npm-debug.log
 yarn-error.log
+
 
 # BUCK
 buck-out/
@@ -77,3 +82,4 @@ server/config/config.json
 server/connection.json
 .env
 healthyMetrics.code-workspace
+server/openai.env
