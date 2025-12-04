@@ -1,63 +1,49 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   ScrollView,
   Dimensions,
   StyleSheet,
   View,
   Text,
-  Image,
-  SafeAreaView,
   TouchableOpacity,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { RFPercentage } from 'react-native-responsive-fontsize'
+import {useNavigation} from '@react-navigation/native'
+import {RFPercentage} from 'react-native-responsive-fontsize'
 import SlideComponent from '../../components/SlideComponent'
-import { State } from '../redux/index'
-import { useSelector } from 'react-redux'
+import {SafeAreaView} from 'react-native-safe-area-context'
+import {useSelector} from 'react-redux'
+import {State} from '../../redux/index'
 
-import slowmotionLady from '../../assets/videos/slowMotionBikiniLadyWalkingOnBeach-8760590.mp4'
+const defaultPoster = require('../../assets/posters/OnboardingSlidePoster.jpg')
 
-const selectUnitsVideo = require('../../assets/videos/onboarding/gifUnits.gif')
-const selectValuesVideo = require('../../assets/videos/onboarding/gifEnterValues.gif')
-const useHelpVideo = require('../../assets/videos/onboarding/gifUseHelp.gif')
-const getResultsVideo = require('../../assets/videos/onboarding/gifResults.gif')
+const {width, height} = Dimensions.get('window')
 
-// const useHelpGif = require('../../assets/videos/onboarding/UseHelpGif.gif')
-
-const { width, height } = Dimensions.get('window')
+const CLOUDFRONT_URL = 'https://d2h7fyutgry3l1.cloudfront.net'
 
 const slides = [
   {
     component: SlideComponent,
     title: 'Welcome to Healthy',
     type: 'image',
+    posterSource: defaultPoster,
     description:
       'Find the recommended healthy weight for your weight, height and wrist size',
-    videoLink: slowmotionLady,
-    gifLink: null,
-    // videoLink: slowmotionLady,
+    videoSource: {
+      uri: `${CLOUDFRONT_URL}/hls/welcome/slowMotionBikiniLadyWalkingOnBeach-8760590.m3u8`,
+    },
     color: 'rgb(38, 27, 21)',
     intro: true,
   },
   {
     component: SlideComponent,
-    title: 'Measurement Units',
-    type: 'image',
-    description: `Select how you want to enter and see your height and weight data`,
-    videoLink: null,
-    gifLink: selectUnitsVideo,
-    // videoLink: ,
-    color: 'rgb(25, 26, 29)',
-    intro: false,
-  },
-  {
-    component: SlideComponent,
-    title: 'Select Your Values',
-    type: 'image',
-    description: 'Select your values using the dials and checkboxes',
-    videoLink: null,
-    gifLink: selectValuesVideo,
-    // videoLink: selectValuesVideo,
+    title: 'Get Your Results',
+    type: 'video',
+    posterSource: defaultPoster,
+    description:
+      "On the Weight screen, click 'Calculate' to get your target weight+BMI",
+    videoSource: {
+      uri: `${CLOUDFRONT_URL}/hls/welcome/GetResults.m3u8`,
+    },
     color: 'rgb(25, 26, 29)',
     intro: false,
   },
@@ -65,22 +51,35 @@ const slides = [
     component: SlideComponent,
     title: 'Use the Help system',
     type: 'video',
+    posterSource: defaultPoster,
     description: `Drag up from the bottom on any page to reveal help information`,
-    videoLink: null,
-    gifLink: useHelpVideo,
-    // videoLink: useHelpVideo,
+    videoSource: {
+      uri: `${CLOUDFRONT_URL}/hls/welcome/UseHelpAI.m3u8`,
+    },
     color: 'rgb(25, 26, 29)',
     intro: false,
   },
   {
     component: SlideComponent,
-    title: 'Get Your Results',
+    title: 'Measurement Units',
     type: 'video',
-    description:
-      'On the Weight screen, Click Calculate to get your Healthy Weight',
-    videoLink: null,
-    gifLink: getResultsVideo,
-    // videoLink: getResultsVideo,
+    posterSource: defaultPoster,
+    description: `You can select pounds, kg, inches, stones, whatever you work with!`,
+    videoSource: {
+      uri: `${CLOUDFRONT_URL}/hls/welcome/SelectUnitsAI.m3u8`,
+    },
+    color: 'rgb(25, 26, 29)',
+    intro: false,
+  },
+  {
+    component: SlideComponent,
+    title: 'Chat Health with AI',
+    type: 'video',
+    posterSource: defaultPoster,
+    description: 'Chat to AI for health and nutrition tips',
+    videoSource: {
+      uri: `${CLOUDFRONT_URL}/hls/welcome/UseAIAI.m3u8`,
+    },
     color: 'rgb(25, 26, 29)',
     intro: false,
   },
@@ -90,15 +89,16 @@ const OnboardingDeck = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const navigation = useNavigation()
   const [backgroundColor, setBackgroundColor] = useState('#000')
-  // const hasSeenIntro = useSelector((state: State) => state.hasSeenIntro)
-  const hasSeenIntro = false
+  const hasSeenIntro = useSelector((state: State) => state.hasSeenIntro)
+  // const hasSeenIntro = false;
 
   const onScroll = (event: any) => {
-    const slide = Math.ceil(
+    const slide = Math.round(
       event.nativeEvent.contentOffset.x /
-        event.nativeEvent.layoutMeasurement.width
+        event.nativeEvent.layoutMeasurement.width,
     )
     if (slide !== activeSlide) {
+      console.log
       setActiveSlide(slide)
 
       if (slide > slides.length - 1) {
@@ -118,8 +118,7 @@ const OnboardingDeck = () => {
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: backgroundColor }]}
-    >
+      style={[styles.container, {backgroundColor: backgroundColor}]}>
       <View style={styles.topContainer}>
         <ScrollView
           style={styles.scrollView}
@@ -127,20 +126,23 @@ const OnboardingDeck = () => {
           pagingEnabled
           onScroll={onScroll}
           scrollEventThrottle={16}
-          showsHorizontalScrollIndicator={false}
-        >
+          showsHorizontalScrollIndicator={false}>
           {slides.map((slide, index) => {
-            const SlideComponent = slide.component
+            const isActive = index === activeSlide
+            // const distance = Math.abs(activeSlide - index);
+            // const shouldRenderVideo = distance <= 1;
+
             return (
               <SlideComponent
-                type={slide.type}
                 key={index}
                 title={slide.title}
                 description={slide.description}
-                gifLink={slide.gifLink}
-                videoLink={slide.videoLink}
+                videoSource={slide.videoSource}
+                posterSource={slide.posterSource}
                 intro={slide.intro}
                 hasSeenIntro={hasSeenIntro}
+                shouldPlay={isActive}
+                // shouldRenderVideo={shouldRenderVideo}
               />
             )
           })}
@@ -149,8 +151,7 @@ const OnboardingDeck = () => {
           {slides.map((_, index) => (
             <Text
               key={index}
-              style={index === activeSlide ? styles.activeDot : styles.dot}
-            >
+              style={index === activeSlide ? styles.activeDot : styles.dot}>
               •
             </Text>
           ))}
@@ -177,7 +178,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 0.82,
-    // paddingTop: 20,
   },
   bottomContainer: {
     flex: 0.08,
