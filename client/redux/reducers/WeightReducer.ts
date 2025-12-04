@@ -3,12 +3,12 @@ import {
   WeightPoundsOnlyAction,
   WeightStonesAction,
   WeightKgAction,
-} from '../actions/index';
+} from '../actions/index'
 // const initialState = '157';
-const weightStonesInitialState = '5';
-const weightPoundsInitialState = '157';
-const weightPoundsOnlyInitialState = '0';
-const weightKgInitialState = '75';
+const weightStonesInitialState = '5'
+const weightPoundsInitialState = '157'
+const weightPoundsOnlyInitialState = '0'
+const weightKgInitialState = '75'
 
 export const weightPounds = (
   state = weightPoundsInitialState,
@@ -16,12 +16,12 @@ export const weightPounds = (
 ) => {
   switch (action.type) {
     case 'UPDATE_WEIGHT_POUNDS_VALUE':
-      state = action.payload;
-      return state;
+      state = action.payload
+      return state
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const weightPoundsOnly = (
   state = weightPoundsOnlyInitialState,
@@ -29,12 +29,12 @@ export const weightPoundsOnly = (
 ) => {
   switch (action.type) {
     case 'UPDATE_WEIGHT_POUNDS_ONLY_VALUE':
-      state = action.payload;
-      return state;
+      state = action.payload
+      return state
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const weightStones = (
   state = weightStonesInitialState,
@@ -42,12 +42,12 @@ export const weightStones = (
 ) => {
   switch (action.type) {
     case 'UPDATE_WEIGHT_STONES_VALUE':
-      state = action.payload;
-      return state;
+      state = action.payload
+      return state
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const weightKg = (
   state = weightKgInitialState,
@@ -55,9 +55,9 @@ export const weightKg = (
 ) => {
   switch (action.type) {
     case 'UPDATE_WEIGHT_KG_VALUE':
-      state = action.payload;
-      return state;
+      state = action.payload
+      return state
     default:
-      return state;
+      return state
   }
-};
+}
